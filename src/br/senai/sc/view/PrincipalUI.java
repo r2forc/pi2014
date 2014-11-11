@@ -19,7 +19,7 @@ public class PrincipalUI extends JFrame {
 
 	private JPanel contentPane;
 	private static PrincipalUI instancia;
-	private String deuCerto;
+	private String deuCerto = "acho que sim";
 	
 	// SINGLETON
 	public static PrincipalUI obterInstancia() {
