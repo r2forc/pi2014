@@ -10,7 +10,7 @@ import br.senai.sc.model.OrdemServico;
 
 public class OrdemServicoControl {
 
-	public void insertOrcamento(OrdemServico os) {
+	public void insertOrdemServico(OrdemServico os) {
 		if (os.getId() == null) {
 			JOptionPane.showMessageDialog(null, "ID ORCAMENTO Obrigatorio!");
 		} else if (os.getCliente().getId() == null) {
@@ -29,18 +29,18 @@ public class OrdemServicoControl {
 			JOptionPane
 					.showMessageDialog(null, "STATUS ORÇAMENTO Obrigatorio!");
 		} else {
-			OrdemServicoDAO.getInstace().insertOrcamento(os);
+			OrdemServicoDAO.getInstace().insertOrdemServico(os);
 		}
 	}
 
-	public void editOrcamento(OrdemServico os) {
+	public void editOrdemServico(OrdemServico os) {
 		if (os.getCliente().getId() == null) {
 			JOptionPane.showMessageDialog(null,
 					"ID ORDEM DE SERVICO Obrigatorio!");
 		} else if (os.getOrcamento().getServico().getId().equals("")) {
 			JOptionPane.showMessageDialog(null, "ID SERVICO Obrigatorio!");
 		} else if (os.getDescricao().equals("")) {
-			JOptionPane.showMessageDialog(null, "E-MAIL CLIENTE Obrigatorio!");
+			JOptionPane.showMessageDialog(null, "DESCRICAO Obrigatorio!");
 		} else if (os.getData() == null) {
 			JOptionPane.showMessageDialog(null, "DATA ORÇAMENTO Obrigatorio!");
 		} else if (os.getValorTotal() == null) {
@@ -50,15 +50,15 @@ public class OrdemServicoControl {
 			JOptionPane
 					.showMessageDialog(null, "STATUS ORÇAMENTO Obrigatorio!");
 		} else {
-			OrdemServicoDAO.getInstace().insertOrcamento(os);
+			OrdemServicoDAO.getInstace().editOrdemServico(os);
 		}
 	}
 
-	public void deleteOrcamento(OrdemServico os) {
-		OrdemServicoDAO.getInstace().deleteOrcamento(os);
+	public void deleteOrdemServico(OrdemServico os) {
+		OrdemServicoDAO.getInstace().deleteOrdemServico(os);
 	}
 
-	public ArrayList<OrdemServico> showAllOrcamentos()
+	public ArrayList<OrdemServico> showAllOrdemServico()
 			throws ClassNotFoundException, SQLException {
 		return OrdemServicoDAO.getInstace().showAllOrdemServicos();
 	}

@@ -13,7 +13,6 @@ import br.senai.sc.model.OrdemServico;
 public class OrdemServicoDAO {
 
 	private static OrdemServicoDAO instance;
-	private ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
 	private Connection con = ConnectionUtil.getConnection();
 
 	public static OrdemServicoDAO getInstace() {
@@ -23,13 +22,13 @@ public class OrdemServicoDAO {
 		return instance;
 	}
 
-	public void insertOrcamento(OrdemServico orcamento) {
+	public void insertOrdemServico(OrdemServico os) {
 	}
 
-	public void editCliente(OrdemServico orcamento) {
+	public void editOrdemServico(OrdemServico os) {
 	}
 
-	public void deleteOrcamento(OrdemServico orcamento) {
+	public void deleteOrdemServico(OrdemServico os) {
 	}
 
 	public ArrayList<OrdemServico> showAllOrdemServicos()

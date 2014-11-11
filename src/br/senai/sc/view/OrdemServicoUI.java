@@ -383,7 +383,7 @@ public class OrdemServicoUI extends JInternalFrame {
 
 		jtListaItensVenda = new JTable();
 		jtListaItensVenda.setModel(new OrdemServicoTableModel(
-				new OrdemServicoControl().showAllOrcamentos()));
+				new OrdemServicoControl().showAllOrdemServico()));
 		jtListaItensVenda.getColumnModel().getColumn(0).setResizable(false);
 		jtListaItensVenda.getColumnModel().getColumn(0).setPreferredWidth(50);
 		jtListaItensVenda.getColumnModel().getColumn(1).setResizable(false);

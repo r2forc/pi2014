@@ -13,7 +13,6 @@ import br.senai.sc.model.ConnectionUtil;
 public class ClienteDAO {
 
 	private static ClienteDAO instance;
-	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	private Connection con = ConnectionUtil.getConnection();
 
 	public static ClienteDAO getInstace() {
