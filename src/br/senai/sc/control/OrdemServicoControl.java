@@ -12,9 +12,10 @@ public class OrdemServicoControl {
 
 	public void insertOrcamento(OrdemServico os) {
 		if (os.getId() == null) {
-			JOptionPane.showMessageDialog(null, "ID ORÇAMENTO Obrigatorio!");
+			JOptionPane.showMessageDialog(null, "ID ORCAMENTO Obrigatorio!");
 		} else if (os.getCliente().getId() == null) {
-			JOptionPane.showMessageDialog(null, "ID CLIENTE Obrigatorio!");
+			JOptionPane.showMessageDialog(null,
+					"ID ORDEM DE SERVICO Obrigatorio!");
 		} else if (os.getOrcamento().getServico().getId().equals("")) {
 			JOptionPane.showMessageDialog(null, "ID SERVIÇO Obrigatorio!");
 		} else if (os.getDescricao().equals("")) {
@@ -34,7 +35,8 @@ public class OrdemServicoControl {
 
 	public void editOrcamento(OrdemServico os) {
 		if (os.getCliente().getId() == null) {
-			JOptionPane.showMessageDialog(null, "ID CLIENTE Obrigatorio!");
+			JOptionPane.showMessageDialog(null,
+					"ID ORDEM DE SERVICO Obrigatorio!");
 		} else if (os.getOrcamento().getServico().getId().equals("")) {
 			JOptionPane.showMessageDialog(null, "ID SERVICO Obrigatorio!");
 		} else if (os.getDescricao().equals("")) {
