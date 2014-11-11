@@ -25,7 +25,7 @@ public class ClienteDAO {
 
 	public void insertCliente(Cliente cliente) throws SQLException {
 		try {
-			String query = "INSERT INTO CLIENTE (nome, cpf, email) values (?, ?, ?, ?)";
+			String query = "INSERT INTO CLIENTE (nome, cpf, email, telefone) values (?, ?, ?, ?)";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, cliente.getNome());
 			stmt.setString(2, cliente.getCpf());
@@ -42,15 +42,16 @@ public class ClienteDAO {
 
 	public void editCliente(Cliente cliente) throws SQLException {
 		try {
-			String query = "UPDATE CLIENTE SET nome = ?," + "cpf = ? "
-					+ "WHERE id = ?;";
+			String query = "UPDATE CLIENTE SET nome = ?," + "cpf = ?, "
+					+ "email = ?, " + "telefone = ? " + "WHERE id = ?;";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, cliente.getNome());
 			stmt.setString(2, cliente.getCpf());
 			stmt.setString(3, cliente.getEmail());
 			stmt.setString(4, cliente.getTelefone());
-
+			stmt.setInt(5, cliente.getId());
 			stmt.executeUpdate();
+			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();
@@ -60,11 +61,12 @@ public class ClienteDAO {
 
 	public void deleteCliente(Integer id) throws SQLException {
 		try {
-			String query = "DELETE CLIENTE WHERE id =?;";
+			String query = "DELETE FROM CLIENTE WHERE id =?;";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 
 			stmt.executeUpdate();
+			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();

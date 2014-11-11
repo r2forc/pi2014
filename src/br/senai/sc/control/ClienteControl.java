@@ -11,9 +11,7 @@ import br.senai.sc.model.Cliente;
 public class ClienteControl {
 
 	public void insertCliente(Cliente cliente) throws SQLException {
-		if (cliente.getId() == null) {
-			JOptionPane.showMessageDialog(null, "ID CLIENTE Obrigatorio!");
-		} else if (cliente.getNome().equals("")) {
+		if (cliente.getNome().equals("")) {
 			JOptionPane.showMessageDialog(null, "NOME CLIENTE Obrigatorio!");
 		} else if (cliente.getCpf().equals("")) {
 			JOptionPane.showMessageDialog(null, "CPF CLIENTE Obrigatorio!");
@@ -38,7 +36,7 @@ public class ClienteControl {
 			JOptionPane
 					.showMessageDialog(null, "TELEFONE CLIENTE Obrigatorio!");
 		} else {
-			ClienteDAO.getInstace().insertCliente(cliente);
+			ClienteDAO.getInstace().editCliente(cliente);
 		}
 	}
 
