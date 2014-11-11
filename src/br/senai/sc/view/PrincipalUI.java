@@ -87,9 +87,9 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmGerarOramento = new JMenuItem("Gerar Or\u00E7amento");
 		mntmGerarOramento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Orcamento orcamento;
+				OrcamentoUI orcamento;
 				try {
-					orcamento = new Orcamento();
+					orcamento = new OrcamentoUI();
 					orcamento.setVisible(true);
 					orcamento.setFocusable(true);
 					orcamento.requestFocus();
