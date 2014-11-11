@@ -1,6 +1,7 @@
 package br.senai.sc.view;
 
 import java.awt.EventQueue;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -9,27 +10,23 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import br.senai.sc.control.ClienteControl;
-import br.senai.sc.control.OrdemServico;
+import br.senai.sc.control.OrdemServicoControl;
 import br.senai.sc.control.ServicoControl;
 import br.senai.sc.model.Cliente;
-import br.senai.sc.model.Orcamento;
+import br.senai.sc.model.OrdemServico;
 import br.senai.sc.model.Servico;
 import br.senai.sc.utils.OrdemServicoTableModel;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.SystemColor;
-import javax.swing.table.DefaultTableModel;
 
 public class OrdemServicoUI extends JInternalFrame {
 	private JTextField jtfDataVenda;
@@ -41,7 +38,7 @@ public class OrdemServicoUI extends JInternalFrame {
 
 	private ArrayList<Cliente> listaClientes;
 	private ArrayList<Servico> listaServicos;
-	private ArrayList<Orcamento> listaOrcamento = new ArrayList<Orcamento>();
+	private ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
 	private Double somaTotal = 0.00;
 	JLabel jlValorTotal = new JLabel("0,00");
 
@@ -112,22 +109,19 @@ public class OrdemServicoUI extends JInternalFrame {
 						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\add_icon.png"));
 		jbAdicionarItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Orcamento orcamento = new Orcamento();
-				orcamento.getOrcamentoHasServico().setQuantidadeOriginal(
+				OrdemServico os = new OrdemServico();
+				os.getOrcamento().setQuantidadeOriginal(
 						Integer.parseInt(jtfQuantidade.getText()));
-				orcamento.getOrcamentoHasServico().setServico(
-						(Servico) jcbServico.getSelectedItem());
-				orcamento.setValorTotal(orcamento.getOrcamentoHasServico()
-						.getServico().getValorUnt()
-						* orcamento.getOrcamentoHasServico()
-								.getQuantidadeOriginal());
+				os.getOrcamento().getServico()
+						.setDescricao((String) jcbServico.getSelectedItem());
+				os.setValorTotal(os.getOrcamento().getServico().getValorUnt()
+						* os.getOrcamento().getQuantidadeOriginal());
 
-				listaOrcamento.add(orcamento);
+				listaOS.add(os);
 
-				jtListaItensVenda.setModel(new OrdemServicoTableModel(
-						listaOrcamento));
+				jtListaItensVenda.setModel(new OrdemServicoTableModel(listaOS));
 
-				somaTotal += orcamento.getValorTotal();
+				somaTotal += os.getValorTotal();
 				jlValorTotal.setText(somaTotal.toString());
 			}
 		});
@@ -389,7 +383,7 @@ public class OrdemServicoUI extends JInternalFrame {
 
 		jtListaItensVenda = new JTable();
 		jtListaItensVenda.setModel(new OrdemServicoTableModel(
-				new OrdemServico().showAllOrcamentos()));
+				new OrdemServicoControl().showAllOrcamentos()));
 		jtListaItensVenda.getColumnModel().getColumn(0).setResizable(false);
 		jtListaItensVenda.getColumnModel().getColumn(0).setPreferredWidth(50);
 		jtListaItensVenda.getColumnModel().getColumn(1).setResizable(false);

@@ -5,8 +5,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.senai.sc.model.Cliente;
-import br.senai.sc.model.Orcamento;
+import br.senai.sc.model.OrdemServico;
 
 public class OrdemServicoTableModel extends AbstractTableModel {
 	/**
@@ -18,11 +17,11 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 	private static final int COL_QUANTIDADE = 2;
 	private static final int COL_VALORTOTAL = 3;
 
-	private List<Orcamento> valores;
+	private List<OrdemServico> valores;
 
 	// Esse é um construtor, que recebe a nossa lista de clientes
-	public OrdemServicoTableModel(List<Orcamento> valores) {
-		this.valores = new ArrayList<Orcamento>(valores);
+	public OrdemServicoTableModel(List<OrdemServico> valores) {
+		this.valores = new ArrayList<OrdemServico>(valores);
 	}
 
 	public int getRowCount() {
@@ -50,33 +49,33 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 
 	public Object getValueAt(int row, int column) {
 		// Precisamos retornar o valor da coluna column e da linha row.
-		Orcamento orcamento = valores.get(row);
+		OrdemServico os = valores.get(row);
 		if (column == COL_DESCRICAO)
-			return orcamento.getOrcamentoHasServico().getServico()
+			return os.getOrcamento().getServico()
 					.getDescricao();
 		else if (column == COL_VALORUNITARIO)
-			return orcamento.getOrcamentoHasServico().getServico()
+			return os.getOrcamento().getServico()
 					.getValorUnt();
 		else if (column == COL_QUANTIDADE)
-			return orcamento.getOrcamentoHasServico().getQuantidadeOriginal();
+			return os.getOrcamento().getQuantidadeOriginal();
 		else if (column == COL_VALORTOTAL)
-			return orcamento.getValorTotal();
+			return os.getValorTotal();
 		return ""; // Nunca deve ocorrer
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		Orcamento orcamento = valores.get(rowIndex);
+		OrdemServico orcamento = valores.get(rowIndex);
 		// Vamos alterar o valor da coluna columnIndex na linha rowIndex com o
 		// valor aValue passado no parâmetro.
 		// Note que vc poderia alterar 2 campos ao invés de um só.
 		if (columnIndex == COL_DESCRICAO)
-			orcamento.getOrcamentoHasServico().getServico()
+			orcamento.getOrcamento().getServico()
 					.setDescricao(aValue.toString());
 		else if (columnIndex == COL_VALORUNITARIO)
-			orcamento.getOrcamentoHasServico().getServico()
+			orcamento.getOrcamento().getServico()
 					.setValorUnt(Double.parseDouble(aValue.toString()));
 		else if (columnIndex == COL_QUANTIDADE)
-			orcamento.getOrcamentoHasServico().setQuantidadeOriginal(
+			orcamento.getOrcamento().setQuantidadeOriginal(
 					Integer.parseInt(aValue.toString()));
 		else if (columnIndex == COL_VALORTOTAL)
 			orcamento.setValorTotal(Double.parseDouble(aValue.toString()));
@@ -97,7 +96,7 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 	// Já que esse tableModel é de clientes, vamos fazer um get que retorne um
 	// objeto cliente inteiro.
 	// Isso elimina a necessidade de chamar o getValueAt() nas telas.
-	public Orcamento get(int row) {
+	public OrdemServico get(int row) {
 		return valores.get(row);
 	}
 }

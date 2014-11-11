@@ -1,69 +1,54 @@
 package br.senai.sc.model;
 
-import java.util.Date;
-
 public class Orcamento {
-	private Cliente cliente;
-	private OrcamentoHasServico orcamentoHasServico;
-	private Integer id;
-	private Date data;
-	private String descricao;
+	private Servico servico;
+	private OrdemServico ordemServico;
+	private Integer quantidadeOriginal;
+	private Integer copias;
 	private Double valorTotal;
-	private Integer status;
 
 	public Orcamento() {
 	}
 
-	public Orcamento(Cliente cliente, OrcamentoHasServico orcamentoHasServico,
-			Integer id, Date data, String descricao, Double valorTotal,
-			Integer status) {
-		this.cliente = cliente;
-		this.orcamentoHasServico = orcamentoHasServico;
-		this.id = id;
-		this.data = data;
-		this.descricao = descricao;
+	public Orcamento(Servico servico, OrdemServico ordemServico,
+			Integer quantidadeOriginal, Integer copias, Double valorTotal) {
+		this.servico = servico;
+		this.ordemServico = ordemServico;
+		this.quantidadeOriginal = quantidadeOriginal;
+		this.copias = copias;
 		this.valorTotal = valorTotal;
-		this.status = status;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Servico getServico() {
+		return servico;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setServico(Servico servico) {
+		this.servico = servico;
 	}
 
-	public OrcamentoHasServico getOrcamentoHasServico() {
-		return orcamentoHasServico;
+	public OrdemServico getOrdemServico() {
+		return ordemServico;
 	}
 
-	public void setOrcamentoHasServico(OrcamentoHasServico orcamentoHasServico) {
-		this.orcamentoHasServico = orcamentoHasServico;
+	public void setOrdemServico(OrdemServico ordemServico) {
+		this.ordemServico = ordemServico;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getQuantidadeOriginal() {
+		return quantidadeOriginal;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setQuantidadeOriginal(Integer quantidadeOriginal) {
+		this.quantidadeOriginal = quantidadeOriginal;
 	}
 
-	public Date getData() {
-		return data;
+	public Integer getCopias() {
+		return copias;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setCopias(Integer copias) {
+		this.copias = copias;
 	}
 
 	public Double getValorTotal() {
@@ -72,13 +57,5 @@ public class Orcamento {
 
 	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
 	}
 }
