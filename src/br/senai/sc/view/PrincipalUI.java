@@ -120,7 +120,7 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CadastrarClientesUI cc = new CadastrarClientesUI();;
+				ConsultaClientesUI cc = new ConsultaClientesUI();;
 				try {
 					cc.setVisible(true);
 					cc.setFocusable(true);
