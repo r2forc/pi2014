@@ -1,4 +1,4 @@
-package br.senai.sc.view;
+package br.senai.sc.tests;
 
 import java.sql.SQLException;
 
