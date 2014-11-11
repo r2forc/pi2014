@@ -19,8 +19,8 @@ public class PrincipalUI extends JFrame {
 
 	private JPanel contentPane;
 	private static PrincipalUI instancia;
-	private String deuCerto = "acho que sim";
-	
+	private String deuCerto = "FEIQUI SEGURA";
+
 	// SINGLETON
 	public static PrincipalUI obterInstancia() {
 
@@ -34,7 +34,7 @@ public class PrincipalUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//RICARDO VIADAOM
+	// RICARDO VIADAOM
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
