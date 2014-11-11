@@ -29,7 +29,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public RelatorioPorStatusUI() {
-		getContentPane().setBackground(new Color(0, 255, 0));
+		getContentPane().setBackground(new Color(138, 43, 226));
 		setTitle("Relat\u00F3rio por Status");
 		setBorder(null);
 		setBounds(0, 0, 1000, 600);

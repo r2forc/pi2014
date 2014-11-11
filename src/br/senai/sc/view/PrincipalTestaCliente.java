@@ -8,6 +8,9 @@ import br.senai.sc.control.ClienteControl;
 import br.senai.sc.model.Cliente;
 
 public class PrincipalTestaCliente {
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public static void main(String args[]) throws SQLException,
 			ClassNotFoundException {
 		Cliente cInsert = new Cliente();
