@@ -113,6 +113,27 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmRelatrioPorPeriodo = new JMenuItem(
 				"Relat\u00F3rio Por Per\u00EDodo");
 		mnRelatrios.add(mntmRelatrioPorPeriodo);
+		
+		JMenu mnClientes = new JMenu("Clientes");
+		menuBar.add(mnClientes);
+		
+		JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
+		mntmCadastrarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CadastrarClientesUI cc = new CadastrarClientesUI();;
+				try {
+					cc.setVisible(true);
+					cc.setFocusable(true);
+					cc.requestFocus();
+					getContentPane().add(cc, 0);
+					getContentPane().add(cc);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		mnClientes.add(mntmCadastrarCliente);
 
 		JMenu mnSair = new JMenu("Sair");
 		menuBar.add(mnSair);
