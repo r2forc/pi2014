@@ -15,7 +15,6 @@ public class ClienteDAO {
 	private static ClienteDAO instance;
 	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	private Connection con = ConnectionUtil.getConnection();
-	private String teste;
 
 	public static ClienteDAO getInstace() {
 		if (instance == null) {
@@ -24,17 +23,53 @@ public class ClienteDAO {
 		return instance;
 	}
 
-	public void insertCliente(Cliente cliente) {
-		this.listaClientes.add(cliente);
+	public void insertCliente(Cliente cliente) throws SQLException {
+		try {
+			String query = "INSERT INTO CLIENTE (nome, cpf, email) values (?, ?, ?, ?)";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, cliente.getNome());
+			stmt.setString(2, cliente.getCpf());
+			stmt.setString(3, cliente.getEmail());
+			stmt.setString(4, cliente.getTelefone());
+			stmt.execute();
+			System.out.println(query);
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
 	}
 
-	public void editCliente(Cliente cliente) {
-		this.listaClientes.set(verificaExistencia(cliente), cliente);
+	public void editCliente(Cliente cliente) throws SQLException {
+		try {
+			String query = "UPDATE CLIENTE SET nome = ?," + "cpf = ? "
+					+ "WHERE id = ?;";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, cliente.getNome());
+			stmt.setString(2, cliente.getCpf());
+			stmt.setString(3, cliente.getEmail());
+			stmt.setString(4, cliente.getTelefone());
+
+			stmt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
 	}
 
-	public void deleteCliente(Cliente cliente) {
-		// this.listaClientes.remove(verificaExistencia(cliente));
-		this.listaClientes.remove(cliente);
+	public void deleteCliente(Integer id) throws SQLException {
+		try {
+			String query = "DELETE CLIENTE WHERE id =?;";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, id);
+
+			stmt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
 	}
 
 	public ArrayList<Cliente> showAllClientes() throws ClassNotFoundException,
@@ -42,7 +77,7 @@ public class ClienteDAO {
 
 		String query = "SELECT * FROM Cliente ORDER BY nome ASC;";
 
-		PreparedStatement stmt = obterConexao().prepareStatement(query);
+		PreparedStatement stmt = con.prepareStatement(query);
 
 		ResultSet rs = stmt.executeQuery();
 
@@ -56,31 +91,11 @@ public class ClienteDAO {
 			cRetorno.setId(rs.getInt("id"));
 			cRetorno.setNome(rs.getString("nome"));
 			cRetorno.setCpf(rs.getString("cpf"));
-			cRetorno.setEmail(rs.getString("cpf"));
-			cRetorno.setTelefone(rs.getString("cpf"));
+			cRetorno.setEmail(rs.getString("email"));
+			cRetorno.setTelefone(rs.getString("telefone"));
 
 			listaClientes.add(cRetorno);
 		}
 		return listaClientes;
-	}
-
-	public Integer verificaExistencia(Cliente cliente) {
-		for (int i = 0; i < this.listaClientes.size(); i++) {
-			if (cliente.getId().equals(this.listaClientes.get(i).getId())) {
-				return i;
-			}
-		}
-		return null;
-	}
-
-	public static Connection obterConexao() throws ClassNotFoundException,
-			SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-
-		String url = "jdbc:mysql://localhost:3306/r2forc";
-
-		Connection con = DriverManager.getConnection(url, "root", "26051993");
-
-		return con;
 	}
 }
