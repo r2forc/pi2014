@@ -34,7 +34,7 @@ public class PrincipalUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-
+//RICARDO VIADAOM
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
