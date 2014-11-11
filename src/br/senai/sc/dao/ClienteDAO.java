@@ -100,4 +100,32 @@ public class ClienteDAO {
 		}
 		return listaClientes;
 	}
+
+	public ArrayList<Cliente> showFilterClientes(String column, String value)
+			throws ClassNotFoundException, SQLException {
+
+		String query = "SELECT * FROM CLIENTE WHERE " + column + " LIKE '%"
+				+ value + "%' ORDER BY nome ASC;";
+
+		PreparedStatement stmt = con.prepareStatement(query);
+
+		ResultSet rs = stmt.executeQuery();
+
+		Cliente cRetorno = null;
+		ArrayList<Cliente> listaClientes = new ArrayList<>();
+
+		while (rs.next()) {
+
+			cRetorno = new Cliente();
+
+			cRetorno.setId(rs.getInt("id"));
+			cRetorno.setNome(rs.getString("nome"));
+			cRetorno.setCpf(rs.getString("cpf"));
+			cRetorno.setEmail(rs.getString("email"));
+			cRetorno.setTelefone(rs.getString("telefone"));
+
+			listaClientes.add(cRetorno);
+		}
+		return listaClientes;
+	}
 }

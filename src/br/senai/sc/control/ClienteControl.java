@@ -48,4 +48,9 @@ public class ClienteControl {
 			SQLException {
 		return ClienteDAO.getInstace().showAllClientes();
 	}
+
+	public ArrayList<Cliente> showFilterClientes(String column, String value)
+			throws ClassNotFoundException, SQLException {
+		return ClienteDAO.getInstace().showFilterClientes(column, value);
+	}
 }

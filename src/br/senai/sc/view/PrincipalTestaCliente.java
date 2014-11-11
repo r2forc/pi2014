@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.model.Cliente;
 
-public class Principal {
+public class PrincipalTestaCliente {
 	public static void main(String args[]) throws SQLException,
 			ClassNotFoundException {
 		Cliente cInsert = new Cliente();
@@ -16,14 +16,13 @@ public class Principal {
 
 		String opc = "";
 		do {
-			opc = JOptionPane.showInputDialog("1 - CLIENTE");
+			opc = JOptionPane.showInputDialog("1 - CLIENTE / 10 - SAIR");
 			switch (opc) {
 
 			case "1":
 				opc = JOptionPane.showInputDialog("1 - INSERIR / "
 						+ "2 - EDITAR / " + "3 - DELETAR / "
-						+ "4 - LISTAR TODOS / "
-						+ "5 - LISTA C/ FILTRO / 6 - SAIR" + " ");
+						+ "4 - LISTAR TODOS / " + "5 - LISTA C/ FILTRO");
 				switch (opc) {
 				case "1":
 					// INSERT
@@ -60,8 +59,22 @@ public class Principal {
 								+ cliente.getEmail() + " Telefone: "
 								+ cliente.getTelefone());
 					}
+				case "5":
+					// LISTAR COM FILTRO
+					String column = JOptionPane
+							.showInputDialog("Nome coluna no BANCO DE DADOS");
+					String value = JOptionPane
+							.showInputDialog("VALOR a ser pesquisado no BANCO DE DADOS");
+
+					for (Cliente cliente : cc.showFilterClientes(column, value)) {
+						System.out.println("ID: " + cliente.getId() + " Nome: "
+								+ cliente.getNome() + " CPF: "
+								+ cliente.getCpf() + " E-mail: "
+								+ cliente.getEmail() + " Telefone: "
+								+ cliente.getTelefone());
+					}
 				}
 			}
-		} while (!opc.equals("6"));
+		} while (!opc.equals("10"));
 	}
 }
