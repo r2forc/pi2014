@@ -8,8 +8,8 @@ import br.senai.sc.control.ClienteControl;
 import br.senai.sc.model.Cliente;
 
 public class Principal {
-	public static void main(String[] args) throws SQLException {
-		String opc = JOptionPane.showInputDialog("CLIENTE");
+	public static void main(String args[]) throws SQLException {
+		String opc = JOptionPane.showInputDialog("1 - CLIENTE");
 		do {
 			switch (opc) {
 			case "1":
