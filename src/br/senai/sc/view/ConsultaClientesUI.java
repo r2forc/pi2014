@@ -27,9 +27,10 @@ import br.senai.sc.utils.ClienteTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class ConsultaClientesUI extends JInternalFrame {
-	private JTextField textField;
+	private JTextField jtfFiltro;
 	private JTable table;
 	private JTable jtConsultaCliente;
 	
@@ -167,27 +168,50 @@ public class ConsultaClientesUI extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);		
 		
 		
-		JLabel lblFiltro = new JLabel("Filtro");
+		final JLabel lblFiltro = new JLabel("Filtro");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		jtfFiltro = new JTextField();
+		jtfFiltro.setColumns(10);
 		
 		JLabel lblTipoFiltro = new JLabel("Tipo filtro");
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox jcbTipoFiltro = new JComboBox();
+		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "CPF", "Email", "Telefone"}));
+		
+		
+		
+		JButton btnNewButton_1 = new JButton("Procurar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Cliente cli = new Cliente();
+				try {
+					jtConsultaCliente.setModel(new ClienteTableModel( 
+							new ClienteControl().showFilterClientes(jcbTipoFiltro.getSelectedItem().toString() ,jtfFiltro.getText() ) ) );
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(20)
 					.addComponent(lblFiltro)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 830, GroupLayout.PREFERRED_SIZE)
-					.addGap(38)
+					.addGap(10)
+					.addComponent(jtfFiltro, GroupLayout.PREFERRED_SIZE, 625, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
 					.addComponent(lblTipoFiltro)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(76, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(jcbTipoFiltro, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+					.addGap(76)
+					.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+					.addGap(30))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
@@ -195,10 +219,11 @@ public class ConsultaClientesUI extends JInternalFrame {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblFiltro)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jtfFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton_1)
 						.addComponent(lblTipoFiltro)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(jcbTipoFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(8))
 		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
