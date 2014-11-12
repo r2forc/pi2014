@@ -159,6 +159,11 @@ public class ConsultaClientesUI extends JInternalFrame {
 		jtConsultaCliente.getColumnModel().getColumn(0).setPreferredWidth(200);
 		jtConsultaCliente.getColumnModel().getColumn(1).setResizable(false);
 		jtConsultaCliente.getColumnModel().getColumn(1).setPreferredWidth(100);
+		jtConsultaCliente.getColumnModel().getColumn(1).setResizable(false);
+		jtConsultaCliente.getColumnModel().getColumn(2).setPreferredWidth(100);
+		jtConsultaCliente.getColumnModel().getColumn(2).setResizable(false);
+		jtConsultaCliente.getColumnModel().getColumn(3).setPreferredWidth(100);
+		jtConsultaCliente.getColumnModel().getColumn(3).setResizable(false);
 		getContentPane().setLayout(groupLayout);		
 		
 		
