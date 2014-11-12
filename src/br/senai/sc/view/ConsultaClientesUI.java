@@ -94,6 +94,16 @@ public class ConsultaClientesUI extends JInternalFrame {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
 				}
+				try {
+					jtConsultaCliente.setModel(new ClienteTableModel( 
+							new ClienteControl().showAllClientes() ) );
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
