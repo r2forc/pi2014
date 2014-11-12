@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
@@ -21,7 +22,11 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
 import br.senai.sc.control.ClienteControl;
+import br.senai.sc.model.Cliente;
 import br.senai.sc.utils.ClienteTableModel;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ConsultaClientesUI extends JInternalFrame {
 	private JTextField textField;
@@ -62,6 +67,35 @@ public class ConsultaClientesUI extends JInternalFrame {
 		JButton btnAlterar = new JButton("Alterar");
 		
 		JButton btnNewButton = new JButton("Exluir");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int opcao = JOptionPane.showConfirmDialog(null, 
+						"Deseja excluir o cliente selecionado?", 
+						"Excluir Cliente", 
+						JOptionPane.YES_NO_OPTION);
+				if ( opcao == 0){
+					Cliente cli = null;
+					try {
+						cli = (Cliente) new ClienteTableModel(
+								new ClienteControl().showAllClientes())
+									.get(jtConsultaCliente.getSelectedRow());
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					ClienteControl cc = new ClienteControl();
+					try {
+						cc.deleteCliente(cli.getId());
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+				}
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
