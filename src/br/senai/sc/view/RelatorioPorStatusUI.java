@@ -51,7 +51,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		setBounds(0, 0, 1000, 600);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(SystemColor.activeCaptionBorder);
+		panel.setBackground(SystemColor.inactiveCaption);
 		panel.setBorder(new TitledBorder(null, "Consulta", TitledBorder.LEFT,
 				TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
