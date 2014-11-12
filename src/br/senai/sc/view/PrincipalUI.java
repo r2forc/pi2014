@@ -107,20 +107,36 @@ public class PrincipalUI extends JFrame {
 		JMenu mnRelatrios = new JMenu("Relat\u00F3rios");
 		menuBar.add(mnRelatrios);
 
-		JMenuItem mntmRelatrioMensal = new JMenuItem("Relat\u00F3rio Mensal");
-		mnRelatrios.add(mntmRelatrioMensal);
+		JMenuItem mntmRelatrioPorStatus = new JMenuItem(
+				"Relat\u00F3rio Por Status");
+		mntmRelatrioPorStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RelatorioPorStatusUI relatorioPorStatus;
 
-		JMenuItem mntmRelatrioPorPeriodo = new JMenuItem(
-				"Relat\u00F3rio Por Per\u00EDodo");
-		mnRelatrios.add(mntmRelatrioPorPeriodo);
-		
+				try {
+					relatorioPorStatus = new RelatorioPorStatusUI();
+					relatorioPorStatus.setVisible(true);
+					relatorioPorStatus.setFocusable(true);
+					relatorioPorStatus.requestFocus();
+					getContentPane().add(relatorioPorStatus, 0);
+					getContentPane().add(relatorioPorStatus);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+		mnRelatrios.add(mntmRelatrioPorStatus);
+
 		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
-		
+
 		JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ConsultaClientesUI cc = new ConsultaClientesUI();;
+				ConsultaClientesUI cc = new ConsultaClientesUI();
+				;
 				try {
 					cc.setVisible(true);
 					cc.setFocusable(true);
