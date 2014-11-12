@@ -5,7 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 import java.awt.SystemColor;
+import java.sql.SQLException;
+
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
@@ -17,10 +20,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
+import br.senai.sc.control.ClienteControl;
+import br.senai.sc.utils.ClienteTableModel;
+
 public class ConsultaClientesUI extends JInternalFrame {
 	private JTextField textField;
 	private JTable table;
-
+	private JTable jtConsultaCliente;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -92,33 +99,24 @@ public class ConsultaClientesUI extends JInternalFrame {
 					.addGap(69))
 		);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-			},
-			new String[] {
-				"Nome", "CPF", "Telefone", "Email"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(3).setResizable(false);
-		scrollPane.setViewportView(table);
+		jtConsultaCliente = new JTable();
+		scrollPane.setViewportView(jtConsultaCliente);
+		try {
+			jtConsultaCliente.setModel(new ClienteTableModel( 
+					new ClienteControl().showAllClientes() ) );
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		jtConsultaCliente.getColumnModel().getColumn(0).setResizable(false);
+		jtConsultaCliente.getColumnModel().getColumn(0).setPreferredWidth(200);
+		jtConsultaCliente.getColumnModel().getColumn(1).setResizable(false);
+		jtConsultaCliente.getColumnModel().getColumn(1).setPreferredWidth(100);
+		getContentPane().setLayout(groupLayout);		
+		
 		
 		JLabel lblFiltro = new JLabel("Filtro");
 		
