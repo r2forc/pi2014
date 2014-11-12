@@ -41,7 +41,7 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 		if (column == COL_VALORUNITARIO)
 			return "Valor Unitário";
 		if (column == COL_QUANTIDADE)
-			return "Quantidade";
+			return "Quantidade Original";
 		if (column == COL_VALORTOTAL)
 			return "Valor Total";
 		return ""; // Nunca deve ocorrer
@@ -51,13 +51,11 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 		// Precisamos retornar o valor da coluna column e da linha row.
 		OrdemServico os = valores.get(row);
 		if (column == COL_DESCRICAO)
-			return os.getOrcamento().getServico()
-					.getDescricao();
+			return os.getServico().getDescricao();
 		else if (column == COL_VALORUNITARIO)
-			return os.getOrcamento().getServico()
-					.getValorUnt();
+			return os.getServico().getValorUnt();
 		else if (column == COL_QUANTIDADE)
-			return os.getOrcamento().getQuantidadeOriginal();
+			return os.getQuantidadeOriginal();
 		else if (column == COL_VALORTOTAL)
 			return os.getValorTotal();
 		return ""; // Nunca deve ocorrer
@@ -69,14 +67,13 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 		// valor aValue passado no parâmetro.
 		// Note que vc poderia alterar 2 campos ao invés de um só.
 		if (columnIndex == COL_DESCRICAO)
-			orcamento.getOrcamento().getServico()
-					.setDescricao(aValue.toString());
+			orcamento.getServico().setDescricao(aValue.toString());
 		else if (columnIndex == COL_VALORUNITARIO)
-			orcamento.getOrcamento().getServico()
-					.setValorUnt(Double.parseDouble(aValue.toString()));
+			orcamento.getServico().setValorUnt(
+					Double.parseDouble(aValue.toString()));
 		else if (columnIndex == COL_QUANTIDADE)
-			orcamento.getOrcamento().setQuantidadeOriginal(
-					Integer.parseInt(aValue.toString()));
+			orcamento
+					.setQuantidadeOriginal(Integer.parseInt(aValue.toString()));
 		else if (columnIndex == COL_VALORTOTAL)
 			orcamento.setValorTotal(Double.parseDouble(aValue.toString()));
 	}

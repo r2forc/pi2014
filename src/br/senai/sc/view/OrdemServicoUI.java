@@ -24,6 +24,7 @@ import br.senai.sc.control.ClienteControl;
 import br.senai.sc.control.OrdemServicoControl;
 import br.senai.sc.control.ServicoControl;
 import br.senai.sc.model.Cliente;
+import br.senai.sc.model.Orcamento;
 import br.senai.sc.model.OrdemServico;
 import br.senai.sc.model.Servico;
 import br.senai.sc.utils.OrdemServicoTableModel;
@@ -110,19 +111,24 @@ public class OrdemServicoUI extends JInternalFrame {
 		jbAdicionarItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				OrdemServico os = new OrdemServico();
-				os.getOrcamento().setQuantidadeOriginal(
-						Integer.parseInt(jtfQuantidade.getText()));
-				os.getOrcamento().getServico()
-						.setDescricao((String) jcbServico.getSelectedItem());
-				os.setValorTotal(os.getOrcamento().getServico().getValorUnt()
-						* os.getOrcamento().getQuantidadeOriginal());
-
-				listaOS.add(os);
-
-				jtListaItensVenda.setModel(new OrdemServicoTableModel(listaOS));
-
-				somaTotal += os.getValorTotal();
-				jlValorTotal.setText(somaTotal.toString());
+				Servico service = new Servico();
+				Orcamento orc = new Orcamento();
+				/*
+				 * (Integer.parseInt(jtfQuantidade .getText()));
+				 * service.setDescricao(((Servico) jcbServico.getSelectedItem())
+				 * .getDescricao()); Double vtotal = service.getValorUnt()
+				 * os.getOrcamento().getQuantidadeOriginal();
+				 * os.setValorTotal(vtotal);
+				 * 
+				 * orc.setServico(service); os.setOrcamento(orc);
+				 * listaOS.add(os);
+				 * 
+				 * jtListaItensVenda.setModel(new
+				 * OrdemServicoTableModel(listaOS));
+				 * 
+				 * somaTotal += os.getValorTotal();
+				 * jlValorTotal.setText(somaTotal.toString());
+				 */
 			}
 		});
 
@@ -235,15 +241,15 @@ public class OrdemServicoUI extends JInternalFrame {
 																										.addPreferredGap(
 																												ComponentPlacement.RELATED)
 																										.addComponent(
-																												jbAdicionarItem)))
-																		.addGap(186))
+																												jbAdicionarItem))))
 														.addGroup(
 																groupLayout
 																		.createSequentialGroup()
 																		.addGroup(
 																				groupLayout
 																						.createParallelGroup(
-																								Alignment.LEADING)
+																								Alignment.LEADING,
+																								false)
 																						.addComponent(
 																								jbRemoverItem,
 																								GroupLayout.DEFAULT_SIZE,
@@ -251,38 +257,33 @@ public class OrdemServicoUI extends JInternalFrame {
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								jbSalvar,
-																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
 																								147,
-																								GroupLayout.PREFERRED_SIZE))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
+																								Short.MAX_VALUE))
 																		.addGroup(
 																				groupLayout
 																						.createParallelGroup(
 																								Alignment.LEADING)
 																						.addGroup(
-																								Alignment.TRAILING,
 																								groupLayout
 																										.createSequentialGroup()
-																										.addComponent(
-																												jbLimpar,
-																												GroupLayout.PREFERRED_SIZE,
-																												135,
-																												GroupLayout.PREFERRED_SIZE)
 																										.addPreferredGap(
 																												ComponentPlacement.RELATED)
 																										.addComponent(
+																												jbLimpar,
+																												GroupLayout.PREFERRED_SIZE,
+																												140,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addGap(6)
+																										.addComponent(
 																												jbCancelar,
 																												GroupLayout.PREFERRED_SIZE,
-																												129,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addGap(251))
+																												132,
+																												GroupLayout.PREFERRED_SIZE))
 																						.addGroup(
-																								Alignment.TRAILING,
 																								groupLayout
 																										.createSequentialGroup()
+																										.addGap(293)
 																										.addComponent(
 																												jlTotalVenda)
 																										.addGap(18)
@@ -290,17 +291,13 @@ public class OrdemServicoUI extends JInternalFrame {
 																												jlValorTotal,
 																												GroupLayout.PREFERRED_SIZE,
 																												31,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addGap(152))))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				jspItensVenda,
-																				GroupLayout.PREFERRED_SIZE,
-																				542,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addContainerGap()))));
+																												GroupLayout.PREFERRED_SIZE))))
+														.addComponent(
+																jspItensVenda,
+																GroupLayout.PREFERRED_SIZE,
+																542,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(162)));
 		groupLayout
 				.setVerticalGroup(groupLayout
 						.createParallelGroup(Alignment.LEADING)
@@ -379,7 +376,7 @@ public class OrdemServicoUI extends JInternalFrame {
 														.addComponent(jbLimpar)
 														.addComponent(
 																jbCancelar))
-										.addContainerGap(15, Short.MAX_VALUE)));
+										.addContainerGap(158, Short.MAX_VALUE)));
 
 		jtListaItensVenda = new JTable();
 		jtListaItensVenda.setModel(new OrdemServicoTableModel(

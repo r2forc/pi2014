@@ -55,7 +55,7 @@ public class PrincipalUI extends JFrame {
 
 	public PrincipalUI() {
 		setResizable(false);
-		setTitle("Sistema De Vendas");
+		setTitle("R2FOrc");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 600);
 

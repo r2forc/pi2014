@@ -48,10 +48,37 @@ public class OrdemServicoDAO {
 			osRetorno = new OrdemServico();
 
 			osRetorno.setId(rs.getInt("id"));
-			osRetorno.getOrcamento().getServico()
-					.setId(rs.getInt("servico_id"));
+			osRetorno.getServico().setId(rs.getInt("servico_id"));
 			osRetorno.setStatus(rs.getInt("status"));
 			osRetorno.setData(rs.getDate("data"));
+			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
+			osRetorno.setDescricao(rs.getString("descricao"));
+
+			listaOS.add(osRetorno);
+		}
+		return listaOS;
+	}
+
+	public ArrayList<OrdemServico> showAllServicosOS()
+			throws ClassNotFoundException, SQLException {
+
+		String query = "SELECT * FROM orcamento_has_servico ORDER BY descricao ASC;";
+
+		PreparedStatement stmt = con.prepareStatement(query);
+
+		ResultSet rs = stmt.executeQuery();
+
+		OrdemServico osRetorno = null;
+		ArrayList<OrdemServico> listaOS = new ArrayList<>();
+
+		while (rs.next()) {
+
+			osRetorno = new OrdemServico();
+
+			osRetorno.setId(rs.getInt("id"));
+			osRetorno.getServico().setId(rs.getInt("servico_id"));
+			osRetorno.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
+			osRetorno.setCopias(rs.getInt("copias"));
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
 			osRetorno.setDescricao(rs.getString("descricao"));
 

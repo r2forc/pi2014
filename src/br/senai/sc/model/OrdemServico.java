@@ -3,26 +3,30 @@ package br.senai.sc.model;
 import java.util.Date;
 
 public class OrdemServico {
-	private Cliente cliente;
-	private Orcamento orcamento;
+	private Cliente cliente = new Cliente();
+	private Servico servico = new Servico();
 	private Integer id;
 	private Date data;
 	private String descricao;
 	private Double valorTotal;
+	private Integer quantidadeOriginal;
+	private Integer copias;
 	private Integer status;
 
 	public OrdemServico() {
 	}
 
-	public OrdemServico(Cliente cliente, Orcamento orcamento,
-			Integer id, Date data, String descricao, Double valorTotal,
-			Integer status) {
+	public OrdemServico(Cliente cliente, Servico servico, Integer id,
+			Date data, String descricao, Double valorTotal,
+			Integer quantidadeOriginal, Integer copias, Integer status) {
 		this.cliente = cliente;
-		this.orcamento = orcamento;
+		this.servico = servico;
 		this.id = id;
 		this.data = data;
 		this.descricao = descricao;
 		this.valorTotal = valorTotal;
+		this.quantidadeOriginal = quantidadeOriginal;
+		this.copias = copias;
 		this.status = status;
 	}
 
@@ -34,12 +38,12 @@ public class OrdemServico {
 		this.cliente = cliente;
 	}
 
-	public Orcamento getOrcamento() {
-		return orcamento;
+	public Servico getServico() {
+		return servico;
 	}
 
-	public void setOrcamento(Orcamento orcamento) {
-		this.orcamento = orcamento;
+	public void setServico(Servico servico) {
+		this.servico = servico;
 	}
 
 	public Integer getId() {
@@ -72,6 +76,22 @@ public class OrdemServico {
 
 	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	public Integer getQuantidadeOriginal() {
+		return quantidadeOriginal;
+	}
+
+	public void setQuantidadeOriginal(Integer quantidadeOriginal) {
+		this.quantidadeOriginal = quantidadeOriginal;
+	}
+
+	public Integer getCopias() {
+		return copias;
+	}
+
+	public void setCopias(Integer copias) {
+		this.copias = copias;
 	}
 
 	public Integer getStatus() {

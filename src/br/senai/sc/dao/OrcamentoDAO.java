@@ -32,7 +32,7 @@ public class OrcamentoDAO {
 	public ArrayList<Orcamento> showAllOrcamentos()
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM orcamento_has_servico ORDER BY descricao ASC;";
+		String query = "SELECT * FROM orcamento ORDER BY descricao ASC WHERE status = 1;";
 
 		PreparedStatement stmt = con.prepareStatement(query);
 
@@ -45,10 +45,10 @@ public class OrcamentoDAO {
 
 			osRetorno = new Orcamento();
 
-			osRetorno.getOrdemServico().setId(rs.getInt("orcamento_id"));
+			osRetorno.setId(rs.getInt("orcamento_id"));
+			osRetorno.setData(rs.getDate("data"));
+			osRetorno.getCliente().setId(rs.getInt("cliente_id"));
 			osRetorno.getServico().setId(rs.getInt("servico_id"));
-			osRetorno.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
-			osRetorno.setCopias(rs.getInt("copias"));
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
 
 			listaOS.add(osRetorno);

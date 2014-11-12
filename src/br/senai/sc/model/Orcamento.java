@@ -1,22 +1,41 @@
 package br.senai.sc.model;
 
-public class Orcamento {
-	private Servico servico;
-	private OrdemServico ordemServico;
+import java.util.Date;
+
+public class Orcamento extends OrdemServico {
+	private Cliente cliente = new Cliente();
+	private Servico servico = new Servico();
+	private Integer id;
+	private Date data;
+	private String descricao;
+	private Double valorTotal;
 	private Integer quantidadeOriginal;
 	private Integer copias;
-	private Double valorTotal;
+	private Integer status;
 
 	public Orcamento() {
 	}
 
-	public Orcamento(Servico servico, OrdemServico ordemServico,
-			Integer quantidadeOriginal, Integer copias, Double valorTotal) {
+	public Orcamento(Cliente cliente, Servico servico, Integer id, Date data,
+			String descricao, Double valorTotal, Integer quantidadeOriginal,
+			Integer copias, Integer status) {
+		this.cliente = cliente;
 		this.servico = servico;
-		this.ordemServico = ordemServico;
+		this.id = id;
+		this.data = data;
+		this.descricao = descricao;
+		this.valorTotal = valorTotal;
 		this.quantidadeOriginal = quantidadeOriginal;
 		this.copias = copias;
-		this.valorTotal = valorTotal;
+		this.status = status;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public Servico getServico() {
@@ -27,12 +46,36 @@ public class Orcamento {
 		this.servico = servico;
 	}
 
-	public OrdemServico getOrdemServico() {
-		return ordemServico;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setOrdemServico(OrdemServico ordemServico) {
-		this.ordemServico = ordemServico;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	public Integer getQuantidadeOriginal() {
@@ -51,11 +94,11 @@ public class Orcamento {
 		this.copias = copias;
 	}
 
-	public Double getValorTotal() {
-		return valorTotal;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setValorTotal(Double valorTotal) {
-		this.valorTotal = valorTotal;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

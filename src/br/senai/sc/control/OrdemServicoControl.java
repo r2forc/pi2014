@@ -12,43 +12,47 @@ public class OrdemServicoControl {
 
 	public void insertOrdemServico(OrdemServico os) {
 		if (os.getId() == null) {
-			JOptionPane.showMessageDialog(null, "ID ORCAMENTO Obrigatorio!");
-		} else if (os.getCliente().getId() == null) {
-			JOptionPane.showMessageDialog(null,
-					"ID ORDEM DE SERVICO Obrigatorio!");
-		} else if (os.getOrcamento().getServico().getId().equals("")) {
-			JOptionPane.showMessageDialog(null, "ID SERVIÇO Obrigatorio!");
-		} else if (os.getDescricao().equals("")) {
-			JOptionPane.showMessageDialog(null, "E-MAIL CLIENTE Obrigatorio!");
+			print("ID ORCAMENTO Obrigatorio!");
 		} else if (os.getData() == null) {
-			JOptionPane.showMessageDialog(null, "DATA ORÇAMENTO Obrigatorio!");
+			print("DATA Obrigatoria!");
+		} else if (os.getServico().getId() == null) {
+			print("ID SERVIÇO Obrigatorio!");
+		} else if (os.getCliente().getId() == null) {
+			print("ID CLIENTE Obrigatorio!");
+		} else if (os.getDescricao().equals("")) {
+			print("DESCRICAO Obrigatorio!");
+		} else if (os.getQuantidadeOriginal() == null) {
+			print("QUANTIDADE ORIGINAL Obrigatorio!");
+		} else if (os.getCopias() == null) {
+			print("COPIAS Obrigatorio!");
 		} else if (os.getValorTotal() == null) {
-			JOptionPane.showMessageDialog(null,
-					"VALOR TOTAL ORÇAMENTO Obrigatorio!");
+			print("VALOR TOTAL Obrigatorio!");
 		} else if (os.getStatus() == null) {
-			JOptionPane
-					.showMessageDialog(null, "STATUS ORÇAMENTO Obrigatorio!");
+			print("VALOR TOTAL Obrigatorio!");
 		} else {
 			OrdemServicoDAO.getInstace().insertOrdemServico(os);
 		}
 	}
 
 	public void editOrdemServico(OrdemServico os) {
-		if (os.getCliente().getId() == null) {
-			JOptionPane.showMessageDialog(null,
-					"ID ORDEM DE SERVICO Obrigatorio!");
-		} else if (os.getOrcamento().getServico().getId().equals("")) {
-			JOptionPane.showMessageDialog(null, "ID SERVICO Obrigatorio!");
-		} else if (os.getDescricao().equals("")) {
-			JOptionPane.showMessageDialog(null, "DESCRICAO Obrigatorio!");
+		if (os.getId() == null) {
+			print("ID ORCAMENTO Obrigatorio!");
 		} else if (os.getData() == null) {
-			JOptionPane.showMessageDialog(null, "DATA ORÇAMENTO Obrigatorio!");
+			print("DATA Obrigatoria!");
+		} else if (os.getServico().getId() == null) {
+			print("ID SERVIÇO Obrigatorio!");
+		} else if (os.getCliente().getId() == null) {
+			print("ID CLIENTE Obrigatorio!");
+		} else if (os.getDescricao().equals("")) {
+			print("DESCRICAO Obrigatorio!");
+		} else if (os.getQuantidadeOriginal() == null) {
+			print("QUANTIDADE ORIGINAL Obrigatorio!");
+		} else if (os.getCopias() == null) {
+			print("COPIAS Obrigatorio!");
 		} else if (os.getValorTotal() == null) {
-			JOptionPane.showMessageDialog(null,
-					"VALOR TOTAL ORÇAMENTO Obrigatorio!");
+			print("VALOR TOTAL Obrigatorio!");
 		} else if (os.getStatus() == null) {
-			JOptionPane
-					.showMessageDialog(null, "STATUS ORÇAMENTO Obrigatorio!");
+			print("VALOR TOTAL Obrigatorio!");
 		} else {
 			OrdemServicoDAO.getInstace().editOrdemServico(os);
 		}
@@ -61,5 +65,10 @@ public class OrdemServicoControl {
 	public ArrayList<OrdemServico> showAllOrdemServico()
 			throws ClassNotFoundException, SQLException {
 		return OrdemServicoDAO.getInstace().showAllOrdemServicos();
+	}
+
+	public static String print(String msg) {
+		JOptionPane.showMessageDialog(null, msg);
+		return msg;
 	}
 }
