@@ -11,6 +11,7 @@ public class PrincipalTestaCliente {
 	/**
 	 * @wbp.parser.entryPoint
 	 */
+	// testando
 	public static void main(String args[]) throws SQLException,
 			ClassNotFoundException {
 		Cliente cInsert = new Cliente();
