@@ -132,8 +132,8 @@ public class PrincipalUI extends JFrame {
 		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
 
-		JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
-		mntmCadastrarCliente.addActionListener(new ActionListener() {
+		JMenuItem mntmConsultarClientes = new JMenuItem("Consultar Clientes");
+		mntmConsultarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaClientesUI cc = new ConsultaClientesUI();
 				;
@@ -149,7 +149,7 @@ public class PrincipalUI extends JFrame {
 				}
 			}
 		});
-		mnClientes.add(mntmCadastrarCliente);
+		mnClientes.add(mntmConsultarClientes);
 
 		JMenu mnSair = new JMenu("Sair");
 		menuBar.add(mnSair);
