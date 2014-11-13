@@ -58,6 +58,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaServicosUI() {
+		setClosable(true);
 		setTitle("Consultar Servi\u00E7os");
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);

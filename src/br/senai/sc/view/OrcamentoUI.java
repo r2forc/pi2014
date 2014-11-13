@@ -41,6 +41,7 @@ public class OrcamentoUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public OrcamentoUI() {
+		setClosable(true);
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		setTitle("Gerar Or\u00E7amento");

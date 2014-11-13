@@ -67,6 +67,7 @@ public class OrdemServicoUI extends JInternalFrame {
 	 */
 
 	public OrdemServicoUI() throws ClassNotFoundException, SQLException {
+		setClosable(true);
 		setBackground(SystemColor.inactiveCaption);
 		setRootPaneCheckingEnabled(false);
 		setEnabled(false);

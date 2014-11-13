@@ -45,6 +45,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public RelatorioPorStatusUI() {
+		setClosable(true);
 		setTitle("Relatorio por Status");
 		setBorder(null);
 		setBackground(SystemColor.inactiveCaption);
