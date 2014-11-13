@@ -27,6 +27,7 @@ import br.senai.sc.utils.ClienteTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.DefaultComboBoxModel;
 
 public class ConsultaClientesUI extends JInternalFrame {
@@ -64,8 +65,47 @@ public class ConsultaClientesUI extends JInternalFrame {
 		panel.setBackground(SystemColor.inactiveCaption);
 		
 		JButton btnNovo = new JButton("Novo");
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CadastrarEditarCliente cec = new CadastrarEditarCliente(null);
+				try {
+					
+					cec.setFocusable(true);
+					cec.moveToFront();
+					getContentPane().add(cec, 0);
+					cec.requestFocus();
+					cec.setVisible(true);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Cliente cli = null;
+				try {
+					cli = (Cliente) new ClienteTableModel(
+							new ClienteControl().showAllClientes())
+								.get(jtConsultaCliente.getSelectedRow());
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				CadastrarEditarCliente cec = new CadastrarEditarCliente(cli);
+				PrincipalUI.obterInstancia().getContentPane().add(cec);
+				cec.setFocusable(true);
+				cec.moveToFront();
+				getContentPane().add(cec, 0);
+				cec.requestFocus();
+				
+				cec.setVisible(true);
+				
+			}
+		});
 		
 		JButton btnNewButton = new JButton("Exluir");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -109,6 +149,19 @@ public class ConsultaClientesUI extends JInternalFrame {
 		});
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JButton jbAtualizar = new JButton("Atualizar");
+		jbAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					jtConsultaCliente.setModel(new ClienteTableModel( 
+							new ClienteControl().showAllClientes() ) );
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -123,7 +176,9 @@ public class ConsultaClientesUI extends JInternalFrame {
 							.addGap(47)
 							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
 							.addGap(44)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addGap(35)
+							.addComponent(jbAtualizar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1171, GroupLayout.PREFERRED_SIZE)))
@@ -140,7 +195,8 @@ public class ConsultaClientesUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNovo)
 						.addComponent(btnAlterar)
-						.addComponent(btnNewButton))
+						.addComponent(btnNewButton)
+						.addComponent(jbAtualizar))
 					.addGap(69))
 		);
 		
@@ -176,6 +232,11 @@ public class ConsultaClientesUI extends JInternalFrame {
 		JLabel lblTipoFiltro = new JLabel("Tipo filtro");
 		
 		final JComboBox jcbTipoFiltro = new JComboBox();
+		jcbTipoFiltro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				jtfFiltro.setText(null);
+			}
+		});
 		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "CPF", "Email", "Telefone"}));
 		
 		
