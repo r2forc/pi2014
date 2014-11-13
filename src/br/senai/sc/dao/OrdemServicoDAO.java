@@ -14,6 +14,7 @@ public class OrdemServicoDAO {
 
 	private static OrdemServicoDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
+	ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
 
 	public static OrdemServicoDAO getInstace() {
 		if (instance == null) {
@@ -22,44 +23,68 @@ public class OrdemServicoDAO {
 		return instance;
 	}
 
-	public void insertOrdemServico(OrdemServico os) {
+	public void insertOrdemServico(OrdemServico os)
+			throws ClassNotFoundException, SQLException {
+		try {
+			String query = "INSERT INTO orcamento_has_servico "
+					+ "(orcamento_id, servico_id, quantidadeOriginal, copias, valorTotal) "
+					+ "values (?, ?, ?, ?, ?)";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, 1);
+			stmt.setInt(2, os.getServico().getId());
+			stmt.setInt(3, os.getQuantidadeOriginal());
+			stmt.setInt(4, os.getCopias());
+			stmt.setDouble(5, os.getValorTotal());
+			stmt.execute();
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
 	}
 
 	public void editOrdemServico(OrdemServico os) {
 	}
 
-	public void deleteOrdemServico(OrdemServico os) {
+	public void deleteServicoOrdemServico(OrdemServico os) {
+		this.listaOS.remove(verificaExistencia(os));
 	}
 
-	public ArrayList<OrdemServico> showAllOrdemServicos()
+	public ArrayList<OrdemServico> showItensServicoOrdemServicos()
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM orcamento ORDER BY descricao ASC;";
-
+		String query = "SELECT * FROM orcamento orc JOIN orcamento_has_servico ohs"
+				+ " ON orc.id = ohs.orcamento_id JOIN servico s ON s.id = ohs.servico_id"
+				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = 1";
+		System.out.println(query);
 		PreparedStatement stmt = con.prepareStatement(query);
-
+		// stmt.setInt(1, os.getId());
 		ResultSet rs = stmt.executeQuery();
-
+		System.out.println(query);
 		OrdemServico osRetorno = null;
 		ArrayList<OrdemServico> listaOS = new ArrayList<>();
 
 		while (rs.next()) {
 
 			osRetorno = new OrdemServico();
-
 			osRetorno.setId(rs.getInt("id"));
-			osRetorno.getServico().setId(rs.getInt("servico_id"));
-			osRetorno.setStatus(rs.getInt("status"));
 			osRetorno.setData(rs.getDate("data"));
+			osRetorno.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
+			osRetorno.setCopias(rs.getInt("copias"));
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
-			osRetorno.setDescricao(rs.getString("descricao"));
+			osRetorno.setStatus(rs.getInt("status"));
+			// recupera valorUnt e Descricao do Servico.
+			osRetorno.getServico().setValorUnt(rs.getDouble("valorUnt"));
+			osRetorno.getServico().setDescricao(rs.getString("descricao"));
+			// recuper nome Cliente
+			osRetorno.getCliente().setNome(rs.getString("nome"));
 
 			listaOS.add(osRetorno);
 		}
 		return listaOS;
 	}
 
-	public ArrayList<OrdemServico> showAllServicosOS()
+	public ArrayList<OrdemServico> showOrdemServicos()
 			throws ClassNotFoundException, SQLException {
 
 		String query = "SELECT * FROM orcamento_has_servico ORDER BY descricao ASC;";
@@ -76,14 +101,22 @@ public class OrdemServicoDAO {
 			osRetorno = new OrdemServico();
 
 			osRetorno.setId(rs.getInt("id"));
-			osRetorno.getServico().setId(rs.getInt("servico_id"));
-			osRetorno.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
-			osRetorno.setCopias(rs.getInt("copias"));
+			osRetorno.setData(rs.getDate("data"));
+			osRetorno.getCliente().setNome("nome");
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
-			osRetorno.setDescricao(rs.getString("descricao"));
+			osRetorno.setStatus(rs.getInt("status"));
 
 			listaOS.add(osRetorno);
 		}
 		return listaOS;
+	}
+
+	public Integer verificaExistencia(OrdemServico os) {
+		for (int i = 0; i < listaOS.size(); i++) {
+			if (os.getServico().getId() == (this.listaOS.get(i).getId())) {
+				return i;
+			}
+		}
+		return null;
 	}
 }

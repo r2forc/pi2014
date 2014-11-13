@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import br.senai.sc.model.ConnectionUtil;
 import br.senai.sc.model.Orcamento;
+import br.senai.sc.model.OrdemServico;
 
 public class OrcamentoDAO {
 	private static OrcamentoDAO instance;
@@ -54,5 +55,8 @@ public class OrcamentoDAO {
 			listaOS.add(osRetorno);
 		}
 		return listaOS;
+	}
+
+	public void excluir(OrdemServico produto) {
 	}
 }

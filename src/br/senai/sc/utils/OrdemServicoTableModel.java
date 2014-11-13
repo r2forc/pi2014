@@ -13,13 +13,14 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 */
 	private static final long serialVersionUID = 1L;
 	private static final int COL_DESCRICAO = 0;
-	private static final int COL_VALORUNITARIO = 1;
-	private static final int COL_QUANTIDADE = 2;
-	private static final int COL_VALORTOTAL = 3;
+	private static final int COL_VALORUNT = 1;
+	private static final int COL_QUANTIDADEORIGINAL = 2;
+	private static final int COL_COPIAS = 3;
+	private static final int COL_VALORTOTAL = 4;
 
 	private List<OrdemServico> valores;
 
-	// Esse é um construtor, que recebe a nossa lista de clientes
+	// Esse é um construtor, que recebe a nossa lista de servicos
 	public OrdemServicoTableModel(List<OrdemServico> valores) {
 		this.valores = new ArrayList<OrdemServico>(valores);
 	}
@@ -31,17 +32,19 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 
 	public int getColumnCount() {
 		// Quantas colunas tem a tabela? Nesse exemplo, só 2.
-		return 4;
+		return 5;
 	}
 
 	public String getColumnName(int column) {
 		// Qual é o nome das nossas colunas?
 		if (column == COL_DESCRICAO)
-			return "Descrição";
-		if (column == COL_VALORUNITARIO)
+			return "Descricao";
+		if (column == COL_VALORUNT)
 			return "Valor Unitário";
-		if (column == COL_QUANTIDADE)
+		if (column == COL_QUANTIDADEORIGINAL)
 			return "Quantidade Original";
+		if (column == COL_COPIAS)
+			return "Cópias";
 		if (column == COL_VALORTOTAL)
 			return "Valor Total";
 		return ""; // Nunca deve ocorrer
@@ -52,30 +55,32 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 		OrdemServico os = valores.get(row);
 		if (column == COL_DESCRICAO)
 			return os.getServico().getDescricao();
-		else if (column == COL_VALORUNITARIO)
+		else if (column == COL_VALORUNT)
 			return os.getServico().getValorUnt();
-		else if (column == COL_QUANTIDADE)
+		else if (column == COL_QUANTIDADEORIGINAL)
 			return os.getQuantidadeOriginal();
+		else if (column == COL_COPIAS)
+			return os.getCopias();
 		else if (column == COL_VALORTOTAL)
-			return os.getValorTotal();
+			return os.getServico().getValorUnt();
 		return ""; // Nunca deve ocorrer
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		OrdemServico orcamento = valores.get(rowIndex);
+		OrdemServico os = valores.get(rowIndex);
 		// Vamos alterar o valor da coluna columnIndex na linha rowIndex com o
 		// valor aValue passado no parâmetro.
 		// Note que vc poderia alterar 2 campos ao invés de um só.
 		if (columnIndex == COL_DESCRICAO)
-			orcamento.getServico().setDescricao(aValue.toString());
-		else if (columnIndex == COL_VALORUNITARIO)
-			orcamento.getServico().setValorUnt(
-					Double.parseDouble(aValue.toString()));
-		else if (columnIndex == COL_QUANTIDADE)
-			orcamento
-					.setQuantidadeOriginal(Integer.parseInt(aValue.toString()));
+			os.getServico().setDescricao(aValue.toString());
+		else if (columnIndex == COL_VALORUNT)
+			os.getServico().setValorUnt(Double.parseDouble(aValue.toString()));
+		else if (columnIndex == COL_QUANTIDADEORIGINAL)
+			os.setQuantidadeOriginal(Integer.parseInt(aValue.toString()));
+		else if (columnIndex == COL_COPIAS)
+			os.setCopias(Integer.parseInt(aValue.toString()));
 		else if (columnIndex == COL_VALORTOTAL)
-			orcamento.setValorTotal(Double.parseDouble(aValue.toString()));
+			os.setValorTotal(Double.parseDouble(aValue.toString()));
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
@@ -90,8 +95,8 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 		return true;
 	}
 
-	// Já que esse tableModel é de clientes, vamos fazer um get que retorne um
-	// objeto cliente inteiro.
+	// Já que esse tableModel é de servicos, vamos fazer um get que retorne um
+	// objeto servico inteiro.
 	// Isso elimina a necessidade de chamar o getValueAt() nas telas.
 	public OrdemServico get(int row) {
 		return valores.get(row);
