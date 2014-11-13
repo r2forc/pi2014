@@ -13,8 +13,12 @@ public class ServicoControl {
 			SQLException {
 		return ServicoDAO.getInstace().showAllServicos();
 	}
-	public ArrayList<Servico> showFilterServicos(String column, String value)
+	public ArrayList<Servico> showFilterServicos(String value)
 			throws ClassNotFoundException, SQLException {
-		return ServicoDAO.getInstace().showFilterServicos(column, value);
+		return ServicoDAO.getInstace().showFilterServicos(value);
+	}
+	
+	public void deleteServico(Integer id) throws SQLException {
+		ServicoDAO.getInstace().deleteServico(id);
 	}
 }

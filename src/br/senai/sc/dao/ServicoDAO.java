@@ -93,10 +93,10 @@ public class ServicoDAO {
 		return listaServicos;
 	}
 
-	public ArrayList<Servico> showFilterServicos(String column, String value)
+	public ArrayList<Servico> showFilterServicos(String value)
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM Servico WHERE " + column + " LIKE '%"
+		String query = "SELECT * FROM Servico WHERE descricao LIKE '%"
 				+ value + "%' ORDER BY descricao ASC;";
 
 		PreparedStatement stmt = con.prepareStatement(query);
