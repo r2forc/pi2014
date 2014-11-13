@@ -3,10 +3,16 @@ package br.senai.sc.view;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
+
 import java.awt.Color;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
 import java.awt.SystemColor;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
@@ -21,10 +27,14 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 
-public class RelatorioPorStatusUI extends JInternalFrame {
-	private JTextField jtfSelecaoCliente;
-	private JTable jtTabelaStatus;
+import br.senai.sc.control.ClienteControl;
+import br.senai.sc.model.Cliente;
 
+public class RelatorioPorStatusUI extends JInternalFrame {
+	private JTable jtTabelaStatus;
+	private ArrayList<Cliente> listaClientes;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -43,8 +53,10 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public RelatorioPorStatusUI() {
+	public RelatorioPorStatusUI() throws ClassNotFoundException, SQLException {
 		setClosable(true);
 		setTitle("Relatorio por Status");
 		setBorder(null);
@@ -71,11 +83,6 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 551,
 								Short.MAX_VALUE).addContainerGap()));
 
-		jtfSelecaoCliente = new JTextField();
-		jtfSelecaoCliente.setForeground(SystemColor.windowBorder);
-		jtfSelecaoCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		jtfSelecaoCliente.setColumns(10);
-
 		JComboBox jcbStatus = new JComboBox();
 		jcbStatus.setForeground(SystemColor.windowBorder);
 		jcbStatus.setModel(new DefaultComboBoxModel(new String[] { "Status" }));
@@ -89,93 +96,56 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		JButton btnImprimir = new JButton("Imprimir");
 
 		JLabel lblNewLabel = new JLabel("Cliente:");
+		
+		//COMBO BOX CLIENTE
+		JComboBox jcbCliente = new JComboBox();
+		listaClientes = new ClienteControl().showAllClientes();
+		jcbCliente = new JComboBox<Cliente>();
+		DefaultComboBoxModel<Cliente> modelCliente = new DefaultComboBoxModel<Cliente>();
+		for (Cliente cliente : listaClientes) {
+			modelCliente.addElement(cliente);
+		}
+		jcbCliente.setModel(modelCliente);
+		
+		
+		
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addComponent(
-																						scrollPane,
-																						GroupLayout.DEFAULT_SIZE,
-																						948,
-																						Short.MAX_VALUE)
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addComponent(
-																										lblNewLabel)
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										jtfSelecaoCliente,
-																										GroupLayout.PREFERRED_SIZE,
-																										402,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addGap(54)
-																								.addComponent(
-																										lblStatus)
-																								.addPreferredGap(
-																										ComponentPlacement.UNRELATED)
-																								.addComponent(
-																										jcbStatus,
-																										0,
-																										281,
-																										Short.MAX_VALUE)
-																								.addPreferredGap(
-																										ComponentPlacement.UNRELATED)
-																								.addComponent(
-																										btnPesquisar,
-																										GroupLayout.PREFERRED_SIZE,
-																										106,
-																										GroupLayout.PREFERRED_SIZE)))
-																.addContainerGap())
-												.addGroup(
-														Alignment.TRAILING,
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		btnImprimir,
-																		GroupLayout.PREFERRED_SIZE,
-																		125,
-																		GroupLayout.PREFERRED_SIZE)
-																.addContainerGap()))));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														jtfSelecaoCliente,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(btnPesquisar)
-												.addComponent(
-														jcbStatus,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblStatus)
-												.addComponent(lblNewLabel))
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(scrollPane,
-										GroupLayout.PREFERRED_SIZE,
-										GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnImprimir,
-										GroupLayout.PREFERRED_SIZE, 46,
-										GroupLayout.PREFERRED_SIZE).addGap(32)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addComponent(lblNewLabel)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jcbCliente, GroupLayout.PREFERRED_SIZE, 438, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblStatus)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(jcbStatus, 0, 290, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnImprimir, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnPesquisar)
+						.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblStatus)
+						.addComponent(lblNewLabel)
+						.addComponent(jcbCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnImprimir, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+					.addGap(32))
+		);
 
 		jtTabelaStatus = new JTable();
 		jtTabelaStatus.setModel(new DefaultTableModel(new Object[][] {
