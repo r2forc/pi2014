@@ -28,7 +28,6 @@ public class ServicoDAO {
 			stmt.setString(1, servico.getDescricao());
 			stmt.setDouble(2, servico.getValorUnt());
 			stmt.execute();
-			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();
@@ -45,7 +44,6 @@ public class ServicoDAO {
 			stmt.setDouble(2, servico.getValorUnt());
 			stmt.setInt(3, servico.getId());
 			stmt.executeUpdate();
-			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();
@@ -93,10 +91,10 @@ public class ServicoDAO {
 		return listaServicos;
 	}
 
-	public ArrayList<Servico> showFilterServicos(String column, String value)
+	public ArrayList<Servico> showFilterServicos(String value)
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM Servico WHERE " + column + " LIKE '%"
+		String query = "SELECT * FROM Servico WHERE descricao LIKE '%"
 				+ value + "%' ORDER BY descricao ASC;";
 
 		PreparedStatement stmt = con.prepareStatement(query);

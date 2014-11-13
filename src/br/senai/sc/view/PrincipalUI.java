@@ -93,7 +93,7 @@ public class PrincipalUI extends JFrame {
 					orcamento = new OrcamentoUI();
 					orcamento.setVisible(true);
 					orcamento.setFocusable(true);
-					orcamento.requestFocus();
+					
 					getContentPane().add(orcamento, 0);
 					getContentPane().add(orcamento);
 				} catch (Exception e) {
@@ -136,7 +136,6 @@ public class PrincipalUI extends JFrame {
 		mntmConsultarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaClientesUI cc = new ConsultaClientesUI();
-				;
 				try {
 					cc.setVisible(true);
 					cc.setFocusable(true);
@@ -150,7 +149,29 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnClientes.add(mntmConsultarClientes);
-
+		
+		JMenu mnServios = new JMenu("Servi\u00E7os");
+		menuBar.add(mnServios);
+		
+		JMenuItem jmiConsultarServicos = new JMenuItem("Consultar Servi\u00E7os");
+		jmiConsultarServicos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConsultaServicosUI cs = new ConsultaServicosUI();
+				;
+				try {
+					cs.setVisible(true);
+					cs.setFocusable(true);
+					cs.requestFocus();
+					getContentPane().add(cs, 0);
+					getContentPane().add(cs);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		mnServios.add(jmiConsultarServicos);
+		
 		JMenu mnSair = new JMenu("Sair");
 		menuBar.add(mnSair);
 		contentPane = new JPanel();
