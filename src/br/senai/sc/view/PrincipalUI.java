@@ -93,7 +93,7 @@ public class PrincipalUI extends JFrame {
 					orcamento = new OrcamentoUI();
 					orcamento.setVisible(true);
 					orcamento.setFocusable(true);
-					orcamento.requestFocus();
+					
 					getContentPane().add(orcamento, 0);
 					getContentPane().add(orcamento);
 				} catch (Exception e) {
@@ -136,7 +136,6 @@ public class PrincipalUI extends JFrame {
 		mntmConsultarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaClientesUI cc = new ConsultaClientesUI();
-				;
 				try {
 					cc.setVisible(true);
 					cc.setFocusable(true);
