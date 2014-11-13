@@ -30,6 +30,7 @@ import br.senai.sc.utils.ServicoTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.DefaultComboBoxModel;
 
 public class ConsultaServicosUI extends JInternalFrame {
@@ -67,8 +68,45 @@ public class ConsultaServicosUI extends JInternalFrame {
 		panel.setBackground(SystemColor.inactiveCaption);
 		
 		JButton btnNovo = new JButton("Novo");
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CadastrarEditarServico ces = new CadastrarEditarServico(null);
+				try {
+					ces.setFocusable(true);
+					ces.moveToFront();
+					getContentPane().add(ces, 0);
+					ces.requestFocus();
+					ces.setVisible(true);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Servico serv = null;
+				try {
+					serv = (Servico) new ServicoTableModel(
+							new ServicoControl().showAllServicos())
+								.get(jtConsultaServico.getSelectedRow());
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				CadastrarEditarServico ces = new CadastrarEditarServico(serv);
+				PrincipalUI.obterInstancia().getContentPane().add(ces);
+				ces.setFocusable(true);
+				ces.moveToFront();
+				getContentPane().add(ces, 0);
+				ces.requestFocus();
+				ces.setVisible(true);
+				
+			}
+		});
 		
 		JButton btnNewButton = new JButton("Exluir");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -111,7 +149,21 @@ public class ConsultaServicosUI extends JInternalFrame {
 			}
 		});
 		
+		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					jtConsultaServico.setModel(new ServicoTableModel( 
+							new ServicoControl().showAllServicos() ) );
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -121,15 +173,17 @@ public class ConsultaServicosUI extends JInternalFrame {
 							.addContainerGap()
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1175, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1171, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(32)
 							.addComponent(btnNovo, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
 							.addGap(47)
 							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
 							.addGap(44)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1171, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addGap(31)
+							.addComponent(btnAtualizar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -143,7 +197,8 @@ public class ConsultaServicosUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNovo)
 						.addComponent(btnAlterar)
-						.addComponent(btnNewButton))
+						.addComponent(btnNewButton)
+						.addComponent(btnAtualizar))
 					.addGap(69))
 		);
 		

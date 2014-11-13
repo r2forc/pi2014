@@ -28,7 +28,6 @@ public class ServicoDAO {
 			stmt.setString(1, servico.getDescricao());
 			stmt.setDouble(2, servico.getValorUnt());
 			stmt.execute();
-			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();
@@ -45,7 +44,6 @@ public class ServicoDAO {
 			stmt.setDouble(2, servico.getValorUnt());
 			stmt.setInt(3, servico.getId());
 			stmt.executeUpdate();
-			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();

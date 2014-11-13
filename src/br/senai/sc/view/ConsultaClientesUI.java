@@ -101,7 +101,6 @@ public class ConsultaClientesUI extends JInternalFrame {
 				cec.moveToFront();
 				getContentPane().add(cec, 0);
 				cec.requestFocus();
-				
 				cec.setVisible(true);
 				
 			}
