@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.ConnectionUtil;
 
@@ -31,7 +33,6 @@ public class ClienteDAO {
 			stmt.setString(3, cliente.getEmail());
 			stmt.setString(4, cliente.getTelefone());
 			stmt.execute();
-			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();
@@ -50,7 +51,6 @@ public class ClienteDAO {
 			stmt.setString(4, cliente.getTelefone());
 			stmt.setInt(5, cliente.getId());
 			stmt.executeUpdate();
-			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();
@@ -105,7 +105,7 @@ public class ClienteDAO {
 
 		String query = "SELECT * FROM CLIENTE WHERE " + column + " LIKE '%"
 				+ value + "%' ORDER BY nome ASC;";
-
+		
 		PreparedStatement stmt = con.prepareStatement(query);
 
 		ResultSet rs = stmt.executeQuery();
