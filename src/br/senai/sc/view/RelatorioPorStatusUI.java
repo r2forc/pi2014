@@ -33,6 +33,7 @@ import br.senai.sc.model.Cliente;
 public class RelatorioPorStatusUI extends JInternalFrame {
 	private JTable jtTabelaStatus;
 	private ArrayList<Cliente> listaClientes;
+	private JComboBox jcbCliente_1;
 	
 	
 	/**
@@ -61,7 +62,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		setTitle("Relatorio por Status");
 		setBorder(null);
 		setBackground(SystemColor.inactiveCaption);
-		setBounds(0, 0, 1000, 600);
+		setBounds(0, 0, 1200, 600);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(SystemColor.inactiveCaption);
@@ -100,12 +101,12 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		//COMBO BOX CLIENTE
 		JComboBox jcbCliente = new JComboBox();
 		listaClientes = new ClienteControl().showAllClientes();
-		jcbCliente = new JComboBox<Cliente>();
+		jcbCliente_1 = new JComboBox<Cliente>();
 		DefaultComboBoxModel<Cliente> modelCliente = new DefaultComboBoxModel<Cliente>();
 		for (Cliente cliente : listaClientes) {
 			modelCliente.addElement(cliente);
 		}
-		jcbCliente.setModel(modelCliente);
+		jcbCliente_1.setModel(modelCliente);
 		
 		
 		
@@ -115,19 +116,19 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1148, Short.MAX_VALUE)
+						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblNewLabel)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jcbCliente, GroupLayout.PREFERRED_SIZE, 438, GroupLayout.PREFERRED_SIZE)
+							.addComponent(jcbCliente_1, GroupLayout.PREFERRED_SIZE, 438, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(lblStatus)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(jcbStatus, 0, 290, Short.MAX_VALUE)
+							.addComponent(jcbStatus, 0, 490, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnImprimir, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnImprimir, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -139,12 +140,12 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 						.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblStatus)
 						.addComponent(lblNewLabel)
-						.addComponent(jcbCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jcbCliente_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 385, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnImprimir, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-					.addGap(32))
+					.addGap(46))
 		);
 
 		jtTabelaStatus = new JTable();
