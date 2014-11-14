@@ -103,6 +103,25 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnVendas.add(mntmGerarOramento);
+		
+		JMenuItem mntmConsultaOrdemDe = new JMenuItem("Consulta Ordem de Servi\u00E7o");
+		mntmConsultaOrdemDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConsultaOrdemServicoUI ConsultaOS;
+				try {
+					ConsultaOS = new ConsultaOrdemServicoUI();
+					ConsultaOS.setVisible(true);
+					ConsultaOS.setFocusable(true);
+					
+					getContentPane().add(ConsultaOS, 0);
+					getContentPane().add(ConsultaOS);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		mnVendas.add(mntmConsultaOrdemDe);
 
 		JMenu mnRelatrios = new JMenu("Relat\u00F3rios");
 		menuBar.add(mnRelatrios);

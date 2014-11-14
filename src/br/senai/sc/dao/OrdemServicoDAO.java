@@ -60,7 +60,6 @@ public class OrdemServicoDAO {
 		PreparedStatement stmt = con.prepareStatement(query);
 		// stmt.setInt(1, os.getId());
 		ResultSet rs = stmt.executeQuery();
-		System.out.println(query);
 		OrdemServico osRetorno = null;
 		ArrayList<OrdemServico> listaOS = new ArrayList<>();
 
@@ -87,7 +86,35 @@ public class OrdemServicoDAO {
 	public ArrayList<OrdemServico> showOrdemServicos()
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM orcamento_has_servico ORDER BY descricao ASC;";
+		String query = "SELECT * FROM orcamento orc join cliente cli on cli.id = orc.id;";
+
+		PreparedStatement stmt = con.prepareStatement(query);
+
+		ResultSet rs = stmt.executeQuery();
+
+		OrdemServico osRetorno = null;
+		ArrayList<OrdemServico> listaOS = new ArrayList<>();
+
+		while (rs.next()) {
+
+			osRetorno = new OrdemServico();
+
+			osRetorno.setId(rs.getInt("id"));
+			osRetorno.setData(rs.getDate("data"));
+			osRetorno.getCliente().setNome(rs.getString("nome"));
+			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
+			osRetorno.setStatus(rs.getInt("status"));
+
+			listaOS.add(osRetorno);
+		}
+		return listaOS;
+	}
+
+	public ArrayList<OrdemServico> showFilterOrdemServico(String column,
+			String value) throws ClassNotFoundException, SQLException {
+
+		String query = "SELECT * FROM orcamento orc join cliente cli on cli.id = orc.id where "
+				+ column + " LIKE '%" + value + "%';";
 
 		PreparedStatement stmt = con.prepareStatement(query);
 

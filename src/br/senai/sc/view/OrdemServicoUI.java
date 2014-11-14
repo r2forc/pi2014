@@ -271,176 +271,77 @@ public class OrdemServicoUI extends JInternalFrame {
 				}
 			}
 		});
-
-		JButton btnNewButton = new JButton("New button");
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		jspItensVenda,
-																		GroupLayout.PREFERRED_SIZE,
-																		1149,
-																		GroupLayout.PREFERRED_SIZE)
-																.addContainerGap())
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addGroup(
-																										gl_panel.createParallelGroup(
-																												Alignment.LEADING)
-																												.addGroup(
-																														gl_panel.createSequentialGroup()
-																																.addGroup(
-																																		gl_panel.createParallelGroup(
-																																				Alignment.TRAILING)
-																																				.addComponent(
-																																						lblCopias)
-																																				.addComponent(
-																																						lblServico))
-																																.addPreferredGap(
-																																		ComponentPlacement.RELATED)
-																																.addGroup(
-																																		gl_panel.createParallelGroup(
-																																				Alignment.LEADING)
-																																				.addGroup(
-																																						gl_panel.createSequentialGroup()
-																																								.addComponent(
-																																										jtfCopias,
-																																										GroupLayout.PREFERRED_SIZE,
-																																										GroupLayout.DEFAULT_SIZE,
-																																										GroupLayout.PREFERRED_SIZE)
-																																								.addPreferredGap(
-																																										ComponentPlacement.RELATED)
-																																								.addComponent(
-																																										lblQuantidade)
-																																								.addPreferredGap(
-																																										ComponentPlacement.RELATED)
-																																								.addComponent(
-																																										jtfQuantidade,
-																																										GroupLayout.PREFERRED_SIZE,
-																																										GroupLayout.DEFAULT_SIZE,
-																																										GroupLayout.PREFERRED_SIZE))
-																																				.addComponent(
-																																						jbAdicionarItem,
-																																						GroupLayout.DEFAULT_SIZE,
-																																						279,
-																																						Short.MAX_VALUE)
-																																				.addComponent(
-																																						jcbServico,
-																																						0,
-																																						279,
-																																						Short.MAX_VALUE))
-																																.addGap(839))
-																												.addGroup(
-																														gl_panel.createSequentialGroup()
-																																.addGap(12)
-																																.addComponent(
-																																		lblCliente)
-																																.addPreferredGap(
-																																		ComponentPlacement.RELATED)
-																																.addComponent(
-																																		jtfCliente,
-																																		GroupLayout.PREFERRED_SIZE,
-																																		978,
-																																		GroupLayout.PREFERRED_SIZE)
-																																.addPreferredGap(
-																																		ComponentPlacement.RELATED)
-																																.addComponent(
-																																		btnNewButton,
-																																		GroupLayout.PREFERRED_SIZE,
-																																		97,
-																																		GroupLayout.PREFERRED_SIZE)))
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED))
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addComponent(
-																										jbRemoverItem,
-																										GroupLayout.PREFERRED_SIZE,
-																										123,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED,
-																										749,
-																										Short.MAX_VALUE)
-																								.addComponent(
-																										jlTotalVenda)
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										jlValorTotal,
-																										GroupLayout.PREFERRED_SIZE,
-																										70,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addGap(167)))
-																.addGap(8)))));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														jtfCliente,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(btnNewButton)
-												.addComponent(lblCliente))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														jcbServico,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(jspItensVenda, GroupLayout.PREFERRED_SIZE, 1149, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panel.createSequentialGroup()
+											.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+												.addComponent(lblCopias)
 												.addComponent(lblServico))
-								.addGap(9)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														jtfCopias,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblQuantidade)
-												.addComponent(
-														jtfQuantidade,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblCopias))
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(jbAdicionarItem)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(jspItensVenda,
-										GroupLayout.PREFERRED_SIZE, 211,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(jbRemoverItem)
-												.addComponent(jlValorTotal)
-												.addComponent(jlTotalVenda))
-								.addContainerGap(18, Short.MAX_VALUE)));
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_panel.createSequentialGroup()
+													.addComponent(jtfCopias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(lblQuantidade)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(jtfQuantidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+												.addComponent(jbAdicionarItem, GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+												.addComponent(jcbServico, 0, 279, Short.MAX_VALUE))
+											.addGap(839))
+										.addGroup(gl_panel.createSequentialGroup()
+											.addGap(12)
+											.addComponent(lblCliente)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)))
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(jbRemoverItem, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 749, Short.MAX_VALUE)
+									.addComponent(jlTotalVenda)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jlValorTotal, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+									.addGap(167)))
+							.addGap(8))))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCliente))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jcbServico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblServico))
+					.addGap(9)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jtfCopias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblQuantidade)
+						.addComponent(jtfQuantidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCopias))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(jbAdicionarItem)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jspItensVenda, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jbRemoverItem)
+						.addComponent(jlValorTotal)
+						.addComponent(jlTotalVenda))
+					.addContainerGap(21, Short.MAX_VALUE))
+		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 	}

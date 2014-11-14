@@ -24,17 +24,23 @@ import br.senai.sc.model.Cliente;
 import br.senai.sc.model.OrdemServico;
 import br.senai.sc.model.Servico;
 import br.senai.sc.utils.ConsultaOrdemServicoTableModel;
+import br.senai.sc.utils.OrdemServicoTableModel;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ConsultaOrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTable jtListaItensVenda;
-
 	private ArrayList<Cliente> listaClientes;
 	private ArrayList<Servico> listaServicos;
 	private ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
 
 	// private Double somaTotal = 0.00;
-	private JTextField tfPesquisa;
+	private JTextField jtfFiltro;
 
 	/**
 	 * Launch the application.
@@ -100,7 +106,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 								GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(143, Short.MAX_VALUE)));
 
-		JScrollPane jspListaOrdemServicos = new JScrollPane();
+		JScrollPane scrollpane = new JScrollPane();
 
 		jtListaItensVenda = new JTable();
 		jtListaItensVenda.setModel(new ConsultaOrdemServicoTableModel(
@@ -109,38 +115,76 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		jtListaItensVenda.getColumnModel().getColumn(0).setPreferredWidth(50);
 		jtListaItensVenda.getColumnModel().getColumn(1).setResizable(false);
 		jtListaItensVenda.getColumnModel().getColumn(1).setPreferredWidth(150);
-		jspListaOrdemServicos.setViewportView(jtListaItensVenda);
+		scrollpane.setViewportView(jtListaItensVenda);
 
-		tfPesquisa = new JTextField();
-		tfPesquisa.setColumns(10);
+		jtfFiltro = new JTextField();
+		jtfFiltro.setColumns(10);
+		final JComboBox jcbTipoFiltro = new JComboBox();
+		JButton btnTipoFiltro = new JButton("Pesquisa");
+		btnTipoFiltro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					jtListaItensVenda.setModel(new OrdemServicoTableModel(
+							new OrdemServicoControl().showFilterClientes(
+									jcbTipoFiltro.getSelectedItem().toString(),
+									jtfFiltro.getText())));
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
-		JButton btnNewButton = new JButton("New button");
+		jcbTipoFiltro.setEditable(true);
+		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "Valor Total", "Status"}));
+
+		JLabel lblTipoFiltro = new JLabel("Tipo filtro:");
+
+		JLabel lblPesquisa = new JLabel("Pesquisa:");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
+				.createParallelGroup(Alignment.TRAILING)
 				.addGroup(
-						Alignment.TRAILING,
 						gl_panel.createSequentialGroup()
 								.addContainerGap()
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.TRAILING)
 												.addComponent(
-														jspListaOrdemServicos,
-														Alignment.LEADING,
+														scrollpane,
 														GroupLayout.DEFAULT_SIZE,
 														1148, Short.MAX_VALUE)
 												.addGroup(
 														gl_panel.createSequentialGroup()
 																.addComponent(
-																		tfPesquisa,
+																		lblPesquisa)
+																.addPreferredGap(
+																		ComponentPlacement.UNRELATED)
+																.addComponent(
+																		jtfFiltro,
 																		GroupLayout.DEFAULT_SIZE,
-																		1049,
+																		816,
 																		Short.MAX_VALUE)
 																.addPreferredGap(
 																		ComponentPlacement.UNRELATED)
 																.addComponent(
-																		btnNewButton)))
+																		lblTipoFiltro,
+																		GroupLayout.PREFERRED_SIZE,
+																		59,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		jcbTipoFiltro,
+																		GroupLayout.PREFERRED_SIZE,
+																		124,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(4)
+																.addComponent(
+																		btnTipoFiltro)))
 								.addContainerGap()));
 		gl_panel.setVerticalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
@@ -149,15 +193,31 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 								.addContainerGap()
 								.addGroup(
 										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														tfPesquisa,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(btnNewButton))
-								.addGap(18)
-								.addComponent(jspListaOrdemServicos,
+												Alignment.LEADING)
+												.addGroup(
+														gl_panel.createParallelGroup(
+																Alignment.BASELINE)
+																.addComponent(
+																		btnTipoFiltro)
+																.addComponent(
+																		jcbTipoFiltro,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+																.addComponent(
+																		lblTipoFiltro))
+												.addGroup(
+														gl_panel.createParallelGroup(
+																Alignment.BASELINE)
+																.addComponent(
+																		jtfFiltro,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+																.addComponent(
+																		lblPesquisa)))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(scrollpane,
 										GroupLayout.DEFAULT_SIZE, 334,
 										Short.MAX_VALUE).addContainerGap()));
 		panel.setLayout(gl_panel);

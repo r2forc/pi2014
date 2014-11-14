@@ -33,7 +33,7 @@ public class ConsultaOrdemServicoTableModel extends AbstractTableModel {
 
 	public int getColumnCount() {
 		// Quantas colunas tem a tabela? Nesse exemplo, só 2.
-		return 5;
+		return 4;
 	}
 
 	public String getColumnName(int column) {

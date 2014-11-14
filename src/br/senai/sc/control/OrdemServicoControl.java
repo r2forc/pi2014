@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import br.senai.sc.dao.ClienteDAO;
 import br.senai.sc.dao.OrdemServicoDAO;
+import br.senai.sc.model.Cliente;
 import br.senai.sc.model.OrdemServico;
 
 public class OrdemServicoControl {
@@ -63,6 +65,12 @@ public class OrdemServicoControl {
 	public ArrayList<OrdemServico> showOrdemServicos()
 			throws ClassNotFoundException, SQLException {
 		return OrdemServicoDAO.getInstace().showOrdemServicos();
+	}
+
+	public ArrayList<OrdemServico> showFilterClientes(String column,
+			String value) throws ClassNotFoundException, SQLException {
+		return OrdemServicoDAO.getInstace().showFilterOrdemServico(column,
+				value);
 	}
 
 	public static String print(String msg) {
