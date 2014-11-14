@@ -48,6 +48,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+	
 				try {
 					OrdemServicoUI frame = new OrdemServicoUI();
 					frame.setVisible(true);

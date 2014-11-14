@@ -16,6 +16,7 @@ public class OrdemServicoControl {
 			throws ClassNotFoundException, SQLException {
 		// if (os.getId() == null) {
 		// print("ID ORCAMENTO Obrigatorio!");
+		// xd
 		if (os.getServico().getId() == null) {
 			print("ID SERVIÇO Obrigatorio!");
 		} else if (os.getQuantidadeOriginal() == null) {

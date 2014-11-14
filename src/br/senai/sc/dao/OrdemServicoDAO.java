@@ -52,7 +52,6 @@ public class OrdemServicoDAO {
 
 	public ArrayList<OrdemServico> showItensServicoOrdemServicos()
 			throws ClassNotFoundException, SQLException {
-
 		String query = "SELECT * FROM orcamento orc JOIN orcamento_has_servico ohs"
 				+ " ON orc.id = ohs.orcamento_id JOIN servico s ON s.id = ohs.servico_id"
 				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = 1";

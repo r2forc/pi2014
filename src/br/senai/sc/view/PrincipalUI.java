@@ -24,11 +24,9 @@ public class PrincipalUI extends JFrame {
 
 	// SINGLETON
 	public static PrincipalUI obterInstancia() {
-
 		if (instancia == null) {
 			instancia = new PrincipalUI();
 		}
-
 		return instancia;
 	}
 
@@ -93,7 +91,7 @@ public class PrincipalUI extends JFrame {
 					orcamento = new OrcamentoUI();
 					orcamento.setVisible(true);
 					orcamento.setFocusable(true);
-					
+
 					getContentPane().add(orcamento, 0);
 					getContentPane().add(orcamento);
 				} catch (Exception e) {
@@ -103,8 +101,9 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnVendas.add(mntmGerarOramento);
-		
-		JMenuItem mntmConsultaOrdemDe = new JMenuItem("Consulta Ordem de Servi\u00E7o");
+
+		JMenuItem mntmConsultaOrdemDe = new JMenuItem(
+				"Consulta Ordem de Servi\u00E7o");
 		mntmConsultaOrdemDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaOrdemServicoUI ConsultaOS;
@@ -112,7 +111,7 @@ public class PrincipalUI extends JFrame {
 					ConsultaOS = new ConsultaOrdemServicoUI();
 					ConsultaOS.setVisible(true);
 					ConsultaOS.setFocusable(true);
-					
+
 					getContentPane().add(ConsultaOS, 0);
 					getContentPane().add(ConsultaOS);
 				} catch (Exception e) {
@@ -168,11 +167,12 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnClientes.add(mntmConsultarClientes);
-		
+
 		JMenu mnServios = new JMenu("Servi\u00E7os");
 		menuBar.add(mnServios);
-		
-		JMenuItem jmiConsultarServicos = new JMenuItem("Consultar Servi\u00E7os");
+
+		JMenuItem jmiConsultarServicos = new JMenuItem(
+				"Consultar Servi\u00E7os");
 		jmiConsultarServicos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaServicosUI cs = new ConsultaServicosUI();
@@ -190,7 +190,7 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnServios.add(jmiConsultarServicos);
-		
+
 		JMenu mnSair = new JMenu("Sair");
 		menuBar.add(mnSair);
 		contentPane = new JPanel();
