@@ -72,7 +72,7 @@ public class PrincipalUI extends JFrame {
 					ordemServico = new OrdemServicoUI();
 					ordemServico.setVisible(true);
 					ordemServico.setFocusable(true);
-					ordemServico.requestFocus();
+					
 					getContentPane().add(ordemServico, 0);
 					getContentPane().add(ordemServico);
 				} catch (ClassNotFoundException | SQLException e1) {
@@ -89,11 +89,10 @@ public class PrincipalUI extends JFrame {
 				OrcamentoUI orcamento;
 				try {
 					orcamento = new OrcamentoUI();
-					orcamento.setVisible(true);
 					orcamento.setFocusable(true);
-
 					getContentPane().add(orcamento, 0);
-					getContentPane().add(orcamento);
+					orcamento.requestFocus();
+					orcamento.setVisible(true);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
