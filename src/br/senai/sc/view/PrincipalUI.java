@@ -155,11 +155,10 @@ public class PrincipalUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaClientesUI cc = new ConsultaClientesUI();
 				try {
-					cc.setVisible(true);
 					cc.setFocusable(true);
-					cc.requestFocus();
 					getContentPane().add(cc, 0);
-					getContentPane().add(cc);
+					cc.requestFocus();
+					cc.setVisible(true);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
