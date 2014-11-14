@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import br.senai.sc.dao.OrcamentoDAO;
-
+import br.senai.sc.dao.OrcamentoFlashDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.Orcamento;
 import br.senai.sc.model.Servico;
 
-public class OrcamentoControl {
+public class OrcamentoFlashControl {
 
 	public void insertOrcamento(Orcamento orcamento) {
 		if (orcamento.getId() == null) {
@@ -69,8 +69,18 @@ public class OrcamentoControl {
 		return OrcamentoDAO.getInstace().showAllOrcamentos();
 	}
 	
-
+	public String mostrarCliente(){
+		return OrcamentoFlashDAO.getInstace().mostrarCliente();
+	}
 	
+	public void inserirCliente(Cliente cli){
+		if(cli == null){
+			JOptionPane.showMessageDialog(null, "Selecione um cliente");
+		}else{
+			OrcamentoFlashDAO.getInstace().insertCliente(cli);
+		}
+	}
+
 	public static String print(String msg) {
 		JOptionPane.showMessageDialog(null, msg);
 		return msg;
