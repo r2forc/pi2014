@@ -22,7 +22,6 @@ public class ClienteControl {
 				if (validacaoCPF.isCPF(cliente.getCpf()) == false)
 					throw new Exception("Digite um cpf válido");
 				
-				
 				 Pattern p = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$"); 
 				 Matcher m = p.matcher(cliente.getEmail()); 
 				
@@ -35,28 +34,49 @@ public class ClienteControl {
 				if (cliente.getTelefone().length() != 14)	
 					throw new Exception("Digite o campo Telefone");
 				
+				ArrayList<Cliente> resultadoClientes = new ArrayList<Cliente>();
+				resultadoClientes =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf());
+				System.out.println(resultadoClientes.size());
+				
+				if(resultadoClientes.size() != 0){
+					throw new Exception("CPF já cadastrado, digite um CPF válido");
+				}
 				ClienteDAO.getInstace().insertCliente(cliente);
 				return true;
-				
-				
+
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(null, e.getMessage());
 				return false;
 			}
 	}
 
-	public void editCliente(Cliente cliente) throws SQLException {
-		if (cliente.getNome().equals("")) {
-			JOptionPane.showMessageDialog(null, "NOME CLIENTE Obrigatorio!");
-		} else if (cliente.getCpf().equals("")) {
-			JOptionPane.showMessageDialog(null, "CPF CLIENTE Obrigatorio!");
-		} else if (cliente.getEmail().equals("")) {
-			JOptionPane.showMessageDialog(null, "E-MAIL CLIENTE Obrigatorio!");
-		} else if (cliente.getTelefone().equals("")) {
-			JOptionPane
-					.showMessageDialog(null, "TELEFONE CLIENTE Obrigatorio!");
-		} else {
+	public boolean editCliente(Cliente cliente) throws SQLException {
+		try{
+			if (cliente.getNome().equals(""))
+				throw new Exception("Digite o campo Nome");
+			
+			ValidaCpf validacaoCPF = new ValidaCpf();
+			if (validacaoCPF.isCPF(cliente.getCpf()) == false)
+				throw new Exception("Digite um cpf válido");
+			
+			 Pattern p = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$"); 
+			 Matcher m = p.matcher(cliente.getEmail()); 
+			
+			if (m.find() == false)
+				throw new Exception("Digite um Email válido");
+			
+			if (cliente.getTelefone().equals("(  )     -    "))	
+				throw new Exception("Digite o campo Telefone");
+			
+			if (cliente.getTelefone().length() != 14)	
+				throw new Exception("Digite o campo Telefone");
+		
 			ClienteDAO.getInstace().editCliente(cliente);
+			return true;
+
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			return false;
 		}
 	}
 

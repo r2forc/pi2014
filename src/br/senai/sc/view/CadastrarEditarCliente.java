@@ -47,8 +47,9 @@ public class CadastrarEditarCliente extends JInternalFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 */
-	public CadastrarEditarCliente(final Cliente cli) {
+	public CadastrarEditarCliente(final Cliente cli) throws ParseException {
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		setClosable(true);
 		setBounds(100, 100, 600, 241);
@@ -68,14 +69,24 @@ public class CadastrarEditarCliente extends JInternalFrame {
 		
 		JLabel jlTelefone = new JLabel("Telefone:");
 		
+		MaskFields mascara = new MaskFields();
+		JFormattedTextField formattedTextField = null;
+		try { 
+			jtfCPF = new JFormattedTextField(mascara.maskCpf(null)); 
+			jtfTelefone = new JFormattedTextField(mascara.maskTelefone(null));
+		} 
+		catch (ParseException e) {	
+			e.printStackTrace(); 
+		}
+		
 		if (cli != null ){
 			jtfNome.setText(cli.getNome());
 			jtfCPF.setText(cli.getCpf());
 			jtfEmail.setText(cli.getEmail());
 			jtfTelefone.setText(cli.getTelefone());
+			jtfCPF.enable(false);
 			
 		}
-		
 		
 		JButton jbSalvar = new JButton("Salvar");
 		jbSalvar.addActionListener(new ActionListener() {
@@ -121,26 +132,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 				dispose();
 			}
 		});
-		
-		
-		MaskFields mascara = new MaskFields();
-		JFormattedTextField formattedTextField = null;
-		try {
-			jtfCPF = new JFormattedTextField(mascara.maskCpf(null));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 
-		try {
-			jtfTelefone = new JFormattedTextField(mascara.maskTelefone(null));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)

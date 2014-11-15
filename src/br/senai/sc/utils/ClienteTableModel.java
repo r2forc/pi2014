@@ -85,7 +85,7 @@ public class ClienteTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		// Indicamos se a célula da rowIndex e da columnIndex é editável. Nossa
 		// tabela toda é.
-		return true;
+		return false;
 	}
 
 	// Já que esse tableModel é de clientes, vamos fazer um get que retorne um

@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import java.awt.SystemColor;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
@@ -70,119 +71,96 @@ public class ConsultaClientesUI extends JInternalFrame {
 		JButton btnNovo = new JButton("Novo");
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CadastrarEditarCliente cec = new CadastrarEditarCliente(null);
+				CadastrarEditarCliente cec = null;
 				try {
-					
+					cec = new CadastrarEditarCliente(null);
 					cec.setFocusable(true);
 					cec.moveToFront();
 					getContentPane().add(cec, 0);
 					cec.requestFocus();
 					cec.setVisible(true);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					cec.addInternalFrameListener(new InternalFrameListener() {  
+					    public void internalFrameClosed(InternalFrameEvent e) { 
+					    	try {
+								jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
+							} catch (ClassNotFoundException | SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}	
+					    }		
+					    public void internalFrameActivated(InternalFrameEvent arg0) {}
+						public void internalFrameClosing(InternalFrameEvent arg0) {}
+						public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+						public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+						public void internalFrameIconified(InternalFrameEvent arg0) {}
+						public void internalFrameOpened(InternalFrameEvent arg0) {}  	
+					});  
 				
-				cec.addInternalFrameListener(new InternalFrameListener() {  
-				    public void internalFrameClosed(InternalFrameEvent e) { 
-				    	try { 
-				    		jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
-				    	}
-				    	catch (ClassNotFoundException | SQLException e1) {	
-				    		e1.printStackTrace(); 
-				    	}
-				    }
-				    public void internalFrameActivated(InternalFrameEvent arg0) {}
-					public void internalFrameClosing(InternalFrameEvent arg0) {}
-					public void internalFrameDeactivated(InternalFrameEvent arg0) {}
-					public void internalFrameDeiconified(InternalFrameEvent arg0) {}
-					public void internalFrameIconified(InternalFrameEvent arg0) {}
-					public void internalFrameOpened(InternalFrameEvent arg0) {}  
-				});  
+				
+				} catch (ParseException e2) {
+					e2.printStackTrace();
+				}
 			}	
 		});
-		
-		
-		
 		
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Cliente cli = null;
 				try {
-					cli = (Cliente) new ClienteTableModel(
-							new ClienteControl().showAllClientes())
-								.get(jtConsultaCliente.getSelectedRow());
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					if (jtConsultaCliente.getSelectedRow() == -1)
+						throw new ArrayIndexOutOfBoundsException("Selecione um Cliente");
+					
+					cli = (Cliente) new ClienteTableModel( new ClienteControl().showAllClientes()).get(jtConsultaCliente.getSelectedRow());
+					CadastrarEditarCliente cec = null;		
+					cec = new CadastrarEditarCliente(cli);
+					PrincipalUI.obterInstancia().getContentPane().add(cec);
+					cec.setFocusable(true);
+					cec.moveToFront();
+					getContentPane().add(cec, 0);
+					cec.requestFocus();
+					cec.setVisible(true);
+					cec.addInternalFrameListener(new InternalFrameListener() {  
+					    public void internalFrameClosed(InternalFrameEvent e) { 
+					    	try { 
+					    		jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
+					    	}
+					    	catch (ClassNotFoundException | SQLException e1) {	
+					    		e1.printStackTrace(); 
+					    	}
+					    }
+					    public void internalFrameActivated(InternalFrameEvent arg0) {}
+						public void internalFrameClosing(InternalFrameEvent arg0) {}
+						public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+						public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+						public void internalFrameIconified(InternalFrameEvent arg0) {}
+						public void internalFrameOpened(InternalFrameEvent arg0) {}  
+					});
+				} catch (ClassNotFoundException | SQLException | ParseException | ArrayIndexOutOfBoundsException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
-				
-				CadastrarEditarCliente cec = new CadastrarEditarCliente(cli);
-				PrincipalUI.obterInstancia().getContentPane().add(cec);
-				cec.setFocusable(true);
-				cec.moveToFront();
-				getContentPane().add(cec, 0);
-				cec.requestFocus();
-				cec.setVisible(true);
-				
-				cec.addInternalFrameListener(new InternalFrameListener() {  
-				    public void internalFrameClosed(InternalFrameEvent e) { 
-				    	try { 
-				    		jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
-				    	}
-				    	catch (ClassNotFoundException | SQLException e1) {	
-				    		e1.printStackTrace(); 
-				    	}
-				    }
-				    public void internalFrameActivated(InternalFrameEvent arg0) {}
-					public void internalFrameClosing(InternalFrameEvent arg0) {}
-					public void internalFrameDeactivated(InternalFrameEvent arg0) {}
-					public void internalFrameDeiconified(InternalFrameEvent arg0) {}
-					public void internalFrameIconified(InternalFrameEvent arg0) {}
-					public void internalFrameOpened(InternalFrameEvent arg0) {}  
-				});
-				
 			}
 		});
 		
 		JButton btnNewButton = new JButton("Exluir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int opcao = JOptionPane.showConfirmDialog(null, 
+				try {
+					if (jtConsultaCliente.getSelectedRow() == -1)
+						throw new ArrayIndexOutOfBoundsException("Selecione um Cliente");
+					int opcao = JOptionPane.showConfirmDialog(null, 
 						"Deseja excluir o cliente selecionado?", 
 						"Excluir Cliente", 
 						JOptionPane.YES_NO_OPTION);
-				if ( opcao == 0){
-					Cliente cli = null;
-					try {
-						cli = (Cliente) new ClienteTableModel(
-								new ClienteControl().showAllClientes())
-									.get(jtConsultaCliente.getSelectedRow());
-					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					ClienteControl cc = new ClienteControl();
-					try {
+					if ( opcao == 0){
+						Cliente cli = null;
+						cli = (Cliente) new ClienteTableModel( new ClienteControl().showAllClientes()).get(jtConsultaCliente.getSelectedRow());		
+						ClienteControl cc = new ClienteControl();
 						cc.deleteCliente(cli.getId());
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
-				}
-				try {
-					jtConsultaCliente.setModel(new ClienteTableModel( 
-							new ClienteControl().showAllClientes() ) );
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
+					}			
+				} catch (SQLException | ClassNotFoundException | ArrayIndexOutOfBoundsException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 			}
 		});

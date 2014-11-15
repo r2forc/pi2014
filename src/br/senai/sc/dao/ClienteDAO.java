@@ -63,9 +63,7 @@ public class ClienteDAO {
 			String query = "DELETE FROM CLIENTE WHERE id =?;";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
-
 			stmt.executeUpdate();
-			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();
