@@ -34,6 +34,8 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 	private JTable jtTabelaStatus;
 	private ArrayList<Cliente> listaClientes;
 	private JComboBox jcbCliente_1;
+	private JTextField tfDataInicial;
+	private JTextField tfDataFinal;
 	
 	
 	/**
@@ -108,6 +110,16 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		}
 		jcbCliente_1.setModel(modelCliente);
 		
+		JLabel lblDataInicial = new JLabel("Data Inicial:");
+		
+		tfDataInicial = new JTextField();
+		tfDataInicial.setColumns(10);
+		
+		JLabel lblDataFinal = new JLabel("Data Final:");
+		
+		tfDataFinal = new JTextField();
+		tfDataFinal.setColumns(10);
+		
 		
 		
 		
@@ -125,8 +137,16 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 							.addGap(18)
 							.addComponent(lblStatus)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(jcbStatus, 0, 490, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(jcbStatus, 0, 171, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(lblDataInicial)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblDataFinal)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
 							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
 						.addComponent(btnImprimir, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
@@ -140,7 +160,11 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 						.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblStatus)
 						.addComponent(lblNewLabel)
-						.addComponent(jcbCliente_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jcbCliente_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDataInicial)
+						.addComponent(tfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDataFinal)
+						.addComponent(tfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 385, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
