@@ -7,8 +7,10 @@ import javax.swing.JOptionPane;
 
 import br.senai.sc.dao.OrcamentoDAO;
 import br.senai.sc.dao.OrcamentoFlashDAO;
+import br.senai.sc.dao.ServicoDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.Orcamento;
+import br.senai.sc.model.OrcamentoFlash;
 import br.senai.sc.model.Servico;
 
 public class OrcamentoFlashControl {
@@ -64,9 +66,8 @@ public class OrcamentoFlashControl {
 		OrcamentoDAO.getInstace().deleteOrcamento(orcamento);
 	}
 
-	public ArrayList<Orcamento> showAllOrcamento()
-			throws ClassNotFoundException, SQLException {
-		return OrcamentoDAO.getInstace().showAllOrcamentos();
+	public OrcamentoFlash showAllOrcamento() {
+		return OrcamentoFlashDAO.getInstace().mostrarOrcamento();
 	}
 	
 	public String mostrarCliente(){
@@ -84,5 +85,9 @@ public class OrcamentoFlashControl {
 	public static String print(String msg) {
 		JOptionPane.showMessageDialog(null, msg);
 		return msg;
+	}
+	
+	public ArrayList<Servico> showAllServicos()  {
+		return OrcamentoFlashDAO.getInstace().mostrarServicos();
 	}
 }

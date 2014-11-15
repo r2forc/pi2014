@@ -15,6 +15,7 @@ public class ServicoTableModel extends AbstractTableModel {
 	private static final int COL_DESCRICAO = 0;
 	private static final int COL_VALORUNT = 1;
 
+
 	private List<Servico> valores;
 
 	// Esse é um construtor, que recebe a nossa lista de servicos
@@ -71,7 +72,7 @@ public class ServicoTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		// Indicamos se a célula da rowIndex e da columnIndex é editável. Nossa
 		// tabela toda é.
-		return true;
+		return false;
 	}
 
 	// Já que esse tableModel é de servicos, vamos fazer um get que retorne um

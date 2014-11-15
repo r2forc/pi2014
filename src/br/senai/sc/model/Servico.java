@@ -4,6 +4,8 @@ public class Servico {
 	private Integer id;
 	private String descricao;
 	private Double valorUnt;
+	private int originais;
+	private int copias;
 
 	public Servico() {
 	}
@@ -32,6 +34,22 @@ public class Servico {
 
 	public Double getValorUnt() {
 		return valorUnt;
+	}
+	
+	public int getOriginais() {
+		return originais;
+	}
+
+	public void setOriginais(int originais) {
+		this.originais = originais;
+	}
+
+	public int getCopias() {
+		return copias;
+	}
+
+	public void setCopias(int copias) {
+		this.copias = copias;
 	}
 
 	public void setValorUnt(Double valorUnt) {

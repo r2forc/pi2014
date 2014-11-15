@@ -19,12 +19,17 @@ import javax.swing.JTable;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 import javax.swing.JLabel;
 
+import br.senai.sc.control.ClienteControl;
 import br.senai.sc.control.OrcamentoFlashControl;
+import br.senai.sc.control.ServicoControl;
 import br.senai.sc.dao.OrcamentoFlashDAO;
 import br.senai.sc.model.Cliente;
+import br.senai.sc.utils.OrcamentoFlashTableModel;
+import br.senai.sc.utils.ServicoTableModel;
 
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
@@ -33,12 +38,20 @@ import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class OrcamentoUI extends JInternalFrame {
 	private JTextField jtfCliente;
 	private JTextField jtfServico;
 	private JTable jtListaServicos;
 	private JTextField jtfOriginais;
-	private JTextField jtfCopias;
+	private JTextField jtfQuantidadeCopias;
+	private JTextField jtfValorUnitario;
+	private JTable jtOrcamentoFlash;
+	private JTextField tfValorTotal;
 
 	/**
 	 * Launch the application.
@@ -64,7 +77,7 @@ public class OrcamentoUI extends JInternalFrame {
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		setTitle("Gerar Or\u00E7amento");
-		setBounds(0, 0, 1200, 600);
+		setBounds(0, 0, 1194, 600);
 		final OrcamentoFlashControl ofc = new OrcamentoFlashControl();
 		
 		JLabel jlCliente = new JLabel("Cliente:");
@@ -143,8 +156,6 @@ public class OrcamentoUI extends JInternalFrame {
 		});
 		btnProcurarCliente.setIcon(new ImageIcon(OrcamentoUI.class.getResource("/br/senai/sc/icons/search.png")));
 		
-		JLabel jlServicos = new JLabel("Servi\u00E7os:");
-		
 		jtfServico = new JTextField();
 		jtfServico.setText("");
 		jtfServico.setColumns(10);
@@ -157,98 +168,159 @@ public class OrcamentoUI extends JInternalFrame {
 		JLabel jlQuantidadeDeOriginais = new JLabel("Quantidade de Originais:");
 		
 		jtfOriginais = new JTextField();
+		jtfOriginais.setText("1");
 		jtfOriginais.setColumns(10);
 		
 		JLabel jlCopias = new JLabel("Quantidade de C\u00F3pias:");
 		
-		jtfCopias = new JTextField();
-		jtfCopias.setColumns(10);
-		
 		JButton btnAdicionar = new JButton("Adicionar");
+		
+		jtfQuantidadeCopias = new JTextField();
+		jtfQuantidadeCopias.setText("1");
+		jtfQuantidadeCopias.setColumns(10);
+		
+		JLabel jlValorUnitaro = new JLabel("Valor Unit\u00E1rio:");
+		
+		jtfValorUnitario = new JTextField();
+		jtfValorUnitario.setColumns(10);
+		
+		JScrollPane spOrcamentoFlahs = new JScrollPane();
+		
+		JLabel jlValorTotal = new JLabel("Valor Total:");
+		
+		tfValorTotal = new JTextField();
+		tfValorTotal.setColumns(10);
+		
+		JButton jbSalvar = new JButton("Salvar");
+		
+		JButton btCancelar = new JButton("Cancelar");
+		
+		JLabel jlServicos = new JLabel("Servi\u00E7os:");
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(14)
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(jlServicos)
-										.addComponent(jlCliente))
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(jtfServico)
-										.addComponent(jtfCliente, GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE))
-									.addGap(43)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnProcurarCliente)
-										.addComponent(jbProcurarServicos, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)))
-								.addComponent(spListaClientes))
-							.addContainerGap(24, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(jlQuantidadeDeOriginais)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jtfOriginais, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)
-							.addGap(123)
-							.addComponent(jlCopias)
+							.addGap(31)
+							.addComponent(jlValorTotal)
 							.addGap(18)
-							.addComponent(jtfCopias, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
-							.addComponent(btnAdicionar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-							.addGap(33))))
+							.addComponent(tfValorTotal, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 508, Short.MAX_VALUE)
+							.addComponent(jbSalvar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+							.addGap(61)
+							.addComponent(btCancelar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+							.addGap(48))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(spOrcamentoFlahs, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1161, Short.MAX_VALUE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(jlQuantidadeDeOriginais)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jtfOriginais, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+									.addGap(70)
+									.addComponent(jlCopias)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jtfQuantidadeCopias, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+									.addComponent(jlValorUnitaro)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jtfValorUnitario, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+									.addGap(43)
+									.addComponent(btnAdicionar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
+								.addGroup(Alignment.LEADING, groupLayout.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(spListaClientes, Alignment.LEADING)
+									.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+										.addGap(14)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addComponent(jlServicos)
+											.addComponent(jlCliente))
+										.addGap(18)
+										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+											.addComponent(jtfServico)
+											.addComponent(jtfCliente, GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE))
+										.addGap(28)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+											.addComponent(jbProcurarServicos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(btnProcurarCliente, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+							.addGap(26)))
+					.addGap(10))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnProcurarCliente, 0, 0, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 							.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(jlCliente)))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jlServicos)
-						.addComponent(jtfServico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jbProcurarServicos, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+							.addComponent(jlCliente))
+						.addComponent(btnProcurarCliente, 0, 0, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(spListaClientes, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(jbProcurarServicos, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(jtfServico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(jlServicos)))
+					.addGap(25)
+					.addComponent(spListaClientes, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlQuantidadeDeOriginais)
 						.addComponent(jtfOriginais, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jtfCopias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jlCopias)
+						.addComponent(jtfQuantidadeCopias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnAdicionar)
-						.addComponent(jlCopias))
-					.addGap(353))
+						.addComponent(jlValorUnitaro)
+						.addComponent(jtfValorUnitario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(spOrcamentoFlahs, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jlValorTotal)
+						.addComponent(tfValorTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jbSalvar)
+						.addComponent(btCancelar))
+					.addGap(71))
 		);
 		
+		jtOrcamentoFlash = new JTable();
+		
+			jtOrcamentoFlash.setModel(new OrcamentoFlashTableModel( 
+					new OrcamentoFlashControl().showAllOrcamento() ) );
+		
+		jtOrcamentoFlash.getColumnModel().getColumn(0).setResizable(false);
+		jtOrcamentoFlash.getColumnModel().getColumn(1).setResizable(false);
+		jtOrcamentoFlash.getColumnModel().getColumn(2).setResizable(false);
+		jtOrcamentoFlash.getColumnModel().getColumn(3).setResizable(false);
+		jtOrcamentoFlash.getColumnModel().getColumn(4).setResizable(false);
+		spOrcamentoFlahs.setViewportView(jtOrcamentoFlash);
+		
 		jtListaServicos = new JTable();
-		spListaClientes.setViewportView(jtListaServicos);
-		jtListaServicos.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null},
-			},
-			new String[] {
-				"Descri\u00E7\u00E3o", "Valor Unt"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Double.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
+		jtListaServicos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					jtfValorUnitario.setText(new ServicoControl().showAllServicos().get(jtListaServicos.getSelectedRow()).getValorUnt().toString());
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
+		spListaClientes.setViewportView(jtListaServicos);
+		try {
+			jtListaServicos.setModel(new ServicoTableModel( 
+					new ServicoControl().showAllServicos() ) );
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		jtListaServicos.getColumnModel().getColumn(0).setResizable(false);
+		
 		jtListaServicos.getColumnModel().getColumn(0).setPreferredWidth(200);
 		jtListaServicos.getColumnModel().getColumn(1).setResizable(false);
 		jtListaServicos.getColumnModel().getColumn(1).setPreferredWidth(100);

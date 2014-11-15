@@ -61,7 +61,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 		setTitle("Consultar Clientes");
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);
-		setBounds(2, 50, 1190, 440);
+		setBounds(2, 40, 1192, 500);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
