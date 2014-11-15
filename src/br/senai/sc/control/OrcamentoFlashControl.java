@@ -94,7 +94,21 @@ public class OrcamentoFlashControl {
 	public ArrayList<Servico> showAllServicos()  {
 		return OrcamentoFlashDAO.getInstace().mostrarServicos();
 	}
+	
+	public void removerServico(int i){
+		OrcamentoFlashDAO.getInstace().RemoverServico(i);
+	}
 
+	public void salvarNoBanco(Double valorTotal){
+		try {
+			OrcamentoFlashDAO.getInstace().SalvarNoBanco(valorTotal);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
 
 
 }
