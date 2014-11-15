@@ -13,6 +13,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 public class PrincipalUI extends JFrame {
@@ -40,6 +41,7 @@ public class PrincipalUI extends JFrame {
 				try {
 					PrincipalUI frame = obterInstancia();
 					frame.setVisible(true);
+					UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

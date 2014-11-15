@@ -92,6 +92,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 					ClienteControl cc = new ClienteControl();
 					try {
 						cc.editCliente( cli );
+						dispose();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
@@ -103,15 +104,15 @@ public class CadastrarEditarCliente extends JInternalFrame {
 					c.setCpf(jtfCPF.getText());
 					c.setEmail(jtfEmail.getText());
 					c.setTelefone(jtfTelefone.getText());
-					
 					ClienteControl cc = new ClienteControl();
 					try {
-						cc.insertCliente( c );
+						if(cc.insertCliente( c ))
+						dispose();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
 				}
-				dispose();
+				
 			}
 		});
 		
