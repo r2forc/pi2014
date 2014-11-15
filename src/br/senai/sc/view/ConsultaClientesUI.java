@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -80,8 +82,28 @@ public class ConsultaClientesUI extends JInternalFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+				
+				cec.addInternalFrameListener(new InternalFrameListener() {  
+				    public void internalFrameClosed(InternalFrameEvent e) { 
+				    	try { 
+				    		jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
+				    	}
+				    	catch (ClassNotFoundException | SQLException e1) {	
+				    		e1.printStackTrace(); 
+				    	}
+				    }
+				    public void internalFrameActivated(InternalFrameEvent arg0) {}
+					public void internalFrameClosing(InternalFrameEvent arg0) {}
+					public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+					public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+					public void internalFrameIconified(InternalFrameEvent arg0) {}
+					public void internalFrameOpened(InternalFrameEvent arg0) {}  
+				});  
+			}	
 		});
+		
+		
+		
 		
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
@@ -103,6 +125,23 @@ public class ConsultaClientesUI extends JInternalFrame {
 				getContentPane().add(cec, 0);
 				cec.requestFocus();
 				cec.setVisible(true);
+				
+				cec.addInternalFrameListener(new InternalFrameListener() {  
+				    public void internalFrameClosed(InternalFrameEvent e) { 
+				    	try { 
+				    		jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
+				    	}
+				    	catch (ClassNotFoundException | SQLException e1) {	
+				    		e1.printStackTrace(); 
+				    	}
+				    }
+				    public void internalFrameActivated(InternalFrameEvent arg0) {}
+					public void internalFrameClosing(InternalFrameEvent arg0) {}
+					public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+					public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+					public void internalFrameIconified(InternalFrameEvent arg0) {}
+					public void internalFrameOpened(InternalFrameEvent arg0) {}  
+				});
 				
 			}
 		});

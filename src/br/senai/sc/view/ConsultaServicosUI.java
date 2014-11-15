@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -82,6 +84,23 @@ public class ConsultaServicosUI extends JInternalFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				ces.addInternalFrameListener(new InternalFrameListener() {  
+				    public void internalFrameClosed(InternalFrameEvent e) { 
+				    	try { 
+				    		jtConsultaServico.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );
+				    	}
+				    	catch (ClassNotFoundException | SQLException e1) {	
+				    		e1.printStackTrace(); 
+				    	}
+				    }
+				    public void internalFrameActivated(InternalFrameEvent arg0) {}
+					public void internalFrameClosing(InternalFrameEvent arg0) {}
+					public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+					public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+					public void internalFrameIconified(InternalFrameEvent arg0) {}
+					public void internalFrameOpened(InternalFrameEvent arg0) {}  
+				});
 			}
 		});
 		
@@ -105,6 +124,23 @@ public class ConsultaServicosUI extends JInternalFrame {
 				getContentPane().add(ces, 0);
 				ces.requestFocus();
 				ces.setVisible(true);
+				
+				ces.addInternalFrameListener(new InternalFrameListener() {  
+				    public void internalFrameClosed(InternalFrameEvent e) { 
+				    	try { 
+				    		jtConsultaServico.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );
+				    	}
+				    	catch (ClassNotFoundException | SQLException e1) {	
+				    		e1.printStackTrace(); 
+				    	}
+				    }
+				    public void internalFrameActivated(InternalFrameEvent arg0) {}
+					public void internalFrameClosing(InternalFrameEvent arg0) {}
+					public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+					public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+					public void internalFrameIconified(InternalFrameEvent arg0) {}
+					public void internalFrameOpened(InternalFrameEvent arg0) {}  
+				});
 				
 			}
 		});

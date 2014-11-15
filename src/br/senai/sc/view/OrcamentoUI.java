@@ -115,45 +115,14 @@ public class OrcamentoUI extends JInternalFrame {
 				{  
 				    public void internalFrameClosed(InternalFrameEvent e)  
 				    {  
-				    	
 				    	jtfCliente.setText(ofc.mostrarCliente());
 				    }
-
-					@Override
-					public void internalFrameActivated(InternalFrameEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void internalFrameClosing(InternalFrameEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void internalFrameDeactivated(InternalFrameEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void internalFrameDeiconified(InternalFrameEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void internalFrameIconified(InternalFrameEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void internalFrameOpened(InternalFrameEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}  
+				    public void internalFrameActivated(InternalFrameEvent arg0) {}
+					public void internalFrameClosing(InternalFrameEvent arg0) {}
+					public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+					public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+					public void internalFrameIconified(InternalFrameEvent arg0) {}
+					public void internalFrameOpened(InternalFrameEvent arg0) {}  
 				});  
 			}
 		});
