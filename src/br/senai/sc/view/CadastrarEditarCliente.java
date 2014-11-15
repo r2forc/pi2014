@@ -13,17 +13,21 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.ParseException;
 
 import javax.swing.border.EtchedBorder;
 
+import br.senai.sc.utils.MaskFields;
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.model.Cliente;
 
+import javax.swing.JFormattedTextField;
+
 public class CadastrarEditarCliente extends JInternalFrame {
 	private JTextField jtfNome;
-	private JTextField jtfCPF;
 	private JTextField jtfEmail;
-	private JTextField jtfTelefone;
+	private JFormattedTextField jtfCPF;
+	private JFormattedTextField jtfTelefone;
 
 	/**
 	 * Launch the application.
@@ -56,8 +60,6 @@ public class CadastrarEditarCliente extends JInternalFrame {
 
 		JLabel jlCPF = new JLabel("CPF:");
 		
-		jtfCPF = new JTextField();
-		jtfCPF.setColumns(10);
 		
 		JLabel lblEmail = new JLabel("E-mail:");
 		
@@ -65,9 +67,6 @@ public class CadastrarEditarCliente extends JInternalFrame {
 		jtfEmail.setColumns(10);
 		
 		JLabel jlTelefone = new JLabel("Telefone:");
-		
-		jtfTelefone = new JTextField();
-		jtfTelefone.setColumns(10);
 		
 		if (cli != null ){
 			jtfNome.setText(cli.getNome());
@@ -122,9 +121,35 @@ public class CadastrarEditarCliente extends JInternalFrame {
 				dispose();
 			}
 		});
+		
+		
+		MaskFields mascara = new MaskFields();
+		JFormattedTextField formattedTextField = null;
+		try {
+			jtfCPF = new JFormattedTextField(mascara.maskCpf(null));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		try {
+			jtfTelefone = new JFormattedTextField(mascara.maskTelefone(null));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(37)
+					.addComponent(jbSalvar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+					.addComponent(jbCancelar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
+					.addGap(47))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -136,15 +161,9 @@ public class CadastrarEditarCliente extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(jtfTelefone)
 						.addComponent(jtfEmail)
-						.addComponent(jtfCPF)
-						.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
+						.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+						.addComponent(jtfCPF, GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
 					.addGap(19))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(37)
-					.addComponent(jbSalvar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
-					.addComponent(jbCancelar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
-					.addGap(47))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -169,7 +188,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jbSalvar)
 						.addComponent(jbCancelar))
-					.addContainerGap(23, Short.MAX_VALUE))
+					.addContainerGap(24, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 
