@@ -81,7 +81,11 @@ public class OrcamentoFlashControl {
 			OrcamentoFlashDAO.getInstace().insertCliente(cli);
 		}
 	}
-
+	
+	public static void inserirServico(Servico servico){
+		OrcamentoFlashDAO.getInstace().InserirServico(servico);
+	}
+	
 	public static String print(String msg) {
 		JOptionPane.showMessageDialog(null, msg);
 		return msg;
@@ -90,4 +94,7 @@ public class OrcamentoFlashControl {
 	public ArrayList<Servico> showAllServicos()  {
 		return OrcamentoFlashDAO.getInstace().mostrarServicos();
 	}
+
+
+
 }

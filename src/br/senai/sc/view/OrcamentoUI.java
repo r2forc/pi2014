@@ -28,6 +28,8 @@ import br.senai.sc.control.OrcamentoFlashControl;
 import br.senai.sc.control.ServicoControl;
 import br.senai.sc.dao.OrcamentoFlashDAO;
 import br.senai.sc.model.Cliente;
+import br.senai.sc.model.OrcamentoFlash;
+import br.senai.sc.model.Servico;
 import br.senai.sc.utils.OrcamentoFlashTableModel;
 import br.senai.sc.utils.ServicoTableModel;
 
@@ -73,6 +75,7 @@ public class OrcamentoUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public OrcamentoUI() {
+		
 		setClosable(true);
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);
@@ -174,6 +177,30 @@ public class OrcamentoUI extends JInternalFrame {
 		JLabel jlCopias = new JLabel("Quantidade de C\u00F3pias:");
 		
 		JButton btnAdicionar = new JButton("Adicionar");
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Servico serv = new Servico();
+				try {
+					serv.setDescricao(new ServicoControl().showAllServicos().get(jtListaServicos.getSelectedRow()).getDescricao());
+					serv.setValorUnt(new ServicoControl().showAllServicos().get(jtListaServicos.getSelectedRow()).getValorUnt());
+					serv.setOriginais(Integer.parseInt(jtfOriginais.getText()));
+					serv.setCopias(Integer.parseInt(jtfQuantidadeCopias.getText()));
+					new OrcamentoFlashControl().inserirServico(serv);
+					jtOrcamentoFlash.setModel(new OrcamentoFlashTableModel( 
+							new OrcamentoFlashControl().showAllOrcamento() ) );
+					Double valorTotal = 0.0;
+					OrcamentoFlash of = new OrcamentoFlashControl().showAllOrcamento();
+					for(int i = 0; i < of.getServicos().size(); i++){
+						valorTotal += (of.getServico(i).getValorUnt() * (of.getServico(i).getCopias() * of.getServico(i).getOriginais()));
+					}
+					tfValorTotal.setText(valorTotal.toString());
+					
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		
 		jtfQuantidadeCopias = new JTextField();
 		jtfQuantidadeCopias.setText("1");
@@ -192,6 +219,13 @@ public class OrcamentoUI extends JInternalFrame {
 		tfValorTotal.setColumns(10);
 		
 		JButton jbSalvar = new JButton("Salvar");
+		jbSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				jtOrcamentoFlash.setModel(new OrcamentoFlashTableModel( 
+						new OrcamentoFlashControl().showAllOrcamento() ) );
+			}
+		});
 		
 		JButton btCancelar = new JButton("Cancelar");
 		

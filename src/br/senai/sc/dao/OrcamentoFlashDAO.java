@@ -16,7 +16,7 @@ import br.senai.sc.model.Servico;
 
 public class OrcamentoFlashDAO {
 	private static OrcamentoFlashDAO instance;
-	private OrcamentoFlash orcamentoFlash = new OrcamentoFlash();
+	private static OrcamentoFlash orcamentoFlash = new OrcamentoFlash();
 
 	public static OrcamentoFlashDAO getInstace() {
 		if (instance == null) {
@@ -24,7 +24,7 @@ public class OrcamentoFlashDAO {
 		}
 		return instance;
 	}
-
+	
 	public void insertCliente(Cliente cliente) {
 		orcamentoFlash.setCliente(cliente);
 	}
@@ -39,6 +39,10 @@ public class OrcamentoFlashDAO {
 	
 	public OrcamentoFlash mostrarOrcamento(){
 		return orcamentoFlash;
+	}
+	
+	public void InserirServico(Servico serivo){
+		orcamentoFlash.inserirServico(serivo);
 	}
 	
 	public void editOrcamento(Orcamento orcamento) {
