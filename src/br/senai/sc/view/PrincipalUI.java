@@ -41,7 +41,7 @@ public class PrincipalUI extends JFrame {
 				try {
 					PrincipalUI frame = obterInstancia();
 					frame.setVisible(true);
-					UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -85,7 +85,6 @@ public class OrcamentoFlashDAO {
 			   stmt.setInt(4, orcamentoFlash.getServicos().get(i).getCopias());
 			   total = (orcamentoFlash.getServicos().get(i).getOriginais() * orcamentoFlash.getServicos().get(i).getCopias()) * orcamentoFlash.getServicos().get(i).getValorUnt();
 			   stmt.setDouble(5, total);
-			   System.out.println(stmt);
 			   stmt.execute();
 		   }
 		    
