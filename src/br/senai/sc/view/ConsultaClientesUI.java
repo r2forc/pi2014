@@ -166,19 +166,6 @@ public class ConsultaClientesUI extends JInternalFrame {
 		});
 		
 		JScrollPane scrollPane = new JScrollPane();
-		
-		JButton jbAtualizar = new JButton("Atualizar");
-		jbAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					jtConsultaCliente.setModel(new ClienteTableModel( 
-							new ClienteControl().showAllClientes() ) );
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -193,9 +180,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 							.addGap(47)
 							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
 							.addGap(44)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addGap(35)
-							.addComponent(jbAtualizar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1171, GroupLayout.PREFERRED_SIZE)))
@@ -212,8 +197,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNovo)
 						.addComponent(btnAlterar)
-						.addComponent(btnNewButton)
-						.addComponent(jbAtualizar))
+						.addComponent(btnNewButton))
 					.addGap(69))
 		);
 		

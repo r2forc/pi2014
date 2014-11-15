@@ -15,8 +15,8 @@ public class ClienteControl {
 
 	public boolean insertCliente(Cliente cliente) throws SQLException {
 			try{
-				if (cliente.getNome().equals(""))
-					throw new Exception("Digite o campo Nome");
+				if (cliente.getNome().equals("") || cliente.getNome().length() > 45 || cliente.getNome().length() < 3)
+					throw new Exception("Digite um nome Válido");
 				
 				ValidaCpf validacaoCPF = new ValidaCpf();
 				if (validacaoCPF.isCPF(cliente.getCpf()) == false)
