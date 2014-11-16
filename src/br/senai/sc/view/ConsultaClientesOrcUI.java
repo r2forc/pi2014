@@ -31,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 public class ConsultaClientesOrcUI extends JInternalFrame {
 	private JTextField jtfFiltro;
@@ -57,7 +58,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaClientesOrcUI() {
-		setClosable(true);
+		setFrameIcon(new ImageIcon(ConsultaClientesOrcUI.class.getResource("/br/senai/sc/icons/fornecedores.png")));
 		setTitle("Consultar Clientes");
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);

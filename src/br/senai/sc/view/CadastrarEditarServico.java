@@ -53,7 +53,6 @@ public class CadastrarEditarServico extends JInternalFrame {
 	 */
 	public CadastrarEditarServico(final Servico serv) {
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		setClosable(true);
 		setBounds(100, 100, 494, 180);
 		
 		JLabel jlDescricao = new JLabel("Descricao");
@@ -83,7 +82,10 @@ public class CadastrarEditarServico extends JInternalFrame {
 						s.setDescricao(jtfDescricao.getText());
 						if(jtfValor.getText().equals(""))
 							throw new Exception("Digite um valor válido");
-						s.setValorUnt(Double.parseDouble(jtfValor.getText()));
+						Double valor = Double.parseDouble(jtfValor.getText());
+						s.setValorUnt(valor);
+						if( valor < 0.0)
+							throw new Exception("Digite um valor válido");
 						s.setId(serv.getId());
 						ServicoControl sc = new ServicoControl();
 						if(sc.editServico(s))
@@ -101,7 +103,10 @@ public class CadastrarEditarServico extends JInternalFrame {
 					s.setDescricao(jtfDescricao.getText());
 					if(jtfValor.getText().equals(""))
 						throw new Exception("Digite um valor válido");
-					s.setValorUnt(Double.parseDouble(jtfValor.getText()));
+					Double valor = Double.parseDouble(jtfValor.getText());
+					s.setValorUnt(valor);
+					if( valor < 0.0)
+						throw new Exception("Digite um valor válido");
 					ServicoControl sc = new ServicoControl();
 					if(sc.insertServico( s ))
 					dispose();

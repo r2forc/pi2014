@@ -32,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 public class ConsultaClientesUI extends JInternalFrame {
 	private JTextField jtfFiltro;
@@ -58,7 +59,8 @@ public class ConsultaClientesUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaClientesUI() {
-		setClosable(true);
+		setFrameIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/fornecedores.png")));
+		
 		setTitle("Consultar Clientes");
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);
@@ -166,6 +168,13 @@ public class ConsultaClientesUI extends JInternalFrame {
 		});
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -180,7 +189,9 @@ public class ConsultaClientesUI extends JInternalFrame {
 							.addGap(47)
 							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
 							.addGap(44)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addGap(48)
+							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1171, GroupLayout.PREFERRED_SIZE)))
@@ -197,7 +208,8 @@ public class ConsultaClientesUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNovo)
 						.addComponent(btnAlterar)
-						.addComponent(btnNewButton))
+						.addComponent(btnNewButton)
+						.addComponent(btnCancelar))
 					.addGap(69))
 		);
 		

@@ -51,7 +51,6 @@ public class CadastrarEditarCliente extends JInternalFrame {
 	 */
 	public CadastrarEditarCliente(final Cliente cli) throws ParseException {
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		setClosable(true);
 		setBounds(100, 100, 600, 241);
 		
 		JLabel jlNome = new JLabel("Nome:");

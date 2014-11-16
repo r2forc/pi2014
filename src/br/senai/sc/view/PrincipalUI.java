@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -15,6 +16,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PrincipalUI extends JFrame {
 
@@ -166,6 +170,22 @@ public class PrincipalUI extends JFrame {
 				}
 			}
 		});
+		
+		JMenuItem mntmCadastrarClientes = new JMenuItem("Cadastrar Clientes");
+		mntmCadastrarClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					CadastrarEditarCliente cec = new CadastrarEditarCliente(null);
+					cec.setFocusable(true);
+					getContentPane().add(cec, 0);
+					cec.requestFocus();
+					cec.setVisible(true);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		mnClientes.add(mntmCadastrarClientes);
 		mnClientes.add(mntmConsultarClientes);
 
 		JMenu mnServios = new JMenu("Servi\u00E7os");
@@ -186,10 +206,28 @@ public class PrincipalUI extends JFrame {
 				}
 			}
 		});
+		
+		JMenuItem mntmCadastrarServio = new JMenuItem("Cadastrar Servi\u00E7o");
+		mntmCadastrarServio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CadastrarEditarServico ces = new CadastrarEditarServico(null);
+				ces.setFocusable(true);
+				getContentPane().add(ces, 0);
+				ces.requestFocus();
+				ces.setVisible(true);
+			}
+		});
+		mnServios.add(mntmCadastrarServio);
 		mnServios.add(jmiConsultarServicos);
-
-		JMenu mnSair = new JMenu("Sair");
-		menuBar.add(mnSair);
+		
+		JLabel jlSair = new JLabel("Sair");
+		jlSair.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+			}
+		});
+		menuBar.add(jlSair);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
