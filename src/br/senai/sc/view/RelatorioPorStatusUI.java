@@ -21,7 +21,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import br.senai.sc.control.ClienteControl;
+import br.senai.sc.control.RelatorioControl;
 import br.senai.sc.model.Cliente;
+import br.senai.sc.utils.ClienteTableModel;
+import br.senai.sc.utils.RelatorioTableModel;
 
 public class RelatorioPorStatusUI extends JInternalFrame {
 	private JTable jtTabelaStatus;
@@ -29,8 +32,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 	private JComboBox jcbCliente_1;
 	private JTextField tfDataInicial;
 	private JTextField tfDataFinal;
-	
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -38,7 +40,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RelatorioPorStatusUI frame = new RelatorioPorStatusUI(); 
+					RelatorioPorStatusUI frame = new RelatorioPorStatusUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,8 +51,9 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
+	 * 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
 	public RelatorioPorStatusUI() throws ClassNotFoundException, SQLException {
 		setClosable(true);
@@ -92,8 +95,8 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		JButton btnImprimir = new JButton("Imprimir");
 
 		JLabel lblNewLabel = new JLabel("Cliente:");
-		
-		//COMBO BOX CLIENTE
+
+		// COMBO BOX CLIENTE
 		JComboBox jcbCliente = new JComboBox();
 		listaClientes = new ClienteControl().showAllClientes();
 		jcbCliente_1 = new JComboBox<Cliente>();
@@ -102,90 +105,140 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 			modelCliente.addElement(cliente);
 		}
 		jcbCliente_1.setModel(modelCliente);
-		
+
 		JLabel lblDataInicial = new JLabel("Data Inicial:");
-		
+
 		tfDataInicial = new JTextField();
 		tfDataInicial.setColumns(10);
-		
+
 		JLabel lblDataFinal = new JLabel("Data Final:");
-		
+
 		tfDataFinal = new JTextField();
 		tfDataFinal.setColumns(10);
-		
-		
-		
-		
+
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1148, Short.MAX_VALUE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNewLabel)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jcbCliente_1, GroupLayout.PREFERRED_SIZE, 438, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblStatus)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(jcbStatus, 0, 171, Short.MAX_VALUE)
-							.addGap(18)
-							.addComponent(lblDataInicial)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(tfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblDataFinal)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(tfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnImprimir, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnPesquisar)
-						.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblStatus)
-						.addComponent(lblNewLabel)
-						.addComponent(jcbCliente_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDataInicial)
-						.addComponent(tfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDataFinal)
-						.addComponent(tfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 385, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnImprimir, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-					.addGap(46))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addComponent(
+														scrollPane,
+														GroupLayout.DEFAULT_SIZE,
+														1148, Short.MAX_VALUE)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addComponent(
+																		lblNewLabel)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		jcbCliente_1,
+																		GroupLayout.PREFERRED_SIZE,
+																		438,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(18)
+																.addComponent(
+																		lblStatus)
+																.addPreferredGap(
+																		ComponentPlacement.UNRELATED)
+																.addComponent(
+																		jcbStatus,
+																		0,
+																		171,
+																		Short.MAX_VALUE)
+																.addGap(18)
+																.addComponent(
+																		lblDataInicial)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		tfDataInicial,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		lblDataFinal)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		tfDataFinal,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(18)
+																.addComponent(
+																		btnPesquisar,
+																		GroupLayout.PREFERRED_SIZE,
+																		106,
+																		GroupLayout.PREFERRED_SIZE))
+												.addComponent(
+														btnImprimir,
+														Alignment.TRAILING,
+														GroupLayout.PREFERRED_SIZE,
+														125,
+														GroupLayout.PREFERRED_SIZE))
+								.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(btnPesquisar)
+												.addComponent(
+														jcbStatus,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblStatus)
+												.addComponent(lblNewLabel)
+												.addComponent(
+														jcbCliente_1,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblDataInicial)
+												.addComponent(
+														tfDataInicial,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblDataFinal)
+												.addComponent(
+														tfDataFinal,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(scrollPane,
+										GroupLayout.PREFERRED_SIZE, 385,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnImprimir,
+										GroupLayout.PREFERRED_SIZE, 46,
+										GroupLayout.PREFERRED_SIZE).addGap(46)));
 
 		jtTabelaStatus = new JTable();
-		jtTabelaStatus.setModel(new DefaultTableModel(new Object[][] {
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null }, },
-				new String[] { "Cliente", "Status", "Data", "Valor" }) {
-			Class[] columnTypes = new Class[] { String.class, String.class,
-					String.class, Double.class };
 
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
+		try {
+			jtTabelaStatus.setModel(new RelatorioTableModel(
+					new RelatorioControl().showAllRelatorios()));
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-			boolean[] columnEditables = new boolean[] { false, false, false,
-					false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
 		jtTabelaStatus.getColumnModel().getColumn(0).setResizable(false);
 		jtTabelaStatus.getColumnModel().getColumn(0).setPreferredWidth(100);
 		jtTabelaStatus.getColumnModel().getColumn(1).setResizable(false);
