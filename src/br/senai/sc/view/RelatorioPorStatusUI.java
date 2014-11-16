@@ -1,31 +1,24 @@
 package br.senai.sc.view;
 
 import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-
-import java.awt.Color;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
-
 import java.awt.SystemColor;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
 
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.model.Cliente;
@@ -45,7 +38,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RelatorioPorStatusUI frame = new RelatorioPorStatusUI();
+					RelatorioPorStatusUI frame = new RelatorioPorStatusUI(); 
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

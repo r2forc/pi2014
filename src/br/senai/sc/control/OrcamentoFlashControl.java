@@ -5,11 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import br.senai.sc.dao.OrcamentoDAO;
 import br.senai.sc.dao.OrcamentoFlashDAO;
-import br.senai.sc.dao.ServicoDAO;
 import br.senai.sc.model.Cliente;
-import br.senai.sc.model.Orcamento;
 import br.senai.sc.model.OrcamentoFlash;
 import br.senai.sc.model.Servico;
 
