@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import br.senai.sc.dao.OrcamentoDAO;
-
-import br.senai.sc.model.Cliente;
 import br.senai.sc.model.Orcamento;
-import br.senai.sc.model.Servico;
 
 public class OrcamentoControl {
 

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.senai.sc.model.Cliente;
 import br.senai.sc.model.ConnectionUtil;
 import br.senai.sc.model.OrdemServico;
 

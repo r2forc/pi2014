@@ -1,11 +1,14 @@
 package br.senai.sc.control;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.senai.sc.model.Orcamento;
+import br.senai.sc.dao.RelatorioDAO;
+import br.senai.sc.model.RelatorioStatus;
 
 public class RelatorioControl {
-	public ArrayList<Orcamento> showAllOrcamentos(){
-		return RelatorioDao.getInstace().showFilterOcamento(value);
+	public ArrayList<RelatorioStatus> showAllRelatorios()
+			throws ClassNotFoundException, SQLException {
+		return RelatorioDAO.getInstance().showAllOrcamentos();
 	}
 }
