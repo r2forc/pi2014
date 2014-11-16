@@ -163,9 +163,16 @@ public class OrcamentoUI extends JInternalFrame {
 					OrcamentoFlashDAO of = new OrcamentoFlashDAO();
 					
 					for(int i = 0; i < of.getInstace().mostrarServicos().size(); i++){
-						valorTotal += (of.getInstace().mostrarServico(i).getValorUnt() * (of.getInstace().mostrarServico(i).getCopias() * of.getInstace().mostrarServico(i).getOriginais()));
+						valorTotal += ((of.getInstace().mostrarServico(i).getValorUnt() * (of.getInstace().mostrarServico(i).getCopias()) * of.getInstace().mostrarServico(i).getOriginais()));
 					}
-					tfValorTotal.setText(valorTotal.toString());
+					
+					if(valorTotal.toString().length() > 7){
+						String[] valorDivido = valorTotal.toString().split("\\.");
+						valorDivido[1] = valorDivido[1].substring(0, 2);
+						tfValorTotal.setText(valorDivido[0] + "." + valorDivido[1] );
+					}else{
+					tfValorTotal.setText( valorTotal.toString() );
+					}
 					
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null,"Numero inválidos");
@@ -231,7 +238,13 @@ public class OrcamentoUI extends JInternalFrame {
 				for(int i = 0; i < of.getInstace().mostrarServicos().size(); i++){
 					valorTotal += (of.getInstace().mostrarServico(i).getValorUnt() * (of.getInstace().mostrarServico(i).getCopias() * of.getInstace().mostrarServico(i).getOriginais()));
 				}
-				tfValorTotal.setText(valorTotal.toString());
+				if(valorTotal.toString().length() > 7){
+					String[] valorDivido = valorTotal.toString().split("\\.");
+					valorDivido[1] = valorDivido[1].substring(0, 2);
+					tfValorTotal.setText(valorDivido[0] + "." + valorDivido[1] );
+				}else{
+				tfValorTotal.setText( valorTotal.toString() );
+				}
 				}catch(Exception e){
 					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
@@ -361,7 +374,7 @@ public class OrcamentoUI extends JInternalFrame {
 		
 		jtListaServicos = new JTable();
 		jtListaServicos.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg0) {
+			public void mousePressed(MouseEvent arg0) {
 				try {
 					jtfValorUnitario.setText(new ServicoControl().showAllServicos().get(jtListaServicos.getSelectedRow()).getValorUnt().toString());
 					jtfOriginais.setText("1");
@@ -370,6 +383,7 @@ public class OrcamentoUI extends JInternalFrame {
 					e.printStackTrace();
 				}
 			}
+
 		});
 		spListaClientes.setViewportView(jtListaServicos);
 		try {
