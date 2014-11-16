@@ -133,6 +133,15 @@ public class OrcamentoUI extends JInternalFrame {
 		jtfServico.setColumns(10);
 		
 		JButton jbProcurarServicos = new JButton("");
+		jbProcurarServicos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					jtListaServicos.setModel(new ServicoTableModel( new ServicoControl().showFilterServicos(jtfServico.getText()) ) );
+				} catch (ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+				}	
+			}
+		});
 		jbProcurarServicos.setIcon(new ImageIcon(OrcamentoUI.class.getResource("/br/senai/sc/icons/search.png")));
 		
 		JScrollPane spListaClientes = new JScrollPane();
@@ -156,18 +165,15 @@ public class OrcamentoUI extends JInternalFrame {
 					serv.setOriginais(Integer.parseInt(jtfOriginais.getText()));
 					serv.setCopias(Integer.parseInt(jtfQuantidadeCopias.getText()));
 					new OrcamentoFlashControl().inserirServico(serv);
-					jtOrcamentoFlash.setModel(new OrcamentoFlashTableModel( 
-							new OrcamentoFlashControl().showAllOrcamento() ) );
+					jtOrcamentoFlash.setModel(new OrcamentoFlashTableModel( new OrcamentoFlashControl().showAllOrcamento() ) );
 					Double valorTotal = 0.0;
 					OrcamentoFlash of = new OrcamentoFlashControl().showAllOrcamento();
-					
 					for(int i = 0; i < of.getServicos().size(); i++){
 						valorTotal += (of.getServico(i).getValorUnt() * (of.getServico(i).getCopias() * of.getServico(i).getOriginais()));
 					}
 					tfValorTotal.setText(valorTotal.toString());
 					
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -312,9 +318,8 @@ public class OrcamentoUI extends JInternalFrame {
 		
 		jtOrcamentoFlash = new JTable();
 		
-			jtOrcamentoFlash.setModel(new OrcamentoFlashTableModel( 
-					new OrcamentoFlashControl().showAllOrcamento() ) );
-		
+		jtOrcamentoFlash.setModel(new OrcamentoFlashTableModel( new OrcamentoFlashControl().showAllOrcamento() ) );
+					
 		jtOrcamentoFlash.getColumnModel().getColumn(0).setResizable(false);
 		jtOrcamentoFlash.getColumnModel().getColumn(1).setResizable(false);
 		jtOrcamentoFlash.getColumnModel().getColumn(2).setResizable(false);
@@ -324,25 +329,18 @@ public class OrcamentoUI extends JInternalFrame {
 		
 		jtListaServicos = new JTable();
 		jtListaServicos.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
 					jtfValorUnitario.setText(new ServicoControl().showAllServicos().get(jtListaServicos.getSelectedRow()).getValorUnt().toString());
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
 		spListaClientes.setViewportView(jtListaServicos);
 		try {
-			jtListaServicos.setModel(new ServicoTableModel( 
-					new ServicoControl().showAllServicos() ) );
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			jtListaServicos.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );	
+		}  catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		jtListaServicos.getColumnModel().getColumn(0).setResizable(false);

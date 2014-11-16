@@ -262,13 +262,9 @@ public class ConsultaClientesUI extends JInternalFrame {
 				try {
 					jtConsultaCliente.setModel(new ClienteTableModel( 
 							new ClienteControl().showFilterClientes(jcbTipoFiltro.getSelectedItem().toString() ,jtfFiltro.getText() ) ) );
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
+				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} 
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);

@@ -3,25 +3,24 @@ package br.senai.sc.view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyVetoException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class PrincipalUI extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static PrincipalUI instancia;
 
@@ -82,7 +81,6 @@ public class PrincipalUI extends JFrame {
 					getContentPane().add(ordemServico, 0);
 					getContentPane().add(ordemServico);
 				} catch (ClassNotFoundException | SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -100,7 +98,6 @@ public class PrincipalUI extends JFrame {
 					orcamento.requestFocus();
 					orcamento.setVisible(true);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -120,7 +117,6 @@ public class PrincipalUI extends JFrame {
 					getContentPane().add(ConsultaOS, 0);
 					getContentPane().add(ConsultaOS);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -165,7 +161,6 @@ public class PrincipalUI extends JFrame {
 					cc.requestFocus();
 					cc.setVisible(true);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
