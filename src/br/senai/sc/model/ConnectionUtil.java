@@ -11,7 +11,7 @@ public class ConnectionUtil {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/r2forc";
-			con = DriverManager.getConnection(url, "root", "26051993");
+			con = DriverManager.getConnection(url, "root", "fabricio14");
 			con.setAutoCommit(false);
 			return con;
 		} catch (ClassNotFoundException e) {
