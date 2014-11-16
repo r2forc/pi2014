@@ -86,7 +86,6 @@ public class ConsultaClientesUI extends JInternalFrame {
 					    	try {
 								jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
 							} catch (ClassNotFoundException | SQLException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}	
 					    }		
