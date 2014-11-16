@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class OrcamentoFlash extends OrdemServico {
 	private Cliente cliente = new Cliente();
-	private static ArrayList<Servico> servicos = new ArrayList<Servico>();
+	private ArrayList<Servico> servicos = new ArrayList<Servico>();
 	private Date data;
 	private Double valorTotal;
 
@@ -31,11 +31,11 @@ public class OrcamentoFlash extends OrdemServico {
 		this.servicos.add(servicoAdd);
 	}
 	
-	public static Servico getServico(int posicao) {
+	public  Servico getServico(int posicao) {
 		return servicos.get(posicao);
 	}
 	
-	public static ArrayList<Servico>  getServicos() {
+	public  ArrayList<Servico>  getServicos() {
 		return servicos;
 	}
 

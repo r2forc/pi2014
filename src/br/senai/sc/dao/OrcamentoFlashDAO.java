@@ -38,8 +38,16 @@ public class OrcamentoFlashDAO {
 		return orcamentoFlash.getCliente().getNome();
 	}
 	
+	public String mostrarDescricao() {
+		return orcamentoFlash.getDescricao();
+	}
+	
 	public ArrayList<Servico> mostrarServicos(){
 		return orcamentoFlash.getServicos();
+	}
+	
+	public Servico mostrarServico(int i){
+		return orcamentoFlash.getServico(i);
 	}
 	
 	public OrcamentoFlash mostrarOrcamento(){
@@ -50,11 +58,15 @@ public class OrcamentoFlashDAO {
 		orcamentoFlash.inserirServico(serivo);
 	}
 	
+	public void InserirServicos(ArrayList<Servico> servico){
+		orcamentoFlash.setServicos(null);
+	}
+	
 	public void RemoverServico(int i){
 		orcamentoFlash.removerServico(i);
 	}
 	
-	public void SalvarNoBanco(Double valorTotal) throws SQLException{
+	public void SalvarNoBanco(Double valorTotal, String descricao) throws SQLException{
 		try {
 			String query = "INSERT INTO orcamento (data, cliente_id, usuario_id, descricao, valorTotal, status) "
 					+ "values (?, ?, ?, ?, ?, ?)";
@@ -64,7 +76,7 @@ public class OrcamentoFlashDAO {
 			stmt.setString(1, sdf.format(data));
 			stmt.setInt(2, orcamentoFlash.getCliente().getId());
 			stmt.setInt(3, 1);
-			stmt.setString(4, "Descrição");
+			stmt.setString(4, descricao);
 			stmt.setDouble(5, valorTotal);
 			stmt.setInt(6, 0);
 			stmt.execute();

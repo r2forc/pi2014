@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import br.senai.sc.dao.OrcamentoFlashDAO;
 import br.senai.sc.model.OrcamentoFlash;
 import br.senai.sc.model.Servico;
 
@@ -53,17 +54,19 @@ public class OrcamentoFlashTableModel extends AbstractTableModel {
 
 	public Object getValueAt(int row, int column) {
 		// Precisamos retornar o valor da coluna column e da linha row.
-		Servico orcamentoFlash = valores.getServicos().get(row);
+		//Servico orcamentoFlash = valores.getServicos().get(row);
+		OrcamentoFlashDAO of = new OrcamentoFlashDAO();
+		
 		if (column == COL_DESCRICAO)
-			return OrcamentoFlash.getServico(row).getDescricao();
+			return of.getInstace().mostrarServico(row).getDescricao();
 		else if (column == COL_VALORUNT)
-			return OrcamentoFlash.getServico(row).getValorUnt();
+			return of.getInstace().mostrarServico(row).getValorUnt();
 		else if (column == COL_ORIGINAIS)
-			return OrcamentoFlash.getServico(row).getOriginais();
+			return of.getInstace().mostrarServico(row).getOriginais();
 		else if (column == COL_COPIAS)
-			return OrcamentoFlash.getServico(row).getCopias();
+			return of.getInstace().mostrarServico(row).getCopias();
 		else if (column == COL_VALORTOAL)
-			return ((OrcamentoFlash.getServico(row).getCopias() * OrcamentoFlash.getServico(row).getOriginais()) * OrcamentoFlash.getServico(row).getValorUnt());
+			return ((of.getInstace().mostrarServico(row).getCopias() * of.getInstace().mostrarServico(row).getOriginais()) * of.getInstace().mostrarServico(row).getValorUnt());
 		
 		return ""; // Nunca deve ocorrer
 	}
@@ -73,14 +76,15 @@ public class OrcamentoFlashTableModel extends AbstractTableModel {
 		// Vamos alterar o valor da coluna columnIndex na linha rowIndex com o
 		// valor aValue passado no parâmetro.
 		// Note que vc poderia alterar 2 campos ao invés de um só.
+		OrcamentoFlash of = new OrcamentoFlash();
 		if (columnIndex == COL_DESCRICAO)
-			OrcamentoFlash.getServico(rowIndex).setDescricao(aValue.toString());
+			of.getServico(rowIndex).setDescricao(aValue.toString());
 		else if (columnIndex == COL_VALORUNT)
-			OrcamentoFlash.getServico(rowIndex).setValorUnt(Double.parseDouble(aValue.toString()));
+			of.getServico(rowIndex).setValorUnt(Double.parseDouble(aValue.toString()));
 		else if (columnIndex == COL_ORIGINAIS)
-			OrcamentoFlash.getServico(rowIndex).setOriginais(Integer.parseInt(aValue.toString()));
+			of.getServico(rowIndex).setOriginais(Integer.parseInt(aValue.toString()));
 		else if (columnIndex == COL_COPIAS)
-			OrcamentoFlash.getServico(rowIndex).setCopias(Integer.parseInt(aValue.toString()));
+			of.getServico(rowIndex).setCopias(Integer.parseInt(aValue.toString()));
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
