@@ -1,5 +1,6 @@
 package br.senai.sc.utils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class ServicoTableModel extends AbstractTableModel {
 			servico.setDescricao(aValue.toString());
 		else if (columnIndex == COL_VALORUNT)
 			servico.setValorUnt(Double.parseDouble(aValue.toString()));
+		
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {

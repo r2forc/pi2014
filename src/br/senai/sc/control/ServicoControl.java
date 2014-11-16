@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-
 import br.senai.sc.dao.ServicoDAO;
 import br.senai.sc.model.Servico;
 
@@ -23,23 +22,32 @@ public class ServicoControl {
 		ServicoDAO.getInstace().deleteServico(id);
 	}
 	
-	public void insertServico(Servico servico) throws SQLException {
-		if (servico.getDescricao().equals("")) {
-			JOptionPane.showMessageDialog(null, "Descrição Obrigatorio!");
-		} else if (servico.getValorUnt().equals("")) {
-			JOptionPane.showMessageDialog(null, "Valor Unitário Obrigatorio!");
-		}  else {
+	public boolean insertServico(Servico servico) throws SQLException {
+		try{
+			if (servico.getDescricao().equals("") || servico.getDescricao().length() < 3 || servico.getDescricao().length() > 45) 
+				throw new Exception("Descrição inválida");
+			if (servico.getValorUnt().equals("") || servico.getValorUnt().equals("0.0"))
+				throw new NumberFormatException("Valor inválido");
 			ServicoDAO.getInstace().insertServico(servico);
+			return true;
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			return false;
 		}
 	}
 
-	public void editServico(Servico servico) throws SQLException {
-		if (servico.getDescricao().equals("")) {
-			JOptionPane.showMessageDialog(null, "Descrição Obrigatorio!");
-		} else if (servico.getValorUnt().equals("")) {
-			JOptionPane.showMessageDialog(null, "Valor Unitário Obrigatorio!");
-		}  else {
+	public boolean editServico(Servico servico) throws SQLException {
+		try{
+			if (servico.getDescricao().equals("") || servico.getDescricao().length() < 3 || servico.getDescricao().length() > 45) 
+				throw new Exception("Descrição inválida");
+			if (servico.getValorUnt().equals("") || servico.getValorUnt().equals("0.0"))
+				throw new NumberFormatException("Valor inválido");
+		
 			ServicoDAO.getInstace().editServico(servico);
+			return true;
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			return false;
 		}
 	}
 }

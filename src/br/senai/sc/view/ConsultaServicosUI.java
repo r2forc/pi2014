@@ -58,8 +58,10 @@ public class ConsultaServicosUI extends JInternalFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public ConsultaServicosUI() {
+	public ConsultaServicosUI() throws ClassNotFoundException, SQLException {
 		setClosable(true);
 		setTitle("Consultar Servi\u00E7os");
 		setBorder(null);
@@ -109,98 +111,67 @@ public class ConsultaServicosUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				Servico serv = null;
 				try {
-					serv = (Servico) new ServicoTableModel(
-							new ServicoControl().showAllServicos())
-								.get(jtConsultaServico.getSelectedRow());
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					if(jtConsultaServico.getSelectedRow() == -1)
+						throw new Exception("Selecione um Serviço");
+					serv = (Servico) new ServicoTableModel( new ServicoControl().showAllServicos()).get(jtConsultaServico.getSelectedRow());
+					CadastrarEditarServico ces = new CadastrarEditarServico(serv);
+					PrincipalUI.obterInstancia().getContentPane().add(ces);
+					ces.setFocusable(true);
+					ces.moveToFront();
+					getContentPane().add(ces, 0);
+					ces.requestFocus();
+					ces.setVisible(true);
+					ces.addInternalFrameListener(new InternalFrameListener() {  
+					    public void internalFrameClosed(InternalFrameEvent e) { 
+					    	try { 
+					    		jtConsultaServico.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );
+					    	}
+					    	catch (ClassNotFoundException | SQLException e1) {	
+					    		e1.printStackTrace(); 
+					    	}
+					    }
+					    public void internalFrameActivated(InternalFrameEvent arg0) {}
+						public void internalFrameClosing(InternalFrameEvent arg0) {}
+						public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+						public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+						public void internalFrameIconified(InternalFrameEvent arg0) {}
+						public void internalFrameOpened(InternalFrameEvent arg0) {}  
+					});
+	
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
-				
-				CadastrarEditarServico ces = new CadastrarEditarServico(serv);
-				PrincipalUI.obterInstancia().getContentPane().add(ces);
-				ces.setFocusable(true);
-				ces.moveToFront();
-				getContentPane().add(ces, 0);
-				ces.requestFocus();
-				ces.setVisible(true);
-				
-				ces.addInternalFrameListener(new InternalFrameListener() {  
-				    public void internalFrameClosed(InternalFrameEvent e) { 
-				    	try { 
-				    		jtConsultaServico.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );
-				    	}
-				    	catch (ClassNotFoundException | SQLException e1) {	
-				    		e1.printStackTrace(); 
-				    	}
-				    }
-				    public void internalFrameActivated(InternalFrameEvent arg0) {}
-					public void internalFrameClosing(InternalFrameEvent arg0) {}
-					public void internalFrameDeactivated(InternalFrameEvent arg0) {}
-					public void internalFrameDeiconified(InternalFrameEvent arg0) {}
-					public void internalFrameIconified(InternalFrameEvent arg0) {}
-					public void internalFrameOpened(InternalFrameEvent arg0) {}  
-				});
-				
 			}
 		});
 		
 		JButton btnNewButton = new JButton("Exluir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+				if(jtConsultaServico.getSelectedRow() == -1)
+					throw new Exception("Selecione um Serviço");
+				
 				int opcao = JOptionPane.showConfirmDialog(null, 
 						"Deseja excluir o serviço selecionado?", 
 						"Excluir Serviço", 
 						JOptionPane.YES_NO_OPTION);
 				if ( opcao == 0){
 					Servico ser = null;
-					try {
-						ser = (Servico) new ServicoTableModel(
-								new ServicoControl().showAllServicos())
-									.get(jtConsultaServico.getSelectedRow());
-					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
+					ser = (Servico) new ServicoTableModel( new ServicoControl().showAllServicos()).get(jtConsultaServico.getSelectedRow());
 					ServicoControl sc = new ServicoControl();
-					try {
-						sc.deleteServico(ser.getId());
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
+					sc.deleteServico(ser.getId());
+					jtConsultaServico.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );
+				} 
 				}
-				try {
-					jtConsultaServico.setModel(new ServicoTableModel( 
-							new ServicoControl().showAllServicos() ) );
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
 			}
 		});
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-		
-		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					jtConsultaServico.setModel(new ServicoTableModel( 
-							new ServicoControl().showAllServicos() ) );
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -218,9 +189,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 							.addGap(47)
 							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
 							.addGap(44)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addGap(31)
-							.addComponent(btnAtualizar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -234,23 +203,15 @@ public class ConsultaServicosUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNovo)
 						.addComponent(btnAlterar)
-						.addComponent(btnNewButton)
-						.addComponent(btnAtualizar))
+						.addComponent(btnNewButton))
 					.addGap(69))
 		);
 		
 		jtConsultaServico = new JTable();
 		scrollPane.setViewportView(jtConsultaServico);
-		try {
-			jtConsultaServico.setModel(new ServicoTableModel( 
-					new ServicoControl().showAllServicos() ) );
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		jtConsultaServico.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );
+					
 		jtConsultaServico.getColumnModel().getColumn(0).setResizable(false);
 		jtConsultaServico.getColumnModel().getColumn(0).setPreferredWidth(200);
 		jtConsultaServico.getColumnModel().getColumn(1).setResizable(false);

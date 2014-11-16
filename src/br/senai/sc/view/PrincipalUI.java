@@ -175,16 +175,13 @@ public class PrincipalUI extends JFrame {
 				"Consultar Servi\u00E7os");
 		jmiConsultarServicos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ConsultaServicosUI cs = new ConsultaServicosUI();
-				;
 				try {
-					cs.setVisible(true);
+					ConsultaServicosUI cs = new ConsultaServicosUI();
 					cs.setFocusable(true);
-					cs.requestFocus();
 					getContentPane().add(cs, 0);
-					getContentPane().add(cs);
+					cs.requestFocus();
+					cs.setVisible(true);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

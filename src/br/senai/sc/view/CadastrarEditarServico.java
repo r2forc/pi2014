@@ -13,13 +13,20 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.text.ParseException;
 
 import javax.swing.border.EtchedBorder;
 
 
-import br.senai.sc.control.ServicoControl;
 
+
+
+import br.senai.sc.control.ServicoControl;
 import br.senai.sc.model.Servico;
+import br.senai.sc.utils.MaskFields;
+
+import javax.swing.JFormattedTextField;
 
 public class CadastrarEditarServico extends JInternalFrame {
 	private JTextField jtfDescricao;
@@ -53,12 +60,12 @@ public class CadastrarEditarServico extends JInternalFrame {
 		
 		jtfDescricao = new JTextField();
 		jtfDescricao.setColumns(10);
-
-		JLabel jlValor = new JLabel("Valor");
 		
 		jtfValor = new JTextField();
 		jtfValor.setColumns(10);
 		
+		JLabel jlValor = new JLabel("Valor");
+
 		if (serv != null ){
 			jtfDescricao.setText(serv.getDescricao());
 			jtfValor.setText(serv.getValorUnt().toString());
@@ -71,29 +78,40 @@ public class CadastrarEditarServico extends JInternalFrame {
 				
 				if ( serv != null){
 					//Editar
-					serv.setDescricao(jtfDescricao.getText());
-					serv.setValorUnt(Double.parseDouble(jtfValor.getText()));
-					ServicoControl sc = new ServicoControl();
 					try {
-						sc.editServico( serv );
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
+						Servico s = new Servico();
+						s.setDescricao(jtfDescricao.getText());
+						if(jtfValor.getText().equals(""))
+							throw new Exception("Digite um valor válido");
+						s.setValorUnt(Double.parseDouble(jtfValor.getText()));
+						s.setId(serv.getId());
+						ServicoControl sc = new ServicoControl();
+						if(sc.editServico(s))
+						dispose();
+						}catch(NumberFormatException e){
+							JOptionPane.showMessageDialog(null, "Digite um valor válido");
+						}catch (Exception e) {
+							JOptionPane.showMessageDialog(null, e.getMessage());
+						}
 					
 				} else {
 					//Inserir
+					try {
 					Servico s = new Servico();
 					s.setDescricao(jtfDescricao.getText());
+					if(jtfValor.getText().equals(""))
+						throw new Exception("Digite um valor válido");
 					s.setValorUnt(Double.parseDouble(jtfValor.getText()));
-					
 					ServicoControl sc = new ServicoControl();
-					try {
-						sc.insertServico( s );
-					} catch (Exception e) {
+					if(sc.insertServico( s ))
+					dispose();
+					}catch(NumberFormatException e){
+						JOptionPane.showMessageDialog(null, "Digite um valor válido");
+					}catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
 				}
-				dispose();
+				
 			}
 		});
 		
@@ -103,25 +121,29 @@ public class CadastrarEditarServico extends JInternalFrame {
 				dispose();
 			}
 		});
+		
+
+		
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(30)
+					.addComponent(jbSalvar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(284, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(jlDescricao)
 						.addComponent(jlValor))
-					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(jtfValor, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 							.addComponent(jbCancelar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
-							.addComponent(jtfDescricao, GroupLayout.PREFERRED_SIZE, 382, GroupLayout.PREFERRED_SIZE)))
-					.addGap(135))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(30)
-					.addComponent(jbSalvar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(390, Short.MAX_VALUE))
+							.addComponent(jtfDescricao, GroupLayout.PREFERRED_SIZE, 382, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jtfValor, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
+					.addGap(48))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -134,15 +156,13 @@ public class CadastrarEditarServico extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlValor)
 						.addComponent(jtfValor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(33)
+					.addGap(36)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jbSalvar)
 						.addComponent(jbCancelar))
-					.addContainerGap(94, Short.MAX_VALUE))
+					.addContainerGap(33, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 
 	}
-
-
 }
