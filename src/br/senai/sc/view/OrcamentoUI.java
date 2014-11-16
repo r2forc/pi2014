@@ -24,10 +24,12 @@ import javax.swing.event.InternalFrameListener;
 
 import br.senai.sc.control.OrcamentoFlashControl;
 import br.senai.sc.control.ServicoControl;
+import br.senai.sc.dao.OrcamentoFlashDAO;
 import br.senai.sc.model.OrcamentoFlash;
 import br.senai.sc.model.Servico;
 import br.senai.sc.utils.OrcamentoFlashTableModel;
 import br.senai.sc.utils.ServicoTableModel;
+
 import javax.swing.JTextPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
@@ -157,9 +159,11 @@ public class OrcamentoUI extends JInternalFrame {
 					OrcamentoFlashControl.inserirServico(serv);
 					jtOrcamentoFlash.setModel(new OrcamentoFlashTableModel( new OrcamentoFlashControl().showAllOrcamento() ) );
 					Double valorTotal = 0.0;
-					OrcamentoFlash of = new OrcamentoFlash();
-					for(int i = 0; i < of.getServicos().size(); i++){
-						valorTotal += (of.getServico(i).getValorUnt() * (of.getServico(i).getCopias() * of.getServico(i).getOriginais()));
+					
+					OrcamentoFlashDAO of = new OrcamentoFlashDAO();
+					
+					for(int i = 0; i < of.getInstace().mostrarServicos().size(); i++){
+						valorTotal += (of.getInstace().mostrarServico(i).getValorUnt() * (of.getInstace().mostrarServico(i).getCopias() * of.getInstace().mostrarServico(i).getOriginais()));
 					}
 					tfValorTotal.setText(valorTotal.toString());
 					
@@ -223,9 +227,9 @@ public class OrcamentoUI extends JInternalFrame {
 				new OrcamentoFlashControl().showAllOrcamento() ) );
 				
 				Double valorTotal = 0.0;
-				OrcamentoFlash of = new OrcamentoFlash();
-				for(int i = 0; i < of.getServicos().size(); i++){
-					valorTotal += (of.getServico(i).getValorUnt() * (of.getServico(i).getCopias() * of.getServico(i).getOriginais()));
+				OrcamentoFlashDAO of = new OrcamentoFlashDAO();
+				for(int i = 0; i < of.getInstace().mostrarServicos().size(); i++){
+					valorTotal += (of.getInstace().mostrarServico(i).getValorUnt() * (of.getInstace().mostrarServico(i).getCopias() * of.getInstace().mostrarServico(i).getOriginais()));
 				}
 				tfValorTotal.setText(valorTotal.toString());
 				}catch(Exception e){
