@@ -5,36 +5,44 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import br.senai.sc.dao.ClienteDAO;
-import br.senai.sc.dao.OrcamentoFlashDAO;
 import br.senai.sc.dao.OrdemServicoDAO;
-import br.senai.sc.model.Cliente;
 import br.senai.sc.model.OrdemServico;
-import br.senai.sc.model.Servico;
 
 public class OrdemServicoControl {
 
-	public static void insertOrdemServico(OrdemServico os)
-			throws ClassNotFoundException, SQLException {
-		// if (os.getId() == null) {
-		// print("ID ORCAMENTO Obrigatorio!");
-		// xd
-		if (os.getServico().getId() == null) {
-			print("ID SERVIÇO Obrigatorio!");
-		} else if (os.getServico().getOriginais() <= 0) {
-			print("QUANTIDADE ORIGINAL Obrigatorio!");
-		} else if (os.getServico().getCopias() <= 0) {
-			print("COPIAS Obrigatorio!");
-		} else if (os.getValorTotal() <= 0) {
-			print("VALOR TOTAL Obrigatorio!");
-		} else {
+	public static void insertOrdemServico(OrdemServico os) {
+		try {
+			ArrayList<OrdemServico> listaOS = new OrdemServicoDAO()
+					.showItensServicoOrdemServicos();
+			boolean contem = false;
+			for (OrdemServico arrayOS : listaOS) {
+				arrayOS.getServico().getId().equals(os.getServico().getId());
+				System.out.println("ID COMPARA: "
+						+ arrayOS.getServico().getId());
+				System.out.println("ID VERIFICA: " + os.getServico().getId());
+
+				contem = true;
+			}
+			if (contem)
+				throw new SQLException("Serviço já adicionado a lista");
+			if (os.getServico().getValorUnt() <= 0)
+				throw new Exception("Valor unitário inválido");
+			if (os.getServico().getCopias() <= 0)
+				throw new Exception("Quantidade de cópias inválidas");
+			if (os.getServico().getOriginais() <= 0)
+				throw new Exception("Quantidade de copias inválidas");
 			OrdemServicoDAO.getInstace().insertOrdemServico(os);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		} finally {
+
 		}
 	}
 
 	public static void deleteServicoOrdemServico(OrdemServico os)
 			throws SQLException {
-		OrdemServicoDAO.getInstace().deleteServicoOrdemServico(os);
+		OrdemServicoDAO.getInstace().deleteServicoOrdemServico(
+				os.getServico().getId());
 	}
 
 	public static ArrayList<OrdemServico> showItensServicoOrdemServicos()

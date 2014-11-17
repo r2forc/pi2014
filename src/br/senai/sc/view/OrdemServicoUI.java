@@ -105,17 +105,19 @@ public class OrdemServicoUI extends JInternalFrame {
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1180,
-								Short.MAX_VALUE).addContainerGap()));
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				Alignment.LEADING,
+				Alignment.LEADING).addGroup(
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 501,
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 495,
 								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(62, Short.MAX_VALUE)));
+						.addContainerGap(68, Short.MAX_VALUE)));
 
 		JScrollPane spItensOS = new JScrollPane();
 
@@ -214,9 +216,11 @@ public class OrdemServicoUI extends JInternalFrame {
 									.getId());
 					OrdemServicoControl.deleteServicoOrdemServico(os);
 
-					jtListaServicosOS.setModel(new OrdemServicoTableModel(
-							new OrdemServicoControl()
-									.showItensServicoOrdemServicos()));
+					new OrdemServicoControl();
+					jtListaServicosOS
+							.setModel(new OrdemServicoTableModel(
+									OrdemServicoControl
+											.showItensServicoOrdemServicos()));
 				} catch (ArrayIndexOutOfBoundsException e1) {
 					JOptionPane.showMessageDialog(null,
 							"Selecione um serviço para deletar");
@@ -288,22 +292,7 @@ public class OrdemServicoUI extends JInternalFrame {
 														gl_panel.createSequentialGroup()
 																.addGroup(
 																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addGroup(
-																						Alignment.TRAILING,
-																						gl_panel.createSequentialGroup()
-																								.addComponent(
-																										jlTotalVenda,
-																										GroupLayout.PREFERRED_SIZE,
-																										66,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										tfValorTotal,
-																										GroupLayout.PREFERRED_SIZE,
-																										70,
-																										GroupLayout.PREFERRED_SIZE))
+																				Alignment.TRAILING)
 																				.addGroup(
 																						gl_panel.createSequentialGroup()
 																								.addGroup(
@@ -393,12 +382,12 @@ public class OrdemServicoUI extends JInternalFrame {
 																																														GroupLayout.PREFERRED_SIZE))))))
 																								.addPreferredGap(
 																										ComponentPlacement.RELATED,
-																										11,
+																										12,
 																										Short.MAX_VALUE))
 																				.addComponent(
 																						spListaServicos,
 																						GroupLayout.DEFAULT_SIZE,
-																						1149,
+																						1150,
 																						Short.MAX_VALUE))
 																.addGap(9))
 												.addGroup(
@@ -419,16 +408,39 @@ public class OrdemServicoUI extends JInternalFrame {
 																						GroupLayout.DEFAULT_SIZE,
 																						134,
 																						Short.MAX_VALUE))
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		jbCancelar,
-																		GroupLayout.PREFERRED_SIZE,
-																		137,
-																		GroupLayout.PREFERRED_SIZE)
-																.addContainerGap(
-																		882,
-																		Short.MAX_VALUE)))));
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.LEADING)
+																				.addGroup(
+																						gl_panel.createSequentialGroup()
+																								.addPreferredGap(
+																										ComponentPlacement.RELATED)
+																								.addComponent(
+																										jbCancelar,
+																										GroupLayout.PREFERRED_SIZE,
+																										137,
+																										GroupLayout.PREFERRED_SIZE)
+																								.addContainerGap(
+																										881,
+																										Short.MAX_VALUE))
+																				.addGroup(
+																						Alignment.TRAILING,
+																						gl_panel.createSequentialGroup()
+																								.addPreferredGap(
+																										ComponentPlacement.RELATED)
+																								.addComponent(
+																										jlTotalVenda,
+																										GroupLayout.PREFERRED_SIZE,
+																										66,
+																										GroupLayout.PREFERRED_SIZE)
+																								.addPreferredGap(
+																										ComponentPlacement.RELATED)
+																								.addComponent(
+																										tfValorTotal,
+																										GroupLayout.PREFERRED_SIZE,
+																										70,
+																										GroupLayout.PREFERRED_SIZE)
+																								.addGap(119)))))));
 		gl_panel.setVerticalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
 				.addGroup(
@@ -503,20 +515,19 @@ public class OrdemServicoUI extends JInternalFrame {
 										GroupLayout.PREFERRED_SIZE, 145,
 										GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(jbRemoverServico)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(jbRemoverServico)
+												.addComponent(jlTotalVenda)
+												.addComponent(tfValorTotal))
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.BASELINE)
 												.addComponent(jbImprimir)
 												.addComponent(jbCancelar))
-								.addGap(19)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(tfValorTotal)
-												.addComponent(jlTotalVenda))
-								.addContainerGap()));
+								.addGap(44)));
 
 		jtListaServicos = new JTable();
 		jtListaServicos.addMouseListener(new MouseAdapter() {

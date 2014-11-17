@@ -10,6 +10,7 @@ import com.mysql.jdbc.Statement;
 
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.ConnectionUtil;
+import br.senai.sc.model.Orcamento;
 import br.senai.sc.model.OrcamentoFlash;
 import br.senai.sc.model.OrdemServico;
 import br.senai.sc.model.Servico;
@@ -18,8 +19,6 @@ public class OrdemServicoDAO {
 
 	private static OrdemServicoDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
-	private static OrdemServico ordemServico = new OrdemServico();
-	ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
 
 	public static OrdemServicoDAO getInstace() {
 		if (instance == null) {
@@ -51,19 +50,17 @@ public class OrdemServicoDAO {
 		}
 	}
 
-	public void editOrdemServico(OrdemServico os) {
-	}
-
-	public void deleteServicoOrdemServico(OrdemServico os) throws SQLException {
+	public void deleteServicoOrdemServico(Integer id) throws SQLException {
 		try {
 			String query = "DELETE FROM orcamento_has_servico "
-					+ "WHERE orcamento_id=? " + " and servico_id=?";
+					+ "WHERE orcamento_id=? " + " and servico_id=" + id;
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, 1);
-			stmt.setInt(2, os.getServico().getId());
 
 			stmt.executeUpdate();
+			System.out.println(query);
 			con.commit();
+			id = null;
 		} catch (SQLException e) {
 			con.rollback();
 			e.printStackTrace();
@@ -74,7 +71,7 @@ public class OrdemServicoDAO {
 			throws ClassNotFoundException, SQLException {
 		String query = "SELECT * FROM orcamento orc JOIN orcamento_has_servico ohs"
 				+ " ON orc.id = ohs.orcamento_id JOIN servico s ON s.id = ohs.servico_id"
-				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = 1";
+				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = 1;";
 
 		PreparedStatement stmt = con.prepareStatement(query);
 		// stmt.setInt(1, os.getId());
@@ -105,22 +102,23 @@ public class OrdemServicoDAO {
 	public ArrayList<OrdemServico> showOrdemServicos()
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM orcamento orc join cliente cli on cli.id = orc.id;";
+		String query = "SELECT * FROM orcamento orc JOIN cliente cli ON orc.cliente_id = cli.id ORDER BY data;";
 
 		PreparedStatement stmt = con.prepareStatement(query);
 
 		ResultSet rs = stmt.executeQuery();
 
-		OrdemServico osRetorno = null;
+		Orcamento osRetorno = null;
 		ArrayList<OrdemServico> listaOS = new ArrayList<>();
 
 		while (rs.next()) {
 
-			osRetorno = new OrdemServico();
+			osRetorno = new Orcamento();
 
 			osRetorno.setId(rs.getInt("id"));
 			osRetorno.setData(rs.getDate("data"));
-			osRetorno.getCliente().setNome(rs.getString("nome"));
+			osRetorno.getCliente().setNome(rs.getString("cli.nome"));
+			osRetorno.getServico().setId(rs.getInt("usuario_id"));
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
 			osRetorno.setStatus(rs.getInt("status"));
 
@@ -155,14 +153,5 @@ public class OrdemServicoDAO {
 			listaOS.add(osRetorno);
 		}
 		return listaOS;
-	}
-
-	public Integer verificaExistencia(OrdemServico os) {
-		for (int i = 0; i < listaOS.size(); i++) {
-			if (os.getServico().getId() == (this.listaOS.get(i).getId())) {
-				return i;
-			}
-		}
-		return null;
 	}
 }

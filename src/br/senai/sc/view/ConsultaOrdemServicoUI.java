@@ -34,7 +34,7 @@ import java.awt.event.ActionEvent;
 
 public class ConsultaOrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
-	private JTable jtListaItensVenda;
+	private static JTable jtListaOrdemServicos;
 	private ArrayList<Cliente> listaClientes;
 	private ArrayList<Servico> listaServicos;
 	private ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
@@ -51,6 +51,8 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 	
 				try {
 					OrdemServicoUI frame = new OrdemServicoUI();
+					jtListaOrdemServicos.setModel(new ConsultaOrdemServicoTableModel(
+							new OrdemServicoControl().showOrdemServicos()));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -109,14 +111,14 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 
 		JScrollPane scrollpane = new JScrollPane();
 
-		jtListaItensVenda = new JTable();
-		jtListaItensVenda.setModel(new ConsultaOrdemServicoTableModel(
+		jtListaOrdemServicos = new JTable();
+		jtListaOrdemServicos.setModel(new ConsultaOrdemServicoTableModel(
 				new OrdemServicoControl().showOrdemServicos()));
-		jtListaItensVenda.getColumnModel().getColumn(0).setResizable(false);
-		jtListaItensVenda.getColumnModel().getColumn(0).setPreferredWidth(50);
-		jtListaItensVenda.getColumnModel().getColumn(1).setResizable(false);
-		jtListaItensVenda.getColumnModel().getColumn(1).setPreferredWidth(150);
-		scrollpane.setViewportView(jtListaItensVenda);
+		jtListaOrdemServicos.getColumnModel().getColumn(0).setResizable(false);
+		jtListaOrdemServicos.getColumnModel().getColumn(0).setPreferredWidth(50);
+		jtListaOrdemServicos.getColumnModel().getColumn(1).setResizable(false);
+		jtListaOrdemServicos.getColumnModel().getColumn(1).setPreferredWidth(150);
+		scrollpane.setViewportView(jtListaOrdemServicos);
 
 		jtfFiltro = new JTextField();
 		jtfFiltro.setColumns(10);
@@ -125,7 +127,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		btnTipoFiltro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					jtListaItensVenda.setModel(new OrdemServicoTableModel(
+					jtListaOrdemServicos.setModel(new OrdemServicoTableModel(
 							new OrdemServicoControl().showFilterOS(
 									jcbTipoFiltro.getSelectedItem().toString(),
 									jtfFiltro.getText())));
@@ -138,8 +140,6 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 				}
 			}
 		});
-
-		jcbTipoFiltro.setEditable(true);
 		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "Valor Total", "Status"}));
 
 		JLabel lblTipoFiltro = new JLabel("Tipo filtro:");
