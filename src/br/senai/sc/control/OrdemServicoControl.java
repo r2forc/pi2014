@@ -10,21 +10,12 @@ import br.senai.sc.model.OrdemServico;
 
 public class OrdemServicoControl {
 
-	public static void insertOrdemServico(OrdemServico os) {
+	public static void insertOrdemServico(OrdemServico os) throws SQLException {
 		try {
-			ArrayList<OrdemServico> listaOS = new OrdemServicoDAO()
-					.showItensServicoOrdemServicos();
-			boolean contem = false;
-			for (OrdemServico arrayOS : listaOS) {
-				arrayOS.getServico().getId().equals(os.getServico().getId());
-				System.out.println("ID COMPARA: "
-						+ arrayOS.getServico().getId());
-				System.out.println("ID VERIFICA: " + os.getServico().getId());
-
-				contem = true;
+			if (OrdemServicoDAO.getInstace().verificarServicosOrdemServicos(1,
+					os.getServico().getId())) {
+				throw new Exception("Serviço já adicionado a lista");
 			}
-			if (contem)
-				throw new SQLException("Serviço já adicionado a lista");
 			if (os.getServico().getValorUnt() <= 0)
 				throw new Exception("Valor unitário inválido");
 			if (os.getServico().getCopias() <= 0)
@@ -39,10 +30,9 @@ public class OrdemServicoControl {
 		}
 	}
 
-	public static void deleteServicoOrdemServico(OrdemServico os)
+	public static void deleteServicoOrdemServico(Integer id_orc, Integer id_serv)
 			throws SQLException {
-		OrdemServicoDAO.getInstace().deleteServicoOrdemServico(
-				os.getServico().getId());
+		OrdemServicoDAO.getInstace().deleteServicoOrdemServico(id_orc, id_serv);
 	}
 
 	public static ArrayList<OrdemServico> showItensServicoOrdemServicos()

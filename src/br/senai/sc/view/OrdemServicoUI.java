@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -23,20 +25,14 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.control.ClienteControl;
-import br.senai.sc.control.OrcamentoFlashControl;
 import br.senai.sc.control.OrdemServicoControl;
 import br.senai.sc.control.ServicoControl;
-import br.senai.sc.dao.OrcamentoFlashDAO;
+import br.senai.sc.dao.OrdemServicoDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.OrdemServico;
 import br.senai.sc.model.Servico;
-import br.senai.sc.utils.OrcamentoFlashTableModel;
 import br.senai.sc.utils.OrdemServicoTableModel;
 import br.senai.sc.utils.ServicoTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.SwingConstants;
 
 public class OrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +42,7 @@ public class OrdemServicoUI extends JInternalFrame {
 	private ArrayList<Cliente> listaClientes;
 	private ArrayList<Servico> listaServicos;
 	private JTextField jtfCliente;
-	JLabel tfValorTotal = new JLabel("0,00");
+	final JLabel tfValorTotal = new JLabel("00.00");
 	private JTextField jtfValorUnitario;
 	private JTextField jtfServico;
 	private JTable jtListaServicos;
@@ -123,8 +119,9 @@ public class OrdemServicoUI extends JInternalFrame {
 
 		jtListaServicosOS = new JTable();
 		try {
+			new OrdemServicoControl();
 			jtListaServicosOS.setModel(new OrdemServicoTableModel(
-					new OrdemServicoControl().showItensServicoOrdemServicos()));
+					OrdemServicoControl.showItensServicoOrdemServicos()));
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -168,16 +165,37 @@ public class OrdemServicoUI extends JInternalFrame {
 							Integer.parseInt(jtfOriginais.getText()));
 					os.getServico().setCopias(
 							Integer.parseInt(jtfCopias.getText()));
-					valorTotal = (double) (os.getServico().getOriginais() + os
-							.getServico().getCopias())
-							* os.getServico().getValorUnt();
+
+					OrdemServicoDAO osd = new OrdemServicoDAO();
+
+					for (int i = 0; i < osd.showItensServicoOrdemServicos()
+							.size(); i++) {
+						valorTotal += (osd.showItensServicoOrdemServicos()
+								.get(i).getServico().getValorUnt()
+								* (osd.showItensServicoOrdemServicos().get(i)
+										.getServico().getCopias()) * osd
+								.showItensServicoOrdemServicos().get(i)
+								.getServico().getOriginais());
+					}
+					System.out.println(valorTotal);
+
+					if (valorTotal.toString().length() > 7) {
+						String[] valorDivido = valorTotal.toString().split(
+								"\\.");
+						valorDivido[1] = valorDivido[1].substring(0, 2);
+						tfValorTotal.setText(valorDivido[0] + "."
+								+ valorDivido[1]);
+					} else {
+						tfValorTotal.setText(valorTotal.toString());
+					}
+
 					os.setValorTotal(valorTotal);
+
 					OrdemServicoControl.insertOrdemServico(os);
-
+					new OrdemServicoControl();
 					jtListaServicosOS.setModel(new OrdemServicoTableModel(
-							new OrdemServicoControl()
+							OrdemServicoControl
 									.showItensServicoOrdemServicos()));
-
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, "Numero inválidos");
 				} catch (ArrayIndexOutOfBoundsException e1) {
@@ -207,16 +225,14 @@ public class OrdemServicoUI extends JInternalFrame {
 						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\exit_icon.png"));
 		jbRemoverServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				OrdemServico os = new OrdemServico();
 				try {
-					new OrdemServicoControl();
-					os.getServico().setId(
-							new ServicoControl().showAllServicos()
+					OrdemServicoControl.deleteServicoOrdemServico(
+							1,
+							OrdemServicoControl.showItensServicoOrdemServicos()
 									.get(jtListaServicosOS.getSelectedRow())
-									.getId());
-					OrdemServicoControl.deleteServicoOrdemServico(os);
-
+									.getServico().getId());
 					new OrdemServicoControl();
+
 					jtListaServicosOS
 							.setModel(new OrdemServicoTableModel(
 									OrdemServicoControl
@@ -408,39 +424,30 @@ public class OrdemServicoUI extends JInternalFrame {
 																						GroupLayout.DEFAULT_SIZE,
 																						134,
 																						Short.MAX_VALUE))
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										jbCancelar,
-																										GroupLayout.PREFERRED_SIZE,
-																										137,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addContainerGap(
-																										881,
-																										Short.MAX_VALUE))
-																				.addGroup(
-																						Alignment.TRAILING,
-																						gl_panel.createSequentialGroup()
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										jlTotalVenda,
-																										GroupLayout.PREFERRED_SIZE,
-																										66,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										tfValorTotal,
-																										GroupLayout.PREFERRED_SIZE,
-																										70,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addGap(119)))))));
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		jbCancelar,
+																		GroupLayout.PREFERRED_SIZE,
+																		137,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED,
+																		621,
+																		Short.MAX_VALUE)
+																.addComponent(
+																		jlTotalVenda,
+																		GroupLayout.PREFERRED_SIZE,
+																		66,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		tfValorTotal,
+																		GroupLayout.PREFERRED_SIZE,
+																		70,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(119)))));
 		gl_panel.setVerticalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
 				.addGroup(
