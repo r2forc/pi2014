@@ -126,7 +126,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					jtListaItensVenda.setModel(new OrdemServicoTableModel(
-							new OrdemServicoControl().showFilterClientes(
+							new OrdemServicoControl().showFilterOS(
 									jcbTipoFiltro.getSelectedItem().toString(),
 									jtfFiltro.getText())));
 				} catch (ClassNotFoundException e) {

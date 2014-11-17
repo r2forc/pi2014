@@ -6,13 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import br.senai.sc.model.Cliente;
 import br.senai.sc.model.ConnectionUtil;
+import br.senai.sc.model.OrcamentoFlash;
 import br.senai.sc.model.OrdemServico;
+import br.senai.sc.model.Servico;
 
 public class OrdemServicoDAO {
 
 	private static OrdemServicoDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
+	private static OrdemServico ordemServico = new OrdemServico();
 	ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
 
 	public static OrdemServicoDAO getInstace() {
@@ -21,6 +25,27 @@ public class OrdemServicoDAO {
 		}
 		return instance;
 	}
+
+	public OrdemServico mostrarOrcamento() {
+		return ordemServico;
+	}
+
+	public Servico mostrarServico(int i) {
+		return ordemServico.getServico(i);
+	}
+
+	public ArrayList<Servico> mostrarServicos() {
+		return ordemServico.getServicos();
+	}
+
+	public void RemoverServico(int i) {
+		ordemServico.removerServico(i);
+	}
+	
+	public void insertCliente(Cliente cliente) {
+		ordemServico.setCliente(cliente);
+	}
+	
 
 	public void insertOrdemServico(OrdemServico os)
 			throws ClassNotFoundException, SQLException {

@@ -1,10 +1,12 @@
 package br.senai.sc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class OrdemServico {
 	private Cliente cliente = new Cliente();
 	private Servico servico = new Servico();
+	private ArrayList<Servico> servicos = new ArrayList<Servico>();
 	private Integer id;
 	private Date data;
 	private String descricao;
@@ -44,6 +46,18 @@ public class OrdemServico {
 
 	public void setServico(Servico servico) {
 		this.servico = servico;
+	}
+
+	public ArrayList<Servico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(ArrayList<Servico> servicos) {
+		this.servicos = servicos;
+	}
+
+	public Servico getServico(int posicao) {
+		return servicos.get(posicao);
 	}
 
 	public Integer getId() {
@@ -100,5 +114,9 @@ public class OrdemServico {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public void removerServico(int i) {
+		this.servicos.remove(i);
 	}
 }
