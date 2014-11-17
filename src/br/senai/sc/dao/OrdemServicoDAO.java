@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.Statement;
+
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.ConnectionUtil;
 import br.senai.sc.model.OrcamentoFlash;
@@ -26,39 +28,21 @@ public class OrdemServicoDAO {
 		return instance;
 	}
 
-	public OrdemServico mostrarOrcamento() {
-		return ordemServico;
-	}
-
-	public Servico mostrarServico(int i) {
-		return ordemServico.getServico(i);
-	}
-
-	public ArrayList<Servico> mostrarServicos() {
-		return ordemServico.getServicos();
-	}
-
-	public void RemoverServico(int i) {
-		ordemServico.removerServico(i);
-	}
-	
-	public void insertCliente(Cliente cliente) {
-		ordemServico.setCliente(cliente);
-	}
-	
-
 	public void insertOrdemServico(OrdemServico os)
 			throws ClassNotFoundException, SQLException {
 		try {
 			String query = "INSERT INTO orcamento_has_servico "
 					+ "(orcamento_id, servico_id, quantidadeOriginal, copias, valorTotal) "
 					+ "values (?, ?, ?, ?, ?)";
-			PreparedStatement stmt = con.prepareStatement(query);
+			PreparedStatement stmt = con.prepareStatement(query,
+					Statement.RETURN_GENERATED_KEYS);
+
 			stmt.setInt(1, 1);
 			stmt.setInt(2, os.getServico().getId());
-			stmt.setInt(3, os.getQuantidadeOriginal());
-			stmt.setInt(4, os.getCopias());
+			stmt.setInt(3, os.getServico().getOriginais());
+			stmt.setInt(4, os.getServico().getCopias());
 			stmt.setDouble(5, os.getValorTotal());
+
 			stmt.execute();
 			con.commit();
 		} catch (SQLException e) {
@@ -70,8 +54,20 @@ public class OrdemServicoDAO {
 	public void editOrdemServico(OrdemServico os) {
 	}
 
-	public void deleteServicoOrdemServico(OrdemServico os) {
-		this.listaOS.remove(verificaExistencia(os));
+	public void deleteServicoOrdemServico(OrdemServico os) throws SQLException {
+		try {
+			String query = "DELETE FROM orcamento_has_servico "
+					+ "WHERE orcamento_id=? " + " and servico_id=?";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, 1);
+			stmt.setInt(2, os.getServico().getId());
+
+			stmt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
 	}
 
 	public ArrayList<OrdemServico> showItensServicoOrdemServicos()
@@ -79,7 +75,7 @@ public class OrdemServicoDAO {
 		String query = "SELECT * FROM orcamento orc JOIN orcamento_has_servico ohs"
 				+ " ON orc.id = ohs.orcamento_id JOIN servico s ON s.id = ohs.servico_id"
 				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = 1";
-		System.out.println(query);
+
 		PreparedStatement stmt = con.prepareStatement(query);
 		// stmt.setInt(1, os.getId());
 		ResultSet rs = stmt.executeQuery();
@@ -97,7 +93,7 @@ public class OrdemServicoDAO {
 			osRetorno.setStatus(rs.getInt("status"));
 			// recupera valorUnt e Descricao do Servico.
 			osRetorno.getServico().setValorUnt(rs.getDouble("valorUnt"));
-			osRetorno.getServico().setDescricao(rs.getString("descricao"));
+			osRetorno.getServico().setDescricao(rs.getString("s.descricao"));
 			// recuper nome Cliente
 			osRetorno.getCliente().setNome(rs.getString("nome"));
 

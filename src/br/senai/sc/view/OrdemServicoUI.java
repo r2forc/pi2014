@@ -35,15 +35,16 @@ import br.senai.sc.utils.OrdemServicoTableModel;
 import br.senai.sc.utils.ServicoTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.SwingConstants;
 
 public class OrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
-	private JTextField jtfQuantidadeCopias;
+	private JTextField jtfCopias;
 	private JTextField jtfOriginais;
-	private JTable jtListaItensVenda;
+	private JTable jtListaServicosOS;
 	private ArrayList<Cliente> listaClientes;
 	private ArrayList<Servico> listaServicos;
-	private Double somaTotal = 0.00;
 	private JTextField jtfCliente;
 	JLabel tfValorTotal = new JLabel("0,00");
 	private JTextField jtfValorUnitario;
@@ -118,78 +119,69 @@ public class OrdemServicoUI extends JInternalFrame {
 
 		JScrollPane spItensOS = new JScrollPane();
 
-		jtListaItensVenda = new JTable();
-		jtListaItensVenda.setModel(new OrdemServicoTableModel(
-				new OrdemServicoControl().showItensServicoOrdemServicos()));
-		jtListaItensVenda.getColumnModel().getColumn(0).setResizable(false);
-		jtListaItensVenda.getColumnModel().getColumn(0).setPreferredWidth(50);
-		jtListaItensVenda.getColumnModel().getColumn(1).setResizable(false);
-		jtListaItensVenda.getColumnModel().getColumn(1).setPreferredWidth(150);
-		spItensOS.setViewportView(jtListaItensVenda);
+		jtListaServicosOS = new JTable();
+		try {
+			jtListaServicosOS.setModel(new OrdemServicoTableModel(
+					new OrdemServicoControl().showItensServicoOrdemServicos()));
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		jtListaServicosOS.getColumnModel().getColumn(0).setResizable(false);
+		jtListaServicosOS.getColumnModel().getColumn(0).setPreferredWidth(50);
+		jtListaServicosOS.getColumnModel().getColumn(1).setResizable(false);
+		jtListaServicosOS.getColumnModel().getColumn(1).setPreferredWidth(150);
+		spItensOS.setViewportView(jtListaServicosOS);
 
 		jtfCliente = new JTextField();
 		jtfCliente.setEditable(false);
 		jtfCliente.setColumns(10);
 
-		// PREENCHE O COMBOBOX CLIENTE
 		JLabel lblCliente = new JLabel("Cliente:");
 
-		// PREENCHE O MODEL SERVICO
 		JLabel lblServico = new JLabel("Servi\u00E7os:");
 
-		// ADICIONA ITEM NO TABLEMODEL ORCAMENTO
+		// ADICIONA ITEM NO TABLEMODEL ORDEM DE SERVIÇOS
 		JButton jbAdicionarItem = new JButton("Adicionar Serviço");
 		jbAdicionarItem
 				.setIcon(new ImageIcon(
 						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\add_icon.png"));
 		jbAdicionarItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Servico serv = new Servico();
+				OrdemServico os = new OrdemServico();
+				Double valorTotal = 0.0;
 				try {
 					new OrdemServicoControl();
-					serv.setId(new ServicoControl().showAllServicos()
-							.get(jtListaServicos.getSelectedRow()).getId());
-					serv.setDescricao(new ServicoControl().showAllServicos()
-							.get(jtListaServicos.getSelectedRow())
-							.getDescricao());
-					serv.setValorUnt(Double.parseDouble(jtfValorUnitario
-							.getText()));
-					serv.setOriginais(Integer.parseInt(jtfOriginais.getText()));
-					serv.setCopias(Integer.parseInt(jtfQuantidadeCopias
-							.getText()));
-					OrcamentoFlashControl.inserirServico(serv);
-					jtListaItensVenda.setModel(new OrdemServicoTableModel(
+					os.setId(1);
+					os.getServico().setId(
+							new ServicoControl().showAllServicos()
+									.get(jtListaServicos.getSelectedRow())
+									.getId());
+					os.getServico().setDescricao(
+							new ServicoControl().showAllServicos()
+									.get(jtListaServicos.getSelectedRow())
+									.getDescricao());
+					os.getServico().setValorUnt(
+							Double.parseDouble(jtfValorUnitario.getText()));
+					os.getServico().setOriginais(
+							Integer.parseInt(jtfOriginais.getText()));
+					os.getServico().setCopias(
+							Integer.parseInt(jtfCopias.getText()));
+					valorTotal = (double) (os.getServico().getOriginais() + os
+							.getServico().getCopias())
+							* os.getServico().getValorUnt();
+					os.setValorTotal(valorTotal);
+					OrdemServicoControl.insertOrdemServico(os);
+
+					jtListaServicosOS.setModel(new OrdemServicoTableModel(
 							new OrdemServicoControl()
 									.showItensServicoOrdemServicos()));
-					Double valorTotal = 0.0;
-
-					OrcamentoFlashDAO of = new OrcamentoFlashDAO();
-
-					for (int i = 0; i < of.getInstace().mostrarServicos()
-							.size(); i++) {
-						valorTotal += ((of.getInstace().mostrarServico(i)
-								.getValorUnt()
-								* (of.getInstace().mostrarServico(i)
-										.getCopias()) * of.getInstace()
-								.mostrarServico(i).getOriginais()));
-					}
-
-					if (valorTotal.toString().length() > 7) {
-						String[] valorDivido = valorTotal.toString().split(
-								"\\.");
-						valorDivido[1] = valorDivido[1].substring(0, 2);
-						tfValorTotal.setText(valorDivido[0] + "."
-								+ valorDivido[1]);
-					} else {
-						tfValorTotal.setText(valorTotal.toString());
-					}
 
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, "Numero inválidos");
 				} catch (ArrayIndexOutOfBoundsException e1) {
 					JOptionPane.showMessageDialog(null,
 							"Selecione um Serviço para adicionar");
-				} catch (Exception e2) {
+				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Falha ao Adicionar");
 				}
 			}
@@ -197,8 +189,8 @@ public class OrdemServicoUI extends JInternalFrame {
 
 		JLabel lblQuantidade = new JLabel("Quantidade Original:");
 
-		jtfQuantidadeCopias = new JTextField();
-		jtfQuantidadeCopias.setColumns(10);
+		jtfCopias = new JTextField();
+		jtfCopias.setColumns(10);
 
 		JLabel lblCopias = new JLabel("Copias:");
 
@@ -207,31 +199,29 @@ public class OrdemServicoUI extends JInternalFrame {
 
 		JLabel jlTotalVenda = new JLabel("Total:  R$:");
 
-		JButton jbRemoverItem = new JButton("Remover Item");
-		jbRemoverItem
+		JButton jbRemoverServico = new JButton("Remover Servi\u00E7o");
+		jbRemoverServico
 				.setIcon(new ImageIcon(
 						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\exit_icon.png"));
-		jbRemoverItem.addActionListener(new ActionListener() {
+		jbRemoverServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				OrdemServicoControl osc = new OrdemServicoControl();
-				int opc = JOptionPane.showConfirmDialog(null,
-						"Deseja excluir o serviço selecionado?",
-						"Excluir serviço", JOptionPane.YES_NO_OPTION);
+				OrdemServico os = new OrdemServico();
+				try {
+					new OrdemServicoControl();
+					os.getServico().setId(
+							new ServicoControl().showAllServicos()
+									.get(jtListaServicosOS.getSelectedRow())
+									.getId());
+					OrdemServicoControl.deleteServicoOrdemServico(os);
 
-				if (opc == 0) {
-
-					try {
-						OrdemServico os = (OrdemServico) new OrdemServicoTableModel(
-								new OrdemServicoControl()
-										.showItensServicoOrdemServicos())
-								.get(jtListaItensVenda.getSelectedRow());
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					jtListaServicosOS.setModel(new OrdemServicoTableModel(
+							new OrdemServicoControl()
+									.showItensServicoOrdemServicos()));
+				} catch (ArrayIndexOutOfBoundsException e1) {
+					JOptionPane.showMessageDialog(null,
+							"Selecione um serviço para deletar");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Falha ao deletar");
 				}
 			}
 		});
@@ -239,6 +229,7 @@ public class OrdemServicoUI extends JInternalFrame {
 		JLabel label = new JLabel("Valor Unit\u00E1rio:");
 
 		jtfValorUnitario = new JTextField();
+		jtfValorUnitario.setEditable(false);
 		jtfValorUnitario.setColumns(10);
 
 		JScrollPane spListaServicos = new JScrollPane();
@@ -248,7 +239,8 @@ public class OrdemServicoUI extends JInternalFrame {
 		jtfServico.setColumns(10);
 
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("C:\\Users\\Felipe\\git\\pi2014\\src\\br\\senai\\sc\\icons\\search.png"));
+		button.setIcon(new ImageIcon(
+				"C:\\Users\\Felipe\\git\\pi2014\\src\\br\\senai\\sc\\icons\\search.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -261,9 +253,10 @@ public class OrdemServicoUI extends JInternalFrame {
 			}
 		});
 
-		JButton jbSalvar = new JButton("Salvar");
-		jbSalvar.setIcon(new ImageIcon(
-				"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\save_icon.png"));
+		JButton jbImprimir = new JButton("Imprimir");
+		jbImprimir
+				.setIcon(new ImageIcon(
+						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\save_icon.png"));
 
 		JButton jbCancelar = new JButton("Cancelar");
 		jbCancelar
@@ -369,7 +362,7 @@ public class OrdemServicoUI extends JInternalFrame {
 																																								.addGroup(
 																																										gl_panel.createSequentialGroup()
 																																												.addComponent(
-																																														jtfQuantidadeCopias,
+																																														jtfCopias,
 																																														GroupLayout.PREFERRED_SIZE,
 																																														GroupLayout.DEFAULT_SIZE,
 																																														GroupLayout.PREFERRED_SIZE)
@@ -415,13 +408,13 @@ public class OrdemServicoUI extends JInternalFrame {
 																				Alignment.TRAILING,
 																				false)
 																				.addComponent(
-																						jbRemoverItem,
+																						jbRemoverServico,
 																						Alignment.LEADING,
 																						GroupLayout.DEFAULT_SIZE,
 																						GroupLayout.DEFAULT_SIZE,
 																						Short.MAX_VALUE)
 																				.addComponent(
-																						jbSalvar,
+																						jbImprimir,
 																						Alignment.LEADING,
 																						GroupLayout.DEFAULT_SIZE,
 																						134,
@@ -472,7 +465,7 @@ public class OrdemServicoUI extends JInternalFrame {
 																		gl_panel.createParallelGroup(
 																				Alignment.BASELINE)
 																				.addComponent(
-																						jtfQuantidadeCopias,
+																						jtfCopias,
 																						GroupLayout.PREFERRED_SIZE,
 																						GroupLayout.DEFAULT_SIZE,
 																						GroupLayout.PREFERRED_SIZE)
@@ -510,12 +503,12 @@ public class OrdemServicoUI extends JInternalFrame {
 										GroupLayout.PREFERRED_SIZE, 145,
 										GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(jbRemoverItem)
+								.addComponent(jbRemoverServico)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.BASELINE)
-												.addComponent(jbSalvar)
+												.addComponent(jbImprimir)
 												.addComponent(jbCancelar))
 								.addGap(19)
 								.addGroup(
@@ -535,7 +528,7 @@ public class OrdemServicoUI extends JInternalFrame {
 							.get(jtListaServicos.getSelectedRow())
 							.getValorUnt().toString());
 					jtfOriginais.setText("1");
-					jtfQuantidadeCopias.setText("1");
+					jtfCopias.setText("1");
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
