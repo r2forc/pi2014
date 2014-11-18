@@ -24,7 +24,7 @@ public class RelatorioDAO {
 
 	public ArrayList<RelatorioStatus> showAllOrcamentos()
 			throws ClassNotFoundException, SQLException {
-		String query = "SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.id  ORDER BY descricao ASC";
+		String query = "SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.cliente_id  ORDER BY descricao ASC";
 
 		PreparedStatement stmt = con.prepareStatement(query);
 
