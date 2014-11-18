@@ -52,12 +52,12 @@ public class RelatorioDAO {
 			String status, String dataInicial, String dataFinal)
 			throws ClassNotFoundException, SQLException {
 
-		String query = " SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.id WHERE (status = "
+		String query = " SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.cliente_id  WHERE (status = "
 				+ status + ")";
-		if (cliente == null)
+		if (!(cliente.equals("")))
 			query += " AND nome LIKE '%" + cliente + "%' ";
 
-		if (!(dataInicial.equals(""))) {
+		if (dataInicial != null) {
 			query += " AND (data BETWEEN '" + dataInicial;
 			if (dataFinal == null) {
 				Date data = new Date();
