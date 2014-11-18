@@ -1,7 +1,10 @@
 package br.senai.sc.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -10,13 +13,17 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
@@ -28,25 +35,17 @@ import br.senai.sc.model.Cliente;
 import br.senai.sc.model.OrdemServico;
 import br.senai.sc.model.Servico;
 import br.senai.sc.utils.ConsultaOrdemServicoTableModel;
+import br.senai.sc.utils.MaskFields;
 import br.senai.sc.utils.OrdemServicoTableModel;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.ImageIcon;
 
 public class ConsultaOrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private static JTable jtListaOrdemServicos;
 	private ArrayList<Cliente> listaClientes;
 	private ArrayList<Servico> listaServicos;
-	private ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
-
-	// private Double somaTotal = 0.00;
-	private JTextField jtfFiltro;
+	private JTextField tfCliente;
+	private JFormattedTextField jftfDataInicial;
+	private JFormattedTextField jftfDataFinal;
 
 	/**
 	 * Launch the application.
@@ -77,6 +76,12 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 	 */
 
 	public ConsultaOrdemServicoUI() throws ClassNotFoundException, SQLException {
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGap(0, 434, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGap(0, 271, Short.MAX_VALUE));
+		getContentPane().setLayout(groupLayout);
 		setBackground(SystemColor.inactiveCaption);
 		setRootPaneCheckingEnabled(false);
 		setEnabled(false);
@@ -96,9 +101,9 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		}
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Ordem de Servi\u00E7o(s)",
+		panel.setBorder(new TitledBorder(UIManager
+				.getBorder("TitledBorder.border"), "Or\u00E7amento(s)",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(
 				groupLayout
@@ -127,33 +132,6 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		jtListaOrdemServicos.getColumnModel().getColumn(1)
 				.setPreferredWidth(150);
 		scrollpane.setViewportView(jtListaOrdemServicos);
-
-		jtfFiltro = new JTextField();
-		jtfFiltro.setColumns(10);
-		final JComboBox jcbTipoFiltro = new JComboBox();
-		JButton btnTipoFiltro = new JButton("Pesquisa");
-		btnTipoFiltro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					jtListaOrdemServicos.setModel(new OrdemServicoTableModel(
-							new OrdemServicoControl().showFilterOS(
-									jcbTipoFiltro.getSelectedItem().toString(),
-									jtfFiltro.getText())));
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] { "Nome",
-				"Valor Total", "Status" }));
-
-		JLabel lblTipoFiltro = new JLabel("Tipo filtro:");
-
-		JLabel lblPesquisa = new JLabel("Pesquisa:");
 
 		JButton btnEditarOs = new JButton("Editar OS");
 		btnEditarOs.addActionListener(new ActionListener() {
@@ -216,87 +194,115 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 				}
 			}
 		});
+
+		JLabel label = new JLabel("Cliente:");
+
+		tfCliente = new JTextField();
+		tfCliente.setColumns(10);
+
+		MaskFields mascara = new MaskFields();
+		JFormattedTextField formattedTextField = null;
+		try {
+
+			jftfDataInicial = new JFormattedTextField(mascara.maskData(null));
+			jftfDataFinal = new JFormattedTextField(mascara.maskData(null));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		JLabel label_1 = new JLabel("Status:");
+
+		final JComboBox jcbStatus = new JComboBox();
+		jcbStatus.setForeground(Color.BLACK);
+		jcbStatus.setModel(new DefaultComboBoxModel(new String[] { "Todos",
+				"Aguardando", "Aprovado" }));
+
+		jcbStatus.setForeground(Color.BLACK);
+
+		JLabel label_2 = new JLabel("Data Inicial:");
+
+		JLabel label_3 = new JLabel("Data Final:");
+
+		JButton button = new JButton("Pesquisar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					jtListaOrdemServicos
+							.setModel(new ConsultaOrdemServicoTableModel(
+									new OrdemServicoControl()
+											.procurarPorFiltro(tfCliente
+													.getText(), jcbStatus
+													.getSelectedItem()
+													.toString(),
+													jftfDataInicial.getText(),
+													jftfDataFinal.getText())));
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.TRAILING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addComponent(
-														scrollpane,
-														Alignment.TRAILING,
-														GroupLayout.DEFAULT_SIZE,
-														1148, Short.MAX_VALUE)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblPesquisa)
-																.addPreferredGap(
-																		ComponentPlacement.UNRELATED)
-																.addComponent(
-																		jtfFiltro,
-																		GroupLayout.DEFAULT_SIZE,
-																		816,
-																		Short.MAX_VALUE)
-																.addPreferredGap(
-																		ComponentPlacement.UNRELATED)
-																.addComponent(
-																		lblTipoFiltro,
-																		GroupLayout.PREFERRED_SIZE,
-																		59,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		jcbTipoFiltro,
-																		GroupLayout.PREFERRED_SIZE,
-																		124,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(4)
-																.addComponent(
-																		btnTipoFiltro))
-												.addComponent(btnEditarOs))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createParallelGroup(
-																Alignment.BASELINE)
-																.addComponent(
-																		btnTipoFiltro)
-																.addComponent(
-																		jcbTipoFiltro,
-																		GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)
-																.addComponent(
-																		lblTipoFiltro))
-												.addGroup(
-														gl_panel.createParallelGroup(
-																Alignment.BASELINE)
-																.addComponent(
-																		jtfFiltro,
-																		GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)
-																.addComponent(
-																		lblPesquisa)))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(scrollpane,
-										GroupLayout.PREFERRED_SIZE, 318,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(btnEditarOs)
-								.addContainerGap(16, Short.MAX_VALUE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollpane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1166, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addComponent(label, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(tfCliente, GroupLayout.PREFERRED_SIZE, 441, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jftfDataInicial, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(label_3, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+							.addGap(2)
+							.addComponent(jftfDataFinal, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+							.addGap(39))
+						.addComponent(btnEditarOs))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(2)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(label_1)
+								.addComponent(tfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label)
+								.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(2)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(label_2)
+								.addComponent(jftfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(2)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(label_3)
+								.addComponent(jftfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(button, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))))
+					.addGap(9)
+					.addComponent(scrollpane, GroupLayout.PREFERRED_SIZE, 317, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(btnEditarOs))
+		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 	}

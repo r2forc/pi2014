@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import br.senai.sc.model.ConnectionUtil;
 import br.senai.sc.model.Orcamento;
 import br.senai.sc.model.OrdemServico;
+import br.senai.sc.model.RelatorioStatus;
 
 import com.mysql.jdbc.Statement;
 
@@ -143,31 +146,46 @@ public class OrdemServicoDAO {
 		return listaOS;
 	}
 
-	public ArrayList<OrdemServico> showFilterOrdemServico(String column,
-			String value) throws ClassNotFoundException, SQLException {
+	public ArrayList<OrdemServico> showFilterOrdemServico(String cliente,
+			String status, String dataInicial, String dataFinal)
+			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM orcamento orc join cliente cli on cli.id = orc.id where "
-				+ column + " LIKE '%" + value + "%';";
+		String query = " SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.cliente_id  WHERE (status = "
+				+ status + ")";
+		if (!(cliente.equals("")))
+			query += " AND nome LIKE '%" + cliente + "%' ";
 
+		if (dataInicial != null) {
+			query += " AND (data BETWEEN '" + dataInicial;
+			if (dataFinal == null) {
+				Date data = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				dataFinal = sdf.format(data);
+				query += "' AND '" + dataFinal + "')";
+			} else {
+				query += " AND '" + dataFinal + "')";
+
+			}
+		}
 		PreparedStatement stmt = con.prepareStatement(query);
 
 		ResultSet rs = stmt.executeQuery();
 
-		OrdemServico osRetorno = null;
-		ArrayList<OrdemServico> listaOS = new ArrayList<>();
+		OrdemServico oRetorno = null;
+		ArrayList<OrdemServico> listaRelatorio = new ArrayList<>();
 
 		while (rs.next()) {
 
-			osRetorno = new OrdemServico();
+			oRetorno = new OrdemServico();
 
-			osRetorno.setId(rs.getInt("id"));
-			osRetorno.setData(rs.getDate("data"));
-			osRetorno.getCliente().setNome("nome");
-			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
-			osRetorno.setStatus(rs.getInt("status"));
+			oRetorno.getCliente().setNome(rs.getString("nome"));
+			oRetorno.setData(rs.getDate("data"));
+			oRetorno.setStatus(rs.getInt("status"));
+			oRetorno.setValorTotal(rs.getDouble("valorTotal"));
 
-			listaOS.add(osRetorno);
+			listaRelatorio.add(oRetorno);
 		}
-		return listaOS;
+		return listaRelatorio;
 	}
+
 }
