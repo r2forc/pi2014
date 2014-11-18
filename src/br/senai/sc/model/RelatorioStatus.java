@@ -3,7 +3,7 @@ package br.senai.sc.model;
 import java.util.Date;
 
 public class RelatorioStatus {
-	private Cliente cliente;
+	private Cliente cliente = new Cliente();
 	private int status;
 	private Date data;
 	private Double valor;
