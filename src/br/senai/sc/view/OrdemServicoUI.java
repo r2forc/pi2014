@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -23,20 +25,14 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.control.ClienteControl;
-import br.senai.sc.control.OrcamentoFlashControl;
 import br.senai.sc.control.OrdemServicoControl;
 import br.senai.sc.control.ServicoControl;
-import br.senai.sc.dao.OrcamentoFlashDAO;
+import br.senai.sc.dao.OrdemServicoDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.OrdemServico;
 import br.senai.sc.model.Servico;
-import br.senai.sc.utils.OrcamentoFlashTableModel;
 import br.senai.sc.utils.OrdemServicoTableModel;
 import br.senai.sc.utils.ServicoTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.SwingConstants;
 
 public class OrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -46,10 +42,11 @@ public class OrdemServicoUI extends JInternalFrame {
 	private ArrayList<Cliente> listaClientes;
 	private ArrayList<Servico> listaServicos;
 	private JTextField jtfCliente;
-	JLabel tfValorTotal = new JLabel("0,00");
+	final JLabel tfValorTotal = new JLabel("00.00");
 	private JTextField jtfValorUnitario;
 	private JTextField jtfServico;
 	private JTable jtListaServicos;
+	private static int id_orc;
 
 	/**
 	 * Launch the application.
@@ -58,7 +55,7 @@ public class OrdemServicoUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OrdemServicoUI frame = new OrdemServicoUI();
+					OrdemServicoUI frame = new OrdemServicoUI(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,9 +70,8 @@ public class OrdemServicoUI extends JInternalFrame {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-
-	public OrdemServicoUI() throws ClassNotFoundException, SQLException {
-		setClosable(true);
+	public OrdemServicoUI(final OrdemServico os) throws ClassNotFoundException,
+			SQLException {
 		setBackground(SystemColor.inactiveCaption);
 		setRootPaneCheckingEnabled(false);
 		setEnabled(false);
@@ -83,7 +79,6 @@ public class OrdemServicoUI extends JInternalFrame {
 		setSize(1500, 1000);
 		setTitle("ORC R2F - Efetuar Ordem de Servi\u00E7o");
 		setBounds(0, 0, 1200, 600);
-
 		listaClientes = new ClienteControl().showAllClientes();
 		DefaultComboBoxModel<Cliente> modelCliente = new DefaultComboBoxModel<Cliente>();
 		for (Cliente cliente : listaClientes) {
@@ -100,31 +95,28 @@ public class OrdemServicoUI extends JInternalFrame {
 		panel.setBorder(new TitledBorder(null, "Ordem de Servi\u00E7o",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 495,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(68, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 503, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(60, Short.MAX_VALUE))
+		);
 
 		JScrollPane spItensOS = new JScrollPane();
 
 		jtListaServicosOS = new JTable();
 		try {
+			new OrdemServicoControl();
 			jtListaServicosOS.setModel(new OrdemServicoTableModel(
-					new OrdemServicoControl().showItensServicoOrdemServicos()));
+					OrdemServicoControl.showItensServicoOrdemServicos(id_orc)));
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -142,6 +134,14 @@ public class OrdemServicoUI extends JInternalFrame {
 
 		JLabel lblServico = new JLabel("Servi\u00E7os:");
 
+		if (os != null) {
+			id_orc = os.getId();
+			jtfCliente.setText(os.getCliente().getNome());
+			new OrdemServicoControl();
+			jtListaServicosOS.setModel(new OrdemServicoTableModel(
+					OrdemServicoControl.showItensServicoOrdemServicos(id_orc)));
+		}
+
 		// ADICIONA ITEM NO TABLEMODEL ORDEM DE SERVIÇOS
 		JButton jbAdicionarItem = new JButton("Adicionar Serviço");
 		jbAdicionarItem
@@ -153,7 +153,7 @@ public class OrdemServicoUI extends JInternalFrame {
 				Double valorTotal = 0.0;
 				try {
 					new OrdemServicoControl();
-					os.setId(1);
+					os.setId(id_orc);
 					os.getServico().setId(
 							new ServicoControl().showAllServicos()
 									.get(jtListaServicos.getSelectedRow())
@@ -168,16 +168,13 @@ public class OrdemServicoUI extends JInternalFrame {
 							Integer.parseInt(jtfOriginais.getText()));
 					os.getServico().setCopias(
 							Integer.parseInt(jtfCopias.getText()));
-					valorTotal = (double) (os.getServico().getOriginais() + os
-							.getServico().getCopias())
-							* os.getServico().getValorUnt();
 					os.setValorTotal(valorTotal);
 					OrdemServicoControl.insertOrdemServico(os);
 
+					new OrdemServicoControl();
 					jtListaServicosOS.setModel(new OrdemServicoTableModel(
-							new OrdemServicoControl()
-									.showItensServicoOrdemServicos()));
-
+							OrdemServicoControl
+									.showItensServicoOrdemServicos(id_orc)));
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, "Numero inválidos");
 				} catch (ArrayIndexOutOfBoundsException e1) {
@@ -207,20 +204,19 @@ public class OrdemServicoUI extends JInternalFrame {
 						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\exit_icon.png"));
 		jbRemoverServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				OrdemServico os = new OrdemServico();
 				try {
-					new OrdemServicoControl();
-					os.getServico().setId(
-							new ServicoControl().showAllServicos()
+					OrdemServicoControl.deleteServicoOrdemServico(
+							id_orc,
+							OrdemServicoControl
+									.showItensServicoOrdemServicos(id_orc)
 									.get(jtListaServicosOS.getSelectedRow())
-									.getId());
-					OrdemServicoControl.deleteServicoOrdemServico(os);
+									.getServico().getId());
 
 					new OrdemServicoControl();
-					jtListaServicosOS
-							.setModel(new OrdemServicoTableModel(
-									OrdemServicoControl
-											.showItensServicoOrdemServicos()));
+					jtListaServicosOS.setModel(new OrdemServicoTableModel(
+							OrdemServicoControl
+									.showItensServicoOrdemServicos(id_orc)));
+
 				} catch (ArrayIndexOutOfBoundsException e1) {
 					JOptionPane.showMessageDialog(null,
 							"Selecione um serviço para deletar");
@@ -408,39 +404,30 @@ public class OrdemServicoUI extends JInternalFrame {
 																						GroupLayout.DEFAULT_SIZE,
 																						134,
 																						Short.MAX_VALUE))
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										jbCancelar,
-																										GroupLayout.PREFERRED_SIZE,
-																										137,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addContainerGap(
-																										881,
-																										Short.MAX_VALUE))
-																				.addGroup(
-																						Alignment.TRAILING,
-																						gl_panel.createSequentialGroup()
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										jlTotalVenda,
-																										GroupLayout.PREFERRED_SIZE,
-																										66,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																								.addComponent(
-																										tfValorTotal,
-																										GroupLayout.PREFERRED_SIZE,
-																										70,
-																										GroupLayout.PREFERRED_SIZE)
-																								.addGap(119)))))));
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		jbCancelar,
+																		GroupLayout.PREFERRED_SIZE,
+																		137,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED,
+																		621,
+																		Short.MAX_VALUE)
+																.addComponent(
+																		jlTotalVenda,
+																		GroupLayout.PREFERRED_SIZE,
+																		66,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		tfValorTotal,
+																		GroupLayout.PREFERRED_SIZE,
+																		70,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(119)))));
 		gl_panel.setVerticalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
 				.addGroup(

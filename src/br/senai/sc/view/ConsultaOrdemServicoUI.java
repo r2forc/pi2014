@@ -3,6 +3,7 @@ package br.senai.sc.view;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -10,12 +11,15 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.control.OrdemServicoControl;
@@ -31,6 +35,8 @@ import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.ImageIcon;
 
 public class ConsultaOrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -48,11 +54,13 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-	
+
 				try {
-					OrdemServicoUI frame = new OrdemServicoUI();
-					jtListaOrdemServicos.setModel(new ConsultaOrdemServicoTableModel(
-							new OrdemServicoControl().showOrdemServicos()));
+					OrdemServicoUI frame = new OrdemServicoUI(null);
+					jtListaOrdemServicos
+							.setModel(new ConsultaOrdemServicoTableModel(
+									new OrdemServicoControl()
+											.showOrdemServicos()));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,13 +77,12 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 	 */
 
 	public ConsultaOrdemServicoUI() throws ClassNotFoundException, SQLException {
-		setClosable(true);
 		setBackground(SystemColor.inactiveCaption);
 		setRootPaneCheckingEnabled(false);
 		setEnabled(false);
 		setBorder(null);
 		setSize(1500, 1000);
-		setTitle("ORC R2F - Efetuar Ordem de Servi\u00E7o");
+		setTitle("ORC R2F - Consulta Ordem de Servi\u00E7o");
 		setBounds(0, 0, 1200, 600);
 		listaClientes = new ClienteControl().showAllClientes();
 		DefaultComboBoxModel<Cliente> modelCliente = new DefaultComboBoxModel<Cliente>();
@@ -104,10 +111,9 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 421,
 								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(143, Short.MAX_VALUE)));
+						.addContainerGap(142, Short.MAX_VALUE)));
 
 		JScrollPane scrollpane = new JScrollPane();
 
@@ -115,9 +121,11 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		jtListaOrdemServicos.setModel(new ConsultaOrdemServicoTableModel(
 				new OrdemServicoControl().showOrdemServicos()));
 		jtListaOrdemServicos.getColumnModel().getColumn(0).setResizable(false);
-		jtListaOrdemServicos.getColumnModel().getColumn(0).setPreferredWidth(50);
+		jtListaOrdemServicos.getColumnModel().getColumn(0)
+				.setPreferredWidth(50);
 		jtListaOrdemServicos.getColumnModel().getColumn(1).setResizable(false);
-		jtListaOrdemServicos.getColumnModel().getColumn(1).setPreferredWidth(150);
+		jtListaOrdemServicos.getColumnModel().getColumn(1)
+				.setPreferredWidth(150);
 		scrollpane.setViewportView(jtListaOrdemServicos);
 
 		jtfFiltro = new JTextField();
@@ -140,11 +148,74 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 				}
 			}
 		});
-		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "Valor Total", "Status"}));
+		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] { "Nome",
+				"Valor Total", "Status" }));
 
 		JLabel lblTipoFiltro = new JLabel("Tipo filtro:");
 
 		JLabel lblPesquisa = new JLabel("Pesquisa:");
+
+		JButton btnEditarOs = new JButton("Editar OS");
+		btnEditarOs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				OrdemServico os = null;
+				try {
+					if (jtListaOrdemServicos.getSelectedRow() == -1)
+						throw new ArrayIndexOutOfBoundsException(
+								"Selecione uma OS");
+
+					os = (OrdemServico) new ConsultaOrdemServicoTableModel(
+							new OrdemServicoControl().showOrdemServicos())
+							.get(jtListaOrdemServicos.getSelectedRow());
+
+					OrdemServicoUI osUI = null;
+					osUI = new OrdemServicoUI(os);
+					PrincipalUI.obterInstancia().getContentPane().add(osUI);
+					osUI.setFocusable(true);
+					osUI.moveToFront();
+					getContentPane().add(osUI, 0);
+					osUI.requestFocus();
+					osUI.setVisible(true);
+					osUI.addInternalFrameListener(new InternalFrameListener() {
+						public void internalFrameClosed(InternalFrameEvent e) {
+							try {
+								jtListaOrdemServicos
+										.setModel(new ConsultaOrdemServicoTableModel(
+												new OrdemServicoControl()
+														.showOrdemServicos()));
+							} catch (ClassNotFoundException | SQLException e1) {
+								e1.printStackTrace();
+							}
+						}
+
+						public void internalFrameActivated(
+								InternalFrameEvent arg0) {
+						}
+
+						public void internalFrameClosing(InternalFrameEvent arg0) {
+						}
+
+						public void internalFrameDeactivated(
+								InternalFrameEvent arg0) {
+						}
+
+						public void internalFrameDeiconified(
+								InternalFrameEvent arg0) {
+						}
+
+						public void internalFrameIconified(
+								InternalFrameEvent arg0) {
+						}
+
+						public void internalFrameOpened(InternalFrameEvent arg0) {
+						}
+					});
+				} catch (ClassNotFoundException | SQLException
+						| ArrayIndexOutOfBoundsException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
 				.createParallelGroup(Alignment.TRAILING)
@@ -153,9 +224,10 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 								.addContainerGap()
 								.addGroup(
 										gl_panel.createParallelGroup(
-												Alignment.TRAILING)
+												Alignment.LEADING)
 												.addComponent(
 														scrollpane,
+														Alignment.TRAILING,
 														GroupLayout.DEFAULT_SIZE,
 														1148, Short.MAX_VALUE)
 												.addGroup(
@@ -185,7 +257,8 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 																		GroupLayout.PREFERRED_SIZE)
 																.addGap(4)
 																.addComponent(
-																		btnTipoFiltro)))
+																		btnTipoFiltro))
+												.addComponent(btnEditarOs))
 								.addContainerGap()));
 		gl_panel.setVerticalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
@@ -219,8 +292,11 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 																		lblPesquisa)))
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(scrollpane,
-										GroupLayout.DEFAULT_SIZE, 334,
-										Short.MAX_VALUE).addContainerGap()));
+										GroupLayout.PREFERRED_SIZE, 318,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(btnEditarOs)
+								.addContainerGap(16, Short.MAX_VALUE)));
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 	}

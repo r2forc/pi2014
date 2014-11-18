@@ -6,14 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.Statement;
-
-import br.senai.sc.model.Cliente;
 import br.senai.sc.model.ConnectionUtil;
 import br.senai.sc.model.Orcamento;
-import br.senai.sc.model.OrcamentoFlash;
 import br.senai.sc.model.OrdemServico;
-import br.senai.sc.model.Servico;
+
+import com.mysql.jdbc.Statement;
 
 public class OrdemServicoDAO {
 
@@ -36,7 +33,7 @@ public class OrdemServicoDAO {
 			PreparedStatement stmt = con.prepareStatement(query,
 					Statement.RETURN_GENERATED_KEYS);
 
-			stmt.setInt(1, 1);
+			stmt.setInt(1, os.getId());
 			stmt.setInt(2, os.getServico().getId());
 			stmt.setInt(3, os.getServico().getOriginais());
 			stmt.setInt(4, os.getServico().getCopias());
@@ -50,35 +47,52 @@ public class OrdemServicoDAO {
 		}
 	}
 
-	public void deleteServicoOrdemServico(Integer id) throws SQLException {
+	public void deleteServicoOrdemServico(Integer id_orc, Integer id_serv)
+			throws SQLException {
 		try {
 			String query = "DELETE FROM orcamento_has_servico "
-					+ "WHERE orcamento_id=? " + " and servico_id=" + id;
+					+ "WHERE orcamento_id=? " + " and servico_id=?";
 			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, 1);
+			stmt.setInt(1, id_orc);
+			stmt.setInt(2, id_serv);
 
 			stmt.executeUpdate();
-			System.out.println(query);
 			con.commit();
-			id = null;
 		} catch (SQLException e) {
 			con.rollback();
 			e.printStackTrace();
 		}
 	}
 
-	public ArrayList<OrdemServico> showItensServicoOrdemServicos()
+	public boolean verificarServicosOrdemServicos(Integer id_orc,
+			Integer id_serv) throws ClassNotFoundException, SQLException {
+		String query = "SELECT * FROM orcamento_has_servico WHERE orcamento_id = "
+				+ id_orc + " AND " + "servico_id = " + id_serv;
+		PreparedStatement stmt = con.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+		int verifica = 0;
+		while (rs.next()) {
+			verifica = rs.getInt("orcamento_id");
+		}
+		if (verifica == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public ArrayList<OrdemServico> showItensServicoOrdemServicos(Integer id_orc)
 			throws ClassNotFoundException, SQLException {
 		String query = "SELECT * FROM orcamento orc JOIN orcamento_has_servico ohs"
 				+ " ON orc.id = ohs.orcamento_id JOIN servico s ON s.id = ohs.servico_id"
-				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = 1;";
+				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = +"
+				+ id_orc + ";";
 
 		PreparedStatement stmt = con.prepareStatement(query);
 		// stmt.setInt(1, os.getId());
 		ResultSet rs = stmt.executeQuery();
 		OrdemServico osRetorno = null;
 		ArrayList<OrdemServico> listaOS = new ArrayList<>();
-
 		while (rs.next()) {
 
 			osRetorno = new OrdemServico();
@@ -89,6 +103,7 @@ public class OrdemServicoDAO {
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
 			osRetorno.setStatus(rs.getInt("status"));
 			// recupera valorUnt e Descricao do Servico.
+			osRetorno.getServico().setId(rs.getInt("s.id"));
 			osRetorno.getServico().setValorUnt(rs.getDouble("valorUnt"));
 			osRetorno.getServico().setDescricao(rs.getString("s.descricao"));
 			// recuper nome Cliente
@@ -102,7 +117,8 @@ public class OrdemServicoDAO {
 	public ArrayList<OrdemServico> showOrdemServicos()
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM orcamento orc JOIN cliente cli ON orc.cliente_id = cli.id ORDER BY data;";
+		String query = "SELECT * FROM orcamento orc JOIN cliente cli ON "
+				+ "orc.cliente_id = cli.id ORDER BY data;";
 
 		PreparedStatement stmt = con.prepareStatement(query);
 
