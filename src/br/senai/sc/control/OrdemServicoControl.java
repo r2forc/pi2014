@@ -12,8 +12,8 @@ public class OrdemServicoControl {
 
 	public static void insertOrdemServico(OrdemServico os) throws SQLException {
 		try {
-			if (OrdemServicoDAO.getInstace().verificarServicosOrdemServicos(1,
-					os.getServico().getId())) {
+			if (OrdemServicoDAO.getInstace().verificarServicosOrdemServicos(
+					os.getId(), os.getServico().getId())) {
 				throw new Exception("Serviço já adicionado a lista");
 			}
 			if (os.getServico().getValorUnt() <= 0)
@@ -35,9 +35,10 @@ public class OrdemServicoControl {
 		OrdemServicoDAO.getInstace().deleteServicoOrdemServico(id_orc, id_serv);
 	}
 
-	public static ArrayList<OrdemServico> showItensServicoOrdemServicos()
-			throws ClassNotFoundException, SQLException {
-		return OrdemServicoDAO.getInstace().showItensServicoOrdemServicos();
+	public static ArrayList<OrdemServico> showItensServicoOrdemServicos(
+			Integer id_orc) throws ClassNotFoundException, SQLException {
+		return OrdemServicoDAO.getInstace().showItensServicoOrdemServicos(
+				id_orc);
 	}
 
 	public ArrayList<OrdemServico> showOrdemServicos()

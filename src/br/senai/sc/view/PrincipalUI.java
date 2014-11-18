@@ -44,7 +44,7 @@ public class PrincipalUI extends JFrame {
 				try {
 					PrincipalUI frame = obterInstancia();
 					frame.setVisible(true);
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -67,25 +67,6 @@ public class PrincipalUI extends JFrame {
 
 		JMenu mnVendas = new JMenu("Or\u00E7amento");
 		menuBar.add(mnVendas);
-
-		JMenuItem mntmRegistrarVenda = new JMenuItem(
-				"Gerar Ordem de Servi\u00E7o");
-		mntmRegistrarVenda.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OrdemServicoUI ordemServico;
-				try {
-					ordemServico = new OrdemServicoUI();
-					ordemServico.setVisible(true);
-					ordemServico.setFocusable(true);
-					
-					getContentPane().add(ordemServico, 0);
-					getContentPane().add(ordemServico);
-				} catch (ClassNotFoundException | SQLException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		mnVendas.add(mntmRegistrarVenda);
 
 		JMenuItem mntmGerarOramento = new JMenuItem("Gerar Or\u00E7amento");
 		mntmGerarOramento.addActionListener(new ActionListener() {
@@ -165,12 +146,13 @@ public class PrincipalUI extends JFrame {
 				}
 			}
 		});
-		
+
 		JMenuItem mntmCadastrarClientes = new JMenuItem("Cadastrar Clientes");
 		mntmCadastrarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					CadastrarEditarCliente cec = new CadastrarEditarCliente(null);
+					CadastrarEditarCliente cec = new CadastrarEditarCliente(
+							null);
 					cec.setFocusable(true);
 					getContentPane().add(cec, 0);
 					cec.requestFocus();
@@ -201,7 +183,7 @@ public class PrincipalUI extends JFrame {
 				}
 			}
 		});
-		
+
 		JMenuItem mntmCadastrarServio = new JMenuItem("Cadastrar Servi\u00E7o");
 		mntmCadastrarServio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -214,7 +196,7 @@ public class PrincipalUI extends JFrame {
 		});
 		mnServios.add(mntmCadastrarServio);
 		mnServios.add(jmiConsultarServicos);
-		
+
 		JLabel jlSair = new JLabel("Sair");
 		jlSair.addMouseListener(new MouseAdapter() {
 			@Override
