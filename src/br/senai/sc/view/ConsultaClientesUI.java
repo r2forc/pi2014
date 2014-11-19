@@ -33,6 +33,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class ConsultaClientesUI extends JInternalFrame {
 	private JTextField jtfFiltro;
@@ -59,6 +61,12 @@ public class ConsultaClientesUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaClientesUI() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				setLocation(0,0);
+			}
+		});
 		setFrameIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/fornecedores.png")));
 		
 		setTitle("Consultar Clientes");

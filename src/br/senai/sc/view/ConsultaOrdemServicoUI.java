@@ -37,6 +37,8 @@ import br.senai.sc.model.Servico;
 import br.senai.sc.utils.ConsultaOrdemServicoTableModel;
 import br.senai.sc.utils.MaskFields;
 import br.senai.sc.utils.OrdemServicoTableModel;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class ConsultaOrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -76,6 +78,12 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 	 */
 
 	public ConsultaOrdemServicoUI() throws ClassNotFoundException, SQLException {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				setLocation(0,0);
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGap(0, 434, Short.MAX_VALUE));

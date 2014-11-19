@@ -35,6 +35,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class OrcamentoUI extends JInternalFrame {
 
@@ -68,6 +70,12 @@ public class OrcamentoUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public OrcamentoUI() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				setLocation(0,0);
+			}
+		});
 		setFrameIcon(new ImageIcon(OrcamentoUI.class.getResource("/br/senai/sc/icons/icon_table.png")));
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);
@@ -213,7 +221,7 @@ public class OrcamentoUI extends JInternalFrame {
 			}
 		});
 		
-		JButton btCancelar = new JButton("Cancelar");
+		JButton btCancelar = new JButton("Fechar");
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

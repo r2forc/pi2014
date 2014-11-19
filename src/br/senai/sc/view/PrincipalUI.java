@@ -92,11 +92,11 @@ public class PrincipalUI extends JFrame {
 				ConsultaOrdemServicoUI ConsultaOS;
 				try {
 					ConsultaOS = new ConsultaOrdemServicoUI();
-					ConsultaOS.setVisible(true);
 					ConsultaOS.setFocusable(true);
-
 					getContentPane().add(ConsultaOS, 0);
-					getContentPane().add(ConsultaOS);
+					ConsultaOS.requestFocus();
+					ConsultaOS.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -115,11 +115,10 @@ public class PrincipalUI extends JFrame {
 
 				try {
 					relatorioPorStatus = new RelatorioPorStatusUI();
-					relatorioPorStatus.setVisible(true);
 					relatorioPorStatus.setFocusable(true);
-					relatorioPorStatus.requestFocus();
 					getContentPane().add(relatorioPorStatus, 0);
-					getContentPane().add(relatorioPorStatus);
+					relatorioPorStatus.requestFocus();
+					relatorioPorStatus.setVisible(true);
 
 				} catch (Exception e) {
 					e.printStackTrace();

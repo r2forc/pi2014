@@ -32,6 +32,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class ConsultaClientesOrcUI extends JInternalFrame {
 	private JTextField jtfFiltro;
@@ -58,6 +60,11 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaClientesOrcUI() {
+		addComponentListener(new ComponentAdapter() {
+			public void componentMoved(ComponentEvent arg0) {
+				setLocation(2,40);
+			}
+		});
 		setFrameIcon(new ImageIcon(
 				ConsultaClientesOrcUI.class
 						.getResource("/br/senai/sc/icons/fornecedores.png")));
@@ -65,7 +72,6 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		setBounds(2, 40, 1192, 500);
-
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel.setBackground(SystemColor.inactiveCaption);

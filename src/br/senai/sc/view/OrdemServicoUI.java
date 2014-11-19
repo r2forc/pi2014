@@ -33,6 +33,8 @@ import br.senai.sc.model.OrdemServico;
 import br.senai.sc.model.Servico;
 import br.senai.sc.utils.OrdemServicoTableModel;
 import br.senai.sc.utils.ServicoTableModel;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class OrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -72,6 +74,12 @@ public class OrdemServicoUI extends JInternalFrame {
 	 */
 	public OrdemServicoUI(final OrdemServico os) throws ClassNotFoundException,
 			SQLException {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				setLocation(0,0);
+			}
+		});
 		setBackground(SystemColor.inactiveCaption);
 		setRootPaneCheckingEnabled(false);
 		setEnabled(false);

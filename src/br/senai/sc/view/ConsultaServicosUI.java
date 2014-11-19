@@ -35,6 +35,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class ConsultaServicosUI extends JInternalFrame {
 	private JTextField jtfFiltro;
@@ -63,6 +65,12 @@ public class ConsultaServicosUI extends JInternalFrame {
 	 * @throws ClassNotFoundException 
 	 */
 	public ConsultaServicosUI() throws ClassNotFoundException, SQLException {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				setLocation(0,0);
+			}
+		});
 		setFrameIcon(new ImageIcon(ConsultaServicosUI.class.getResource("/br/senai/sc/icons/imprimir.png")));
 		setTitle("Consultar Servi\u00E7os");
 		setBorder(null);
