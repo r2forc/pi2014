@@ -14,6 +14,7 @@ import br.senai.sc.model.RelatorioStatus;
 public class RelatorioDAO {
 	private static RelatorioDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
+	private static Integer status = 0;
 
 	public static RelatorioDAO getInstance() {
 		if (instance == null) {
@@ -40,7 +41,15 @@ public class RelatorioDAO {
 
 			oRetorno.getCliente().setNome(rs.getString("cli.nome"));
 			oRetorno.setData(rs.getDate("data"));
-			oRetorno.setStatus(rs.getInt("status"));
+			status = rs.getInt("status");
+			switch (status) {
+			case 0:
+				oRetorno.setStatus("Aguardando");
+				break;
+			case 1:
+				oRetorno.setStatus("Aprovado");
+				break;
+			}
 			oRetorno.setValor(rs.getDouble("valorTotal"));
 
 			listaRelatorio.add(oRetorno);
@@ -84,7 +93,14 @@ public class RelatorioDAO {
 
 			oRetorno.getCliente().setNome(rs.getString("nome"));
 			oRetorno.setData(rs.getDate("data"));
-			oRetorno.setStatus(rs.getInt("status"));
+			switch (this.status) {
+			case 0:
+				oRetorno.setStatus("Aguardando");
+				break;
+			case 1:
+				oRetorno.setStatus("Aprovado");
+				break;
+			}
 			oRetorno.setValor(rs.getDouble("valorTotal"));
 
 			listaRelatorio.add(oRetorno);

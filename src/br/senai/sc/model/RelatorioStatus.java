@@ -4,11 +4,12 @@ import java.util.Date;
 
 public class RelatorioStatus {
 	private Cliente cliente = new Cliente();
-	private int status;
+	private String status;
 	private Date data;
 	private Double valor;
 
-	public RelatorioStatus(Cliente cliente, int status, Date data, Double valor) {
+	public RelatorioStatus(Cliente cliente, String status, Date data,
+			Double valor) {
 
 		this.cliente = cliente;
 		this.status = status;
@@ -28,11 +29,11 @@ public class RelatorioStatus {
 		this.cliente = cliente;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

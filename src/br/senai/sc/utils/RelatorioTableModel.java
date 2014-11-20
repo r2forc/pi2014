@@ -69,7 +69,7 @@ public class RelatorioTableModel extends AbstractTableModel {
 		if (columnIndex == COL_CLIENTE)
 			rs.getCliente().setNome(aValue.toString());
 		else if (columnIndex == COL_STATUS)
-			rs.setStatus(Integer.parseInt(aValue.toString()));
+			rs.setStatus(aValue.toString());
 		else if (columnIndex == COL_DATA)
 			try {
 				rs.setData(sdf.parse(aValue.toString()));
