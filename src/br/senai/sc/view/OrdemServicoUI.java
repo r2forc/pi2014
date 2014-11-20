@@ -156,12 +156,12 @@ public class OrdemServicoUI extends JInternalFrame {
 		// ADICIONA ITEM NO TABLEMODEL ORDEM DE SERVIÇOS
 		JButton jbAdicionarItem = new JButton("Adicionar Serviço");
 		jbAdicionarItem
-				.setIcon(new ImageIcon(
-						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\add_icon.png"));
+				.setIcon(new ImageIcon(OrdemServicoUI.class.getResource("/br/senai/sc/icons/add_icon.png")));
 		jbAdicionarItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				OrdemServico os = new OrdemServico();
-				Double valorTotal = 0.0;
+				Double valorTotal =  (Integer.parseInt( jtfOriginais.getText() ) * Integer.parseInt( jtfCopias.getText() )) * Double.parseDouble( jtfValorUnitario.getText() );
+		
 				try {
 					new OrdemServicoControl();
 					os.setId(id_orc);
