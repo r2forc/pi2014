@@ -103,24 +103,20 @@ public class OrdemServicoUI extends JInternalFrame {
 		panel.setBorder(new TitledBorder(null, "Ordem de Servi\u00E7o",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 503,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(60, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1171, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(19, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 503, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(59, Short.MAX_VALUE))
+		);
 
 		JScrollPane spItensOS = new JScrollPane();
 
@@ -280,253 +276,95 @@ public class OrdemServicoUI extends JInternalFrame {
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		spItensOS,
-																		GroupLayout.PREFERRED_SIZE,
-																		1149,
-																		GroupLayout.PREFERRED_SIZE)
-																.addContainerGap())
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.TRAILING)
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addGroup(
-																										gl_panel.createParallelGroup(
-																												Alignment.LEADING,
-																												false)
-																												.addGroup(
-																														gl_panel.createSequentialGroup()
-																																.addGap(12)
-																																.addComponent(
-																																		lblCliente)
-																																.addPreferredGap(
-																																		ComponentPlacement.RELATED)
-																																.addComponent(
-																																		jtfCliente,
-																																		GroupLayout.PREFERRED_SIZE,
-																																		1085,
-																																		GroupLayout.PREFERRED_SIZE))
-																												.addGroup(
-																														gl_panel.createSequentialGroup()
-																																.addGroup(
-																																		gl_panel.createParallelGroup(
-																																				Alignment.TRAILING)
-																																				.addComponent(
-																																						lblCopias)
-																																				.addComponent(
-																																						lblServico))
-																																.addPreferredGap(
-																																		ComponentPlacement.RELATED)
-																																.addGroup(
-																																		gl_panel.createParallelGroup(
-																																				Alignment.LEADING)
-																																				.addGroup(
-																																						gl_panel.createSequentialGroup()
-																																								.addComponent(
-																																										jtfServico,
-																																										GroupLayout.PREFERRED_SIZE,
-																																										1008,
-																																										GroupLayout.PREFERRED_SIZE)
-																																								.addPreferredGap(
-																																										ComponentPlacement.RELATED)
-																																								.addComponent(
-																																										button,
-																																										GroupLayout.PREFERRED_SIZE,
-																																										49,
-																																										GroupLayout.PREFERRED_SIZE))
-																																				.addGroup(
-																																						gl_panel.createParallelGroup(
-																																								Alignment.LEADING,
-																																								false)
-																																								.addComponent(
-																																										jbAdicionarItem,
-																																										GroupLayout.DEFAULT_SIZE,
-																																										GroupLayout.DEFAULT_SIZE,
-																																										Short.MAX_VALUE)
-																																								.addGroup(
-																																										gl_panel.createSequentialGroup()
-																																												.addComponent(
-																																														jtfCopias,
-																																														GroupLayout.PREFERRED_SIZE,
-																																														GroupLayout.DEFAULT_SIZE,
-																																														GroupLayout.PREFERRED_SIZE)
-																																												.addPreferredGap(
-																																														ComponentPlacement.RELATED)
-																																												.addComponent(
-																																														lblQuantidade)
-																																												.addPreferredGap(
-																																														ComponentPlacement.RELATED)
-																																												.addComponent(
-																																														jtfOriginais,
-																																														GroupLayout.PREFERRED_SIZE,
-																																														GroupLayout.DEFAULT_SIZE,
-																																														GroupLayout.PREFERRED_SIZE)
-																																												.addPreferredGap(
-																																														ComponentPlacement.UNRELATED)
-																																												.addComponent(
-																																														label,
-																																														GroupLayout.PREFERRED_SIZE,
-																																														91,
-																																														GroupLayout.PREFERRED_SIZE)
-																																												.addPreferredGap(
-																																														ComponentPlacement.RELATED)
-																																												.addComponent(
-																																														jtfValorUnitario,
-																																														GroupLayout.PREFERRED_SIZE,
-																																														114,
-																																														GroupLayout.PREFERRED_SIZE))))))
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED,
-																										12,
-																										Short.MAX_VALUE))
-																				.addComponent(
-																						spListaServicos,
-																						GroupLayout.DEFAULT_SIZE,
-																						1150,
-																						Short.MAX_VALUE))
-																.addGap(9))
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.TRAILING,
-																				false)
-																				.addComponent(
-																						jbRemoverServico,
-																						Alignment.LEADING,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						jbImprimir,
-																						Alignment.LEADING,
-																						GroupLayout.DEFAULT_SIZE,
-																						134,
-																						Short.MAX_VALUE))
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		jbCancelar,
-																		GroupLayout.PREFERRED_SIZE,
-																		137,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED,
-																		621,
-																		Short.MAX_VALUE)
-																.addComponent(
-																		jlTotalVenda,
-																		GroupLayout.PREFERRED_SIZE,
-																		66,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		tfValorTotal,
-																		GroupLayout.PREFERRED_SIZE,
-																		70,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(119)))));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														jtfCliente,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblCliente))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addComponent(
-																						lblServico)
-																				.addComponent(
-																						jtfServico,
-																						GroupLayout.PREFERRED_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.PREFERRED_SIZE))
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.BASELINE)
-																				.addComponent(
-																						jtfCopias,
-																						GroupLayout.PREFERRED_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						lblQuantidade)
-																				.addComponent(
-																						jtfOriginais,
-																						GroupLayout.PREFERRED_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						lblCopias)
-																				.addComponent(
-																						label)
-																				.addComponent(
-																						jtfValorUnitario,
-																						GroupLayout.PREFERRED_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.PREFERRED_SIZE))
-																.addPreferredGap(
-																		ComponentPlacement.UNRELATED)
-																.addComponent(
-																		jbAdicionarItem))
-												.addComponent(
-														button,
-														GroupLayout.PREFERRED_SIZE,
-														20,
-														GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(spListaServicos,
-										GroupLayout.PREFERRED_SIZE, 121,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(16)
-								.addComponent(spItensOS,
-										GroupLayout.PREFERRED_SIZE, 145,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(jbRemoverServico)
-												.addComponent(jlTotalVenda)
-												.addComponent(tfValorTotal))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(jbImprimir)
-												.addComponent(jbCancelar))
-								.addGap(44)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(jbRemoverServico, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(jbImprimir, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jbCancelar, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 621, Short.MAX_VALUE)
+							.addComponent(jlTotalVenda, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tfValorTotal, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+							.addGap(119))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(spItensOS, Alignment.LEADING)
+								.addComponent(spListaServicos, Alignment.LEADING)
+								.addGroup(Alignment.LEADING, gl_panel.createParallelGroup(Alignment.TRAILING, false)
+									.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+										.addGap(12)
+										.addComponent(lblCliente)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(jtfCliente))
+									.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+										.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+											.addComponent(lblCopias)
+											.addComponent(lblServico))
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+											.addGroup(gl_panel.createSequentialGroup()
+												.addComponent(jtfServico, GroupLayout.PREFERRED_SIZE, 1008, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(button, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE))
+											.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+												.addComponent(jbAdicionarItem, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addGroup(gl_panel.createSequentialGroup()
+													.addComponent(jtfCopias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(lblQuantidade)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(jtfOriginais, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.UNRELATED)
+													.addComponent(label, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(jtfValorUnitario, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)))))))
+							.addContainerGap(21, Short.MAX_VALUE))))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCliente))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblServico)
+								.addComponent(jtfServico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jtfCopias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblQuantidade)
+								.addComponent(jtfOriginais, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblCopias)
+								.addComponent(label)
+								.addComponent(jtfValorUnitario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(jbAdicionarItem))
+						.addComponent(button, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(spListaServicos, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addGap(16)
+					.addComponent(spItensOS, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jbRemoverServico)
+						.addComponent(jlTotalVenda)
+						.addComponent(tfValorTotal))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jbImprimir)
+						.addComponent(jbCancelar))
+					.addGap(44))
+		);
 
 		jtListaServicos = new JTable();
 		jtListaServicos.addMouseListener(new MouseAdapter() {

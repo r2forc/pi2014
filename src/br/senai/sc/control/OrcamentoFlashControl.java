@@ -73,7 +73,7 @@ public class OrcamentoFlashControl {
 		Cliente novoCliente = new Cliente();
 		OrcamentoFlashDAO.getInstace().insertCliente(novoCliente);
 		int i = OrcamentoFlashDAO.getInstace().mostrarServicos().size()-1;
-		while( i != 0){
+		while(OrcamentoFlashDAO.getInstace().mostrarServicos().size() != 0){
 			i = OrcamentoFlashDAO.getInstace().mostrarServicos().size()-1;
 			OrcamentoFlashDAO.getInstace().RemoverServico(i);
 		}

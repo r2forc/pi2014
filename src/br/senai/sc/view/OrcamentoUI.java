@@ -224,6 +224,11 @@ public class OrcamentoUI extends JInternalFrame {
 		JButton btCancelar = new JButton("Fechar");
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(ofc.showAllServicos().size() != 0)
+					ofc.destruirFlash();
+				
+				jtfDescricao.setText("");
+				jtfCliente.setText("");
 				dispose();
 			}
 		});
