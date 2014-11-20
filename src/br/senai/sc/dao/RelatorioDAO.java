@@ -74,7 +74,7 @@ public class RelatorioDAO {
 				dataFinal = sdf.format(data);
 				query += "' AND '" + dataFinal + "')";
 			} else {
-				query += " AND '" + dataFinal + "')";
+				query += "' AND '" + dataFinal + "')";
 
 			}
 		}

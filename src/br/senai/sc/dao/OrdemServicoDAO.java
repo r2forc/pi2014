@@ -202,7 +202,6 @@ public class OrdemServicoDAO {
 
 		String query = " SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.cliente_id  WHERE (status = "
 				+ status + ")";
-		System.out.println(query);
 		if (!(cliente.equals("")))
 			query += " AND nome LIKE '%" + cliente + "%' ";
 
@@ -214,8 +213,7 @@ public class OrdemServicoDAO {
 				dataFinal = sdf.format(data);
 				query += "' AND '" + dataFinal + "')";
 			} else {
-				query += " AND '" + dataFinal + "')";
-
+				query += "' AND '" + dataFinal + "')";
 			}
 		}
 		PreparedStatement stmt = con.prepareStatement(query);
