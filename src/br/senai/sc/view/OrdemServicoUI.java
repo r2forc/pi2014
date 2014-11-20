@@ -77,7 +77,7 @@ public class OrdemServicoUI extends JInternalFrame {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentMoved(ComponentEvent arg0) {
-				setLocation(0,0);
+				setLocation(0, 0);
 			}
 		});
 		setBackground(SystemColor.inactiveCaption);
@@ -103,20 +103,24 @@ public class OrdemServicoUI extends JInternalFrame {
 		panel.setBorder(new TitledBorder(null, "Ordem de Servi\u00E7o",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 503, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(60, Short.MAX_VALUE))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 503,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(60, Short.MAX_VALUE)));
 
 		JScrollPane spItensOS = new JScrollPane();
 
