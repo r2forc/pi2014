@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import br.senai.sc.model.Cliente;
 import br.senai.sc.model.ConnectionUtil;
 import br.senai.sc.model.Orcamento;
 import br.senai.sc.model.OrdemServico;
@@ -19,12 +20,30 @@ public class OrdemServicoDAO {
 
 	private static OrdemServicoDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
+	private static Integer status = 0;
 
 	public static OrdemServicoDAO getInstace() {
 		if (instance == null) {
 			instance = new OrdemServicoDAO();
 		}
 		return instance;
+	}
+
+	public boolean verificarServicosOrdemServicos(Integer id_orc,
+			Integer id_serv) throws ClassNotFoundException, SQLException {
+		String query = "SELECT * FROM orcamento_has_servico WHERE orcamento_id = "
+				+ id_orc + " AND " + "servico_id = " + id_serv;
+		PreparedStatement stmt = con.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+		int verifica = 0;
+		while (rs.next()) {
+			verifica = rs.getInt("orcamento_id");
+		}
+		if (verifica == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public void insertOrdemServico(OrdemServico os)
@@ -67,15 +86,31 @@ public class OrdemServicoDAO {
 		}
 	}
 
-	public boolean verificarServicosOrdemServicos(Integer id_orc,
-			Integer id_serv) throws ClassNotFoundException, SQLException {
-		String query = "SELECT * FROM orcamento_has_servico WHERE orcamento_id = "
-				+ id_orc + " AND " + "servico_id = " + id_serv;
+	public void changeStatus(OrdemServico os, Integer status)
+			throws SQLException {
+		try {
+			String query = "UPDATE orcamento SET status = ? WHERE id = ?;";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, status);
+			stmt.setInt(2, os.getId());
+
+			stmt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
+	}
+
+	public boolean verificarStatus(Integer status, Integer id_orc)
+			throws ClassNotFoundException, SQLException {
+		String query = "SELECT * FROM orcamento WHERE status = " + status
+				+ " AND " + "id = " + id_orc;
 		PreparedStatement stmt = con.prepareStatement(query);
 		ResultSet rs = stmt.executeQuery();
 		int verifica = 0;
 		while (rs.next()) {
-			verifica = rs.getInt("orcamento_id");
+			verifica = rs.getInt("status");
 		}
 		if (verifica == 0) {
 			return false;
@@ -97,14 +132,23 @@ public class OrdemServicoDAO {
 		OrdemServico osRetorno = null;
 		ArrayList<OrdemServico> listaOS = new ArrayList<>();
 		while (rs.next()) {
-
+			Integer status = 0;
 			osRetorno = new OrdemServico();
 			osRetorno.setId(rs.getInt("id"));
 			osRetorno.setData(rs.getDate("data"));
 			osRetorno.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
 			osRetorno.setCopias(rs.getInt("copias"));
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
-			osRetorno.setStatus(rs.getInt("status"));
+			status = rs.getInt("status");
+			switch (status) {
+			case 0:
+				osRetorno.setStatus("Aguardando");
+				break;
+			case 1:
+				osRetorno.setStatus("Aprovado");
+				break;
+			}
+
 			// recupera valorUnt e Descricao do Servico.
 			osRetorno.getServico().setId(rs.getInt("s.id"));
 			osRetorno.getServico().setValorUnt(rs.getDouble("valorUnt"));
@@ -131,7 +175,6 @@ public class OrdemServicoDAO {
 		ArrayList<OrdemServico> listaOS = new ArrayList<>();
 
 		while (rs.next()) {
-
 			osRetorno = new Orcamento();
 
 			osRetorno.setId(rs.getInt("id"));
@@ -139,8 +182,15 @@ public class OrdemServicoDAO {
 			osRetorno.getCliente().setNome(rs.getString("cli.nome"));
 			osRetorno.getServico().setId(rs.getInt("usuario_id"));
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
-			osRetorno.setStatus(rs.getInt("status"));
-
+			status = rs.getInt("status");
+			switch (status) {
+			case 0:
+				osRetorno.setStatus("Aguardando");
+				break;
+			case 1:
+				osRetorno.setStatus("Aprovado");
+				break;
+			}
 			listaOS.add(osRetorno);
 		}
 		return listaOS;
@@ -152,6 +202,7 @@ public class OrdemServicoDAO {
 
 		String query = " SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.cliente_id  WHERE (status = "
 				+ status + ")";
+		System.out.println(query);
 		if (!(cliente.equals("")))
 			query += " AND nome LIKE '%" + cliente + "%' ";
 
@@ -175,14 +226,20 @@ public class OrdemServicoDAO {
 		ArrayList<OrdemServico> listaRelatorio = new ArrayList<>();
 
 		while (rs.next()) {
-
 			oRetorno = new OrdemServico();
 
 			oRetorno.getCliente().setNome(rs.getString("nome"));
 			oRetorno.setData(rs.getDate("data"));
-			oRetorno.setStatus(rs.getInt("status"));
+			this.status = rs.getInt("status");
+			switch (this.status) {
+			case 0:
+				oRetorno.setStatus("Aguardando");
+				break;
+			case 1:
+				oRetorno.setStatus("Aprovado");
+				break;
+			}
 			oRetorno.setValorTotal(rs.getDouble("valorTotal"));
-
 			listaRelatorio.add(oRetorno);
 		}
 		return listaRelatorio;

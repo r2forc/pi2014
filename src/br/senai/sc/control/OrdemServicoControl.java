@@ -28,13 +28,30 @@ public class OrdemServicoControl {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		} finally {
-
 		}
 	}
 
 	public static void deleteServicoOrdemServico(Integer id_orc, Integer id_serv)
 			throws SQLException {
 		OrdemServicoDAO.getInstace().deleteServicoOrdemServico(id_orc, id_serv);
+	}
+
+	public static void changeStatus(OrdemServico os, Integer status)
+			throws Exception {
+		try {
+			if (OrdemServicoDAO.getInstace()
+					.verificarStatus(status, os.getId())) {
+				throw new Exception(
+						"O Status dessa ordem de serviço já foi alterado!");
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Status alterado com sucesso!");
+				OrdemServicoDAO.getInstace().changeStatus(os, status);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		} finally {
+		}
 	}
 
 	public static ArrayList<OrdemServico> showItensServicoOrdemServicos(

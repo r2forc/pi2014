@@ -13,14 +13,14 @@ public class OrdemServico {
 	private Double valorTotal;
 	private Integer quantidadeOriginal;
 	private Integer copias;
-	private Integer status;
+	private String status;
 
 	public OrdemServico() {
 	}
 
 	public OrdemServico(Cliente cliente, Servico servico, Integer id,
 			Date data, String descricao, Double valorTotal,
-			Integer quantidadeOriginal, Integer copias, Integer status) {
+			Integer quantidadeOriginal, Integer copias, String status) {
 		this.cliente = cliente;
 		this.servico = servico;
 		this.id = id;
@@ -108,11 +108,11 @@ public class OrdemServico {
 		this.copias = copias;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

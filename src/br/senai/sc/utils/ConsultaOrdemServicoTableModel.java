@@ -82,7 +82,7 @@ public class ConsultaOrdemServicoTableModel extends AbstractTableModel {
 		else if (columnIndex == COL_VALORTOTAL)
 			os.setValorTotal(Double.parseDouble(aValue.toString()));
 		else if (columnIndex == COL_STATUS)
-			os.setStatus(Integer.parseInt(aValue.toString()));
+			os.setStatus(aValue.toString());
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
