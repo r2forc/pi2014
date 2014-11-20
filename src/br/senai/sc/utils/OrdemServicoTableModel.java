@@ -62,7 +62,7 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 		else if (column == COL_COPIAS)
 			return os.getCopias();
 		else if (column == COL_VALORTOTAL)
-			return os.getServico().getValorUnt();
+			return os.getValorTotal();
 		return ""; // Nunca deve ocorrer
 	}
 
@@ -92,7 +92,7 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		// Indicamos se a célula da rowIndex e da columnIndex é editável. Nossa
 		// tabela toda é.
-		return true;
+		return false;
 	}
 
 	// Já que esse tableModel é de servicos, vamos fazer um get que retorne um

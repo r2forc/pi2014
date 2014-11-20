@@ -138,7 +138,7 @@ public class OrdemServicoDAO {
 			osRetorno.setData(rs.getDate("data"));
 			osRetorno.setQuantidadeOriginal(rs.getInt("quantidadeOriginal"));
 			osRetorno.setCopias(rs.getInt("copias"));
-			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
+			osRetorno.setValorTotal(rs.getDouble("ohs.valorTotal"));
 			status = rs.getInt("status");
 			switch (status) {
 			case 0:

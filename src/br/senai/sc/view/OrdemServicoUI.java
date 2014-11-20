@@ -67,12 +67,6 @@ public class OrdemServicoUI extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
 	public OrdemServicoUI(final OrdemServico os) throws ClassNotFoundException,
 			SQLException {
 		addComponentListener(new ComponentAdapter() {
@@ -81,6 +75,7 @@ public class OrdemServicoUI extends JInternalFrame {
 				setLocation(0, 0);
 			}
 		});
+
 		setBackground(SystemColor.inactiveCaption);
 		setRootPaneCheckingEnabled(false);
 		setEnabled(false);
@@ -155,14 +150,21 @@ public class OrdemServicoUI extends JInternalFrame {
 
 		// ADICIONA ITEM NO TABLEMODEL ORDEM DE SERVIÇOS
 		JButton jbAdicionarItem = new JButton("Adicionar Serviço");
-		jbAdicionarItem
-				.setIcon(new ImageIcon(OrdemServicoUI.class.getResource("/br/senai/sc/icons/add_icon.png")));
+		if (os.getStatus() == "Aprovado") {
+			jbAdicionarItem.setEnabled(false);
+		} else {
+			jbAdicionarItem.setEnabled(true);
+		}
+		jbAdicionarItem.setIcon(new ImageIcon(OrdemServicoUI.class
+				.getResource("/br/senai/sc/icons/add_icon.png")));
 		jbAdicionarItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				OrdemServico os = new OrdemServico();
-				Double valorTotal =  (Integer.parseInt( jtfOriginais.getText() ) * Integer.parseInt( jtfCopias.getText() )) * Double.parseDouble( jtfValorUnitario.getText() );
-		
+
 				try {
+					Double valorTotal = (Integer.parseInt(jtfOriginais
+							.getText()) * Integer.parseInt(jtfCopias.getText()))
+							* Double.parseDouble(jtfValorUnitario.getText());
 					new OrdemServicoControl();
 					os.setId(id_orc);
 					os.getServico().setId(
@@ -210,6 +212,11 @@ public class OrdemServicoUI extends JInternalFrame {
 		JLabel jlTotalVenda = new JLabel("Total:  R$:");
 
 		JButton jbRemoverServico = new JButton("Remover Servi\u00E7o");
+		if (os.getStatus() == "Aprovado") {
+			jbRemoverServico.setEnabled(false);
+		} else {
+			jbRemoverServico.setEnabled(true);
+		}
 		jbRemoverServico
 				.setIcon(new ImageIcon(
 						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\exit_icon.png"));
@@ -240,7 +247,6 @@ public class OrdemServicoUI extends JInternalFrame {
 		JLabel label = new JLabel("Valor Unit\u00E1rio:");
 
 		jtfValorUnitario = new JTextField();
-		jtfValorUnitario.setEditable(false);
 		jtfValorUnitario.setColumns(10);
 
 		JScrollPane spListaServicos = new JScrollPane();

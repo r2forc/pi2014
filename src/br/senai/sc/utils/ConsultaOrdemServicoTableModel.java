@@ -3,6 +3,7 @@ package br.senai.sc.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -52,8 +53,10 @@ public class ConsultaOrdemServicoTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int column) {
 		// Precisamos retornar o valor da coluna column e da linha row.
 		OrdemServico os = valores.get(row);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
 		if (column == COL_DATA)
-			return os.getData();
+			return sdf.format(os.getData());
 		else if (column == COL_NOMECLIENTE)
 			return os.getCliente().getNome();
 		else if (column == COL_VALORTOTAL)
@@ -94,7 +97,7 @@ public class ConsultaOrdemServicoTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		// Indicamos se a célula da rowIndex e da columnIndex é editável. Nossa
 		// tabela toda é.
-		return true;
+		return false;
 	}
 
 	// Já que esse tableModel é de servicos, vamos fazer um get que retorne um
