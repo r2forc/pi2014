@@ -55,6 +55,7 @@ public class RelatorioDAO {
 			oRetorno.setValor(rs.getDouble("valorTotal"));
 
 			listaRelatorio.add(oRetorno);
+			con.commit();
 		}
 		return listaRelatorio;
 	}

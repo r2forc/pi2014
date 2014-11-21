@@ -257,7 +257,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 				jtfFiltro.setText(null);
 			}
 		});
-		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "CPF", "Email", "Telefone"}));
+		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "CPF / CNPJ", "Email", "Telefone"}));
 		
 		
 		

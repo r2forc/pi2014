@@ -201,8 +201,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 			}
 		});
 
-		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] { "Nome",
-				"CPF", "Email", "Telefone" }));
+		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "CPF / CNPJ", "Email", "Telefone"}));
 
 		JButton btnNewButton_1 = new JButton("Procurar");
 		btnNewButton_1.addActionListener(new ActionListener() {
