@@ -277,7 +277,7 @@ public class OrdemServicoUI extends JInternalFrame {
 				try {
 					jtListaServicos.setModel(new ServicoTableModel(
 							new ServicoControl().showFilterServicos(jtfServico
-									.getText())));
+									.getText(), 0)));
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}

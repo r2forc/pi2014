@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.control.ServicoControl;
+import br.senai.sc.dao.ServicoDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.Servico;
 import br.senai.sc.utils.ClienteTableModel;
@@ -35,13 +36,16 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.JCheckBox;
 
 public class ConsultaServicosUI extends JInternalFrame {
 	private JTextField jtfFiltro;
 	private JTable table;
 	private JTable jtConsultaServico;
+	private JCheckBox jckbExcluidos;
 	
 	/**
 	 * Launch the application.
@@ -81,6 +85,38 @@ public class ConsultaServicosUI extends JInternalFrame {
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel.setBackground(SystemColor.inactiveCaption);
 		
+		final JCheckBox jckbExcluidos = new JCheckBox("Exclu\u00EDdos");
+		jckbExcluidos.setBackground(SystemColor.inactiveCaption);
+		
+		final JButton btnRestaurar = new JButton("Restaurar");
+		btnRestaurar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if(jtConsultaServico.getSelectedRow() == -1)
+						throw new Exception("Selecione um Serviço");
+					
+					int opcao = JOptionPane.showConfirmDialog(null, 
+							"Deseja restaurar o serviço selecionado?", 
+							"restaurar Serviço", 
+							JOptionPane.YES_NO_OPTION);
+					if ( opcao == 0){
+						Servico ser = null;
+						ser = ServicoDAO.getInstace().getListaServicos().get(jtConsultaServico.getSelectedRow());
+						ServicoControl sc = new ServicoControl();
+						sc.restaurarServico(ser.getId());
+						int exclusao = jckbExcluidos.isSelected() ? 1 : 0;
+						jtConsultaServico.setModel(new ServicoTableModel( 
+								new ServicoControl().showFilterServicos(jtfFiltro.getText(), exclusao ) ) );
+					} 
+					}
+					catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+			}
+		});
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		btnRestaurar.setVisible(false);
+		
 		JButton btnNovo = new JButton("Novo");
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -115,14 +151,15 @@ public class ConsultaServicosUI extends JInternalFrame {
 			}
 		});
 		
-		JButton btnAlterar = new JButton("Alterar");
+		final JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Servico serv = null;
 				try {
 					if(jtConsultaServico.getSelectedRow() == -1)
 						throw new Exception("Selecione um Serviço");
-					serv = (Servico) new ServicoTableModel( new ServicoControl().showAllServicos()).get(jtConsultaServico.getSelectedRow());
+					
+					serv = ServicoDAO.getInstace().getListaServicos().get(jtConsultaServico.getSelectedRow());
 					CadastrarEditarServico ces = new CadastrarEditarServico(serv);
 					PrincipalUI.obterInstancia().getContentPane().add(ces);
 					ces.setFocusable(true);
@@ -132,12 +169,14 @@ public class ConsultaServicosUI extends JInternalFrame {
 					ces.setVisible(true);
 					ces.addInternalFrameListener(new InternalFrameListener() {  
 					    public void internalFrameClosed(InternalFrameEvent e) { 
-					    	try { 
-					    		jtConsultaServico.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );
-					    	}
-					    	catch (ClassNotFoundException | SQLException e1) {	
-					    		e1.printStackTrace(); 
-					    	}
+					    	try {
+					    		int exclusao = jckbExcluidos.isSelected() ? 1 : 0;
+								jtConsultaServico.setModel(new ServicoTableModel( 
+										new ServicoControl().showFilterServicos(jtfFiltro.getText(), exclusao ) ) );
+							} catch (ClassNotFoundException | SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 					    }
 					    public void internalFrameActivated(InternalFrameEvent arg0) {}
 						public void internalFrameClosing(InternalFrameEvent arg0) {}
@@ -153,8 +192,8 @@ public class ConsultaServicosUI extends JInternalFrame {
 			}
 		});
 		
-		JButton btnNewButton = new JButton("Exluir");
-		btnNewButton.addActionListener(new ActionListener() {
+		final JButton btnExcluir = new JButton("Exluir");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
@@ -167,10 +206,12 @@ public class ConsultaServicosUI extends JInternalFrame {
 						JOptionPane.YES_NO_OPTION);
 				if ( opcao == 0){
 					Servico ser = null;
-					ser = (Servico) new ServicoTableModel( new ServicoControl().showAllServicos()).get(jtConsultaServico.getSelectedRow());
+					ser = ServicoDAO.getInstace().getListaServicos().get(jtConsultaServico.getSelectedRow());
 					ServicoControl sc = new ServicoControl();
 					sc.deleteServico(ser.getId());
-					jtConsultaServico.setModel(new ServicoTableModel( new ServicoControl().showAllServicos() ) );
+					int exclusao = jckbExcluidos.isSelected() ? 1 : 0;
+					jtConsultaServico.setModel(new ServicoTableModel( 
+							new ServicoControl().showFilterServicos(jtfFiltro.getText(), exclusao ) ) );
 				} 
 				}
 				catch (Exception e) {
@@ -188,7 +229,8 @@ public class ConsultaServicosUI extends JInternalFrame {
 				dispose();
 			}
 		});
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		
+		
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -205,9 +247,11 @@ public class ConsultaServicosUI extends JInternalFrame {
 							.addGap(47)
 							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
 							.addGap(44)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
 							.addGap(44)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addGap(42)
+							.addComponent(btnRestaurar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -221,8 +265,9 @@ public class ConsultaServicosUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNovo)
 						.addComponent(btnAlterar)
-						.addComponent(btnNewButton)
-						.addComponent(btnCancelar))
+						.addComponent(btnExcluir)
+						.addComponent(btnCancelar)
+						.addComponent(btnRestaurar))
 					.addGap(69))
 		);
 		
@@ -243,26 +288,32 @@ public class ConsultaServicosUI extends JInternalFrame {
 		
 		jtfFiltro = new JTextField();
 		jtfFiltro.setColumns(10);
-		
-		
-		
+
 		JButton btnNewButton_1 = new JButton("Procurar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				Cliente cli = new Cliente();
 				try {
+					if(jckbExcluidos.isSelected()){
+						btnExcluir.setEnabled(false);
+						btnAlterar.setEnabled(false);
+						btnRestaurar.setVisible(true);
+					}else{
+						btnExcluir.setEnabled(true);
+						btnAlterar.setEnabled(true);
+						btnRestaurar.setVisible(false);
+					}
+					
+					int exclusao = jckbExcluidos.isSelected() ? 1 : 0;
 					jtConsultaServico.setModel(new ServicoTableModel( 
-							new ServicoControl().showFilterServicos(jtfFiltro.getText() ) ) );
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+							new ServicoControl().showFilterServicos(jtfFiltro.getText(), exclusao ) ) );
+				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -270,8 +321,10 @@ public class ConsultaServicosUI extends JInternalFrame {
 					.addGap(20)
 					.addComponent(lblFiltro)
 					.addGap(10)
-					.addComponent(jtfFiltro, GroupLayout.PREFERRED_SIZE, 902, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+					.addComponent(jtfFiltro, GroupLayout.PREFERRED_SIZE, 767, GroupLayout.PREFERRED_SIZE)
+					.addGap(54)
+					.addComponent(jckbExcluidos)
+					.addPreferredGap(ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
 					.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
 					.addGap(30))
 		);
@@ -282,7 +335,8 @@ public class ConsultaServicosUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblFiltro)
 						.addComponent(jtfFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton_1))
+						.addComponent(btnNewButton_1)
+						.addComponent(jckbExcluidos))
 					.addGap(8))
 		);
 		panel.setLayout(gl_panel);

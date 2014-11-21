@@ -135,7 +135,7 @@ public class OrcamentoUI extends JInternalFrame {
 		jbProcurarServicos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					jtListaServicos.setModel(new ServicoTableModel( new ServicoControl().showFilterServicos(jtfServico.getText()) ) );
+					jtListaServicos.setModel(new ServicoTableModel( new ServicoControl().showFilterServicos(jtfServico.getText(),0) ) );
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}	

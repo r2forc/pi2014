@@ -13,7 +13,7 @@ import br.senai.sc.model.ConnectionUtil;
 public class ServicoDAO {
 	private static ServicoDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
-
+	private ArrayList<Servico> listaServicos = new ArrayList<Servico>();
 	public static ServicoDAO getInstace() {
 		if (instance == null) {
 			instance = new ServicoDAO();
@@ -53,7 +53,20 @@ public class ServicoDAO {
 
 	public void deleteServico(Integer id) throws SQLException {
 		try {
-			String query = "DELETE FROM servico WHERE id =?;";
+			String query = "UPDATE servico SET excluido = 1 WHERE id =?;";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, id);
+			stmt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
+	}
+	
+	public void restaurarServico(Integer id) throws SQLException {
+		try {
+			String query = "UPDATE servico SET excluido = 0 WHERE id =?;";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			stmt.executeUpdate();
@@ -67,15 +80,14 @@ public class ServicoDAO {
 	public ArrayList<Servico> showAllServicos() throws ClassNotFoundException,
 			SQLException {
 
-		String query = "SELECT * FROM servico ORDER BY descricao ASC;";
+		String query = "SELECT * FROM servico WHERE excluido = 0 ORDER BY descricao ASC;";
 
 		PreparedStatement stmt = con.prepareStatement(query);
 
 		ResultSet rs = stmt.executeQuery();
 
 		Servico sRetorno = null;
-		ArrayList<Servico> listaServicos = new ArrayList<>();
-
+		listaServicos.clear();
 		while (rs.next()) {
 
 			sRetorno = new Servico();
@@ -89,16 +101,16 @@ public class ServicoDAO {
 		return listaServicos;
 	}
 
-	public ArrayList<Servico> showFilterServicos(String value)
+	public ArrayList<Servico> showFilterServicos(String value, int exclusao)
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM Servico WHERE descricao LIKE  ?  ORDER BY descricao ASC;";
+		String query = "SELECT * FROM Servico WHERE descricao LIKE  ? AND excluido = ? ORDER BY descricao ASC;";
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, "%"+value+"%");
+		stmt.setInt(2, exclusao);
 		ResultSet rs = stmt.executeQuery();
 		Servico sRetorno = null;
-		ArrayList<Servico> listaServicos = new ArrayList<>();
-
+		listaServicos.clear();
 		while (rs.next()) {
 
 			sRetorno = new Servico();
@@ -128,4 +140,9 @@ public class ServicoDAO {
 		else
 			return true;
 	}
+
+	public ArrayList<Servico> getListaServicos() {
+		return listaServicos;
+	}
+
 }
