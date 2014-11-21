@@ -82,6 +82,7 @@ public class OrdemServicoUI extends JInternalFrame {
 
 	public OrdemServicoUI(final OrdemServico os) throws ClassNotFoundException,
 			SQLException {
+		setFrameIcon(new ImageIcon(OrdemServicoUI.class.getResource("/br/senai/sc/icons/efeturar_ordem.png")));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentMoved(ComponentEvent arg0) {

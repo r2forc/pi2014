@@ -80,6 +80,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 	}
 
 	public ConsultaOrdemServicoUI() throws ClassNotFoundException, SQLException {
+		setFrameIcon(new ImageIcon(ConsultaOrdemServicoUI.class.getResource("/br/senai/sc/icons/ordem_serc.png")));
 		setEnabled(false);
 		setRootPaneCheckingEnabled(false);
 		addComponentListener(new ComponentAdapter() {

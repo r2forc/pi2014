@@ -30,6 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.SystemColor;
+import javax.swing.ImageIcon;
 
 public class CadastrarEditarCliente extends JInternalFrame {
 	private JTextField jtfNome;
@@ -59,6 +60,10 @@ public class CadastrarEditarCliente extends JInternalFrame {
 	 * @throws ParseException 
 	 */
 	public CadastrarEditarCliente(final Cliente cli) throws ParseException {
+		setTitle("Cadastrar Cliente");
+		if(cli != null)
+			setTitle("Editar Cliente");
+		setFrameIcon(new ImageIcon(CadastrarEditarCliente.class.getResource("/br/senai/sc/icons/user.png")));
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		setBounds(100, 100, 600, 241);
 		

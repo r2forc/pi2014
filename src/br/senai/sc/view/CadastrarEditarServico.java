@@ -27,6 +27,7 @@ import br.senai.sc.model.Servico;
 import br.senai.sc.utils.MaskFields;
 
 import javax.swing.JFormattedTextField;
+import javax.swing.ImageIcon;
 
 public class CadastrarEditarServico extends JInternalFrame {
 	private JTextField jtfDescricao;
@@ -52,6 +53,10 @@ public class CadastrarEditarServico extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastrarEditarServico(final Servico serv) {
+		setTitle("Cadastrar Servi\u00E7o");
+		if(serv != null)
+			setTitle("Editar Servi\u00E7o");
+		setFrameIcon(new ImageIcon(CadastrarEditarServico.class.getResource("/br/senai/sc/icons/edit_icon.png")));
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		setBounds(100, 100, 494, 180);
 		

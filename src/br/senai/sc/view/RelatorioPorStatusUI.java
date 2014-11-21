@@ -69,6 +69,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 	 * @throws ClassNotFoundException
 	 */
 	public RelatorioPorStatusUI() throws ClassNotFoundException, SQLException {
+		setFrameIcon(new ImageIcon(RelatorioPorStatusUI.class.getResource("/br/senai/sc/icons/relatorio_insumo.png")));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentMoved(ComponentEvent arg0) {
