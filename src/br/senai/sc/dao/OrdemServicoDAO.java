@@ -19,7 +19,7 @@ public class OrdemServicoDAO {
 	private static OrdemServicoDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
 	private static Integer status = 0;
-
+	private ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
 	public static OrdemServicoDAO getInstace() {
 		if (instance == null) {
 			instance = new OrdemServicoDAO();
@@ -128,7 +128,8 @@ public class OrdemServicoDAO {
 		// stmt.setInt(1, os.getId());
 		ResultSet rs = stmt.executeQuery();
 		OrdemServico osRetorno = null;
-		ArrayList<OrdemServico> listaOS = new ArrayList<>();
+		
+		listaOS.clear();
 		while (rs.next()) {
 			Integer status = 0;
 			osRetorno = new OrdemServico();
@@ -171,12 +172,12 @@ public class OrdemServicoDAO {
 		ResultSet rs = stmt.executeQuery(query);
 
 		Orcamento osRetorno = null;
-		ArrayList<OrdemServico> listaOS = new ArrayList<>();
-
+		
+		listaOS.clear();
 		while (rs.next()) {
 			osRetorno = new Orcamento();
 
-			osRetorno.setId(rs.getInt("id"));
+			osRetorno.setId(rs.getInt("orc.id"));
 			osRetorno.setData(rs.getDate("data"));
 			osRetorno.getCliente().setNome(rs.getString("cli.nome"));
 			osRetorno.getServico().setId(rs.getInt("usuario_id"));
@@ -221,11 +222,11 @@ public class OrdemServicoDAO {
 		ResultSet rs = stmt.executeQuery();
 
 		OrdemServico oRetorno = null;
-		ArrayList<OrdemServico> listaRelatorio = new ArrayList<>();
-
+		
+		listaOS.clear();
 		while (rs.next()) {
 			oRetorno = new OrdemServico();
-
+			oRetorno.setId(rs.getInt("orc.id"));
 			oRetorno.getCliente().setNome(rs.getString("nome"));
 			oRetorno.setData(rs.getDate("data"));
 			this.status = rs.getInt("status");
@@ -238,10 +239,14 @@ public class OrdemServicoDAO {
 				break;
 			}
 			oRetorno.setValorTotal(rs.getDouble("valorTotal"));
-			listaRelatorio.add(oRetorno);
+			listaOS.add(oRetorno);
 		}
 		con.commit();
-		return listaRelatorio;
+		return listaOS;
+	}
+
+	public ArrayList<OrdemServico> getListaOS() {
+		return listaOS;
 	}
 
 }

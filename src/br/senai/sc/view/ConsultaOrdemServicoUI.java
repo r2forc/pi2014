@@ -33,6 +33,7 @@ import javax.swing.event.InternalFrameListener;
 
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.control.OrdemServicoControl;
+import br.senai.sc.dao.OrdemServicoDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.OrdemServico;
 import br.senai.sc.utils.ConsultaOrdemServicoTableModel;
@@ -196,10 +197,8 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 					if (jtListaOrdemServicos.getSelectedRow() == -1)
 						throw new ArrayIndexOutOfBoundsException(
 								"Selecione uma OS");
-
-					OrdemServico os = (OrdemServico) new ConsultaOrdemServicoTableModel(
-							new OrdemServicoControl().showOrdemServicos())
-							.get(jtListaOrdemServicos.getSelectedRow());
+					
+					OrdemServico os = OrdemServicoDAO.getInstace().getListaOS().get(jtListaOrdemServicos.getSelectedRow());
 
 					OrdemServicoUI osUI = new OrdemServicoUI(os);
 					osUI.setFocusable(true);
