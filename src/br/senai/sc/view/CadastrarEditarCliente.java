@@ -16,18 +16,27 @@ import java.awt.event.ActionEvent;
 import java.text.ParseException;
 
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 
 import br.senai.sc.utils.MaskFields;
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.model.Cliente;
 
 import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
+import java.awt.Color;
+import javax.swing.DefaultComboBoxModel;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.SystemColor;
 
 public class CadastrarEditarCliente extends JInternalFrame {
 	private JTextField jtfNome;
 	private JTextField jtfEmail;
-	private JFormattedTextField jtfCPF;
+	private JFormattedTextField jtfCPFeCNPJ;
 	private JFormattedTextField jtfTelefone;
+	
 
 	/**
 	 * Launch the application.
@@ -57,8 +66,6 @@ public class CadastrarEditarCliente extends JInternalFrame {
 		
 		jtfNome = new JTextField();
 		jtfNome.setColumns(10);
-
-		JLabel jlCPF = new JLabel("CPF:");
 		
 		
 		JLabel lblEmail = new JLabel("E-mail:");
@@ -71,7 +78,10 @@ public class CadastrarEditarCliente extends JInternalFrame {
 		MaskFields mascara = new MaskFields();
 		JFormattedTextField formattedTextField = null;
 		try { 
-			jtfCPF = new JFormattedTextField(mascara.maskCpf(null)); 
+			MaskFormatter cpf = new MaskFormatter("###.###.###-##");  
+			jtfCPFeCNPJ = new JFormattedTextField(); 
+			jtfCPFeCNPJ.setFormatterFactory( new DefaultFormatterFactory(cpf) );  
+			
 			jtfTelefone = new JFormattedTextField(mascara.maskTelefone(null));
 		} 
 		catch (ParseException e) {	
@@ -80,10 +90,10 @@ public class CadastrarEditarCliente extends JInternalFrame {
 		
 		if (cli != null ){
 			jtfNome.setText(cli.getNome());
-			jtfCPF.setText(cli.getCpf());
+			jtfCPFeCNPJ.setText(cli.getCpf());
 			jtfEmail.setText(cli.getEmail());
 			jtfTelefone.setText(cli.getTelefone());
-			jtfCPF.enable(false);
+			jtfCPFeCNPJ.enable(false);
 			
 		}
 		
@@ -94,7 +104,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 				if ( cli != null){
 					//Editar
 					cli.setNome(jtfNome.getText());
-					cli.setCpf(jtfCPF.getText());
+					cli.setCpf(jtfCPFeCNPJ.getText());
 					cli.setEmail(jtfEmail.getText());
 					cli.setTelefone(jtfTelefone.getText());
 					
@@ -110,7 +120,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 					//Inserir
 					Cliente c = new Cliente();
 					c.setNome(jtfNome.getText());
-					c.setCpf(jtfCPF.getText());
+					c.setCpf(jtfCPFeCNPJ.getText());
 					c.setEmail(jtfEmail.getText());
 					c.setTelefone(jtfTelefone.getText());
 					ClienteControl cc = new ClienteControl();
@@ -131,30 +141,52 @@ public class CadastrarEditarCliente extends JInternalFrame {
 				dispose();
 			}
 		});
+		
+		final JComboBox jcbCPFeCNPJ = new JComboBox();
+		jcbCPFeCNPJ.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if(jcbCPFeCNPJ.getSelectedIndex() == 0){
+						jtfCPFeCNPJ.setValue(null);
+						MaskFields mascara = new MaskFields();
+						MaskFormatter cpf = new MaskFormatter("###.###.###-##");  
+						jtfCPFeCNPJ.setFormatterFactory( new DefaultFormatterFactory(cpf) );  
+					}else{
+						jtfCPFeCNPJ.setValue(null);
+						MaskFields mascara = new MaskFields();
+						MaskFormatter cpnj = new MaskFormatter("##.###.###/####-##");  
+						jtfCPFeCNPJ.setFormatterFactory( new DefaultFormatterFactory(cpnj) );  
+						}        
+				} catch (ParseException e) { e.printStackTrace(); }
+			}
+		});
+		
+		jcbCPFeCNPJ.setModel(new DefaultComboBoxModel(new String[] {"CPF", "CNPJ"}));
+		jcbCPFeCNPJ.setBackground(SystemColor.inactiveCaptionBorder);
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(jlNome)
+						.addComponent(lblEmail)
+						.addComponent(jlTelefone)
+						.addComponent(jcbCPFeCNPJ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(jtfTelefone)
+						.addComponent(jtfEmail)
+						.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+						.addComponent(jtfCPFeCNPJ, GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
+					.addGap(19))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(37)
 					.addComponent(jbSalvar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
 					.addComponent(jbCancelar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
 					.addGap(47))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(jlNome)
-						.addComponent(jlCPF)
-						.addComponent(lblEmail)
-						.addComponent(jlTelefone))
-					.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(jtfTelefone)
-						.addComponent(jtfEmail)
-						.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
-						.addComponent(jtfCPF, GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
-					.addGap(19))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -165,8 +197,8 @@ public class CadastrarEditarCliente extends JInternalFrame {
 						.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jlCPF)
-						.addComponent(jtfCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jtfCPFeCNPJ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jcbCPFeCNPJ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblEmail)

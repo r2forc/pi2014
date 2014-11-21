@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import br.senai.sc.dao.ClienteDAO;
 import br.senai.sc.model.Cliente;
+import br.senai.sc.utils.ValidaCnpj;
 import br.senai.sc.utils.ValidaCpf;
 
 public class ClienteControl {
@@ -19,8 +20,15 @@ public class ClienteControl {
 					throw new Exception("Digite um nome Válido");
 				
 				ValidaCpf validacaoCPF = new ValidaCpf();
-				if (validacaoCPF.isCPF(cliente.getCpf()) == false)
-					throw new Exception("Digite um cpf válido");
+				ValidaCnpj validacaoCnpj = new ValidaCnpj();
+				
+				if(cliente.getCpf().length() == 14){
+					if (validacaoCPF.isCPF(cliente.getCpf()) == false)
+						throw new Exception("Digite um CPF válido");
+				}else{
+					if (validacaoCnpj.isCNPJ(cliente.getCpf()) == false)
+						throw new Exception("Digite um CNPJ válido");
+				}
 				
 				 Pattern p = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$"); 
 				 Matcher m = p.matcher(cliente.getEmail()); 
