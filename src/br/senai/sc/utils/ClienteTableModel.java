@@ -39,7 +39,7 @@ public class ClienteTableModel extends AbstractTableModel {
 		if (column == COL_NOME)
 			return "Nome";
 		if (column == COL_CPF)
-			return "CPF";
+			return "CPF / CNPJ";
 		if (column == COL_EMAIL)
 			return "E-mail";
 		if (column == COL_TELEFONE)
