@@ -85,22 +85,24 @@ public class OrcamentoFlashDAO {
 		    if(rs.next()){  
 		        id = rs.getInt(1);  
 		    }         
-		  
+		    
 		   Double total = 0.0;
 		   for(int i = 0; i < orcamentoFlash.getServicos().size(); i++){
 			   query = "INSERT INTO orcamento_has_servico (orcamento_id, servico_id, quantidadeOriginal, copias, valorTotal) "
 						+ "values (?, ?, ?, ?, ?)";
-			   stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			   stmt.setInt(1, id);
-			   stmt.setInt(2, orcamentoFlash.getServicos().get(i).getId());
-			   stmt.setInt(3, orcamentoFlash.getServicos() .get(i).getOriginais());
-			   stmt.setInt(4, orcamentoFlash.getServicos().get(i).getCopias());
+			   PreparedStatement stmt2 = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			   stmt2.setInt(1, id);
+			   stmt2.setInt(2, orcamentoFlash.getServicos().get(i).getId());
+			   stmt2.setInt(3, orcamentoFlash.getServicos() .get(i).getOriginais());
+			   stmt2.setInt(4, orcamentoFlash.getServicos().get(i).getCopias());
 			   total = (orcamentoFlash.getServicos().get(i).getOriginais() * orcamentoFlash.getServicos().get(i).getCopias()) * orcamentoFlash.getServicos().get(i).getValorUnt();
-			   stmt.setDouble(5, total);
-			   stmt.execute();
+			   stmt2.setDouble(5, total);
+			   stmt2.execute();
 		   }
 		    
 			con.commit();
+			con.commit();
+//			con.close();
 		} catch (SQLException e) {
 			con.rollback();
 			e.printStackTrace();

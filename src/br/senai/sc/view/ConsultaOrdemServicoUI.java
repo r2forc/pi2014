@@ -48,7 +48,6 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 	private JFormattedTextField jftfDataInicial;
 	private JFormattedTextField jftfDataFinal;
 	private JTextField tfCliente;
-	private static JLabel jlValorTotal = new JLabel();
 
 	/**
 	 * Launch the application.
@@ -66,6 +65,20 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		});
 	}
 
+	public void atualizarTableModel() {
+		jtListaOrdemServicos = new JTable();
+		try {
+			jtListaOrdemServicos.setModel(new ConsultaOrdemServicoTableModel(
+					new OrdemServicoControl().showOrdemServicos()));
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public ConsultaOrdemServicoUI() throws ClassNotFoundException, SQLException {
 		setEnabled(false);
 		setRootPaneCheckingEnabled(false);
@@ -75,6 +88,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 				setLocation(0, 0);
 			}
 		});
+		atualizarTableModel();
 		setTitle("R2Forc - Consulta Or\u00E7amentos");
 		setBorder(null);
 		setBackground(SystemColor.inactiveCaption);
@@ -236,71 +250,104 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(tfCliente, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-					.addGap(33)
-					.addComponent(lblStatus, GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(jcbStatus, 0, 103, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(lblDataInicial, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(jftfDataInicial, GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-					.addGap(33)
-					.addComponent(lblDataFinal)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(jftfDataFinal, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
-					.addGap(127))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1170, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(18)
-					.addComponent(button)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(1057, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(11)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(tfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblStatus)
-						.addComponent(lblDataInicial)
-						.addComponent(jftfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDataFinal)
-						.addComponent(jftfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnPesquisar))
-					.addGap(11)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-					.addGap(11)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button)))
-		);
-
-		jtListaOrdemServicos = new JTable();
-
-		try {
-			jtListaOrdemServicos.setModel(new ConsultaOrdemServicoTableModel(
-					new OrdemServicoControl().showOrdemServicos()));
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addComponent(lblNewLabel,
+										GroupLayout.DEFAULT_SIZE, 44,
+										Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(tfCliente,
+										GroupLayout.DEFAULT_SIZE, 424,
+										Short.MAX_VALUE)
+								.addGap(33)
+								.addComponent(lblStatus,
+										GroupLayout.DEFAULT_SIZE, 44,
+										Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(jcbStatus, 0, 103,
+										Short.MAX_VALUE)
+								.addGap(18)
+								.addComponent(lblDataInicial,
+										GroupLayout.DEFAULT_SIZE, 62,
+										Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(jftfDataInicial,
+										GroupLayout.DEFAULT_SIZE, 71,
+										Short.MAX_VALUE)
+								.addGap(33)
+								.addComponent(lblDataFinal)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(jftfDataFinal,
+										GroupLayout.DEFAULT_SIZE, 79,
+										Short.MAX_VALUE)
+								.addGap(18)
+								.addComponent(btnPesquisar,
+										GroupLayout.PREFERRED_SIZE, 123,
+										GroupLayout.PREFERRED_SIZE).addGap(127))
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addComponent(scrollPane,
+										GroupLayout.PREFERRED_SIZE, 1170,
+										GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGap(18)
+								.addComponent(button)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnSair,
+										GroupLayout.PREFERRED_SIZE, 95,
+										GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(1057, Short.MAX_VALUE)));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGap(11)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblNewLabel)
+												.addComponent(
+														tfCliente,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														jcbStatus,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblStatus)
+												.addComponent(lblDataInicial)
+												.addComponent(
+														jftfDataInicial,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblDataFinal)
+												.addComponent(
+														jftfDataFinal,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(btnPesquisar))
+								.addGap(11)
+								.addComponent(scrollPane,
+										GroupLayout.DEFAULT_SIZE, 420,
+										Short.MAX_VALUE)
+								.addGap(11)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(
+														btnSair,
+														GroupLayout.PREFERRED_SIZE,
+														25,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(button))));
 
 		jtListaOrdemServicos.getColumnModel().getColumn(0).setResizable(false);
 		jtListaOrdemServicos.getColumnModel().getColumn(0)

@@ -67,6 +67,19 @@ public class OrdemServicoUI extends JInternalFrame {
 		});
 	}
 
+	public void atualizarValor() throws ClassNotFoundException, SQLException {
+		OrdemServicoControl osc = null;
+		Double valorTotal = 0.0;
+		for (int i = 0; i < new OrdemServicoControl()
+				.showItensServicoOrdemServicos(id_orc).size(); i++) {
+			valorTotal += new OrdemServicoControl()
+					.showItensServicoOrdemServicos(id_orc).get(i)
+					.getValorTotal();
+
+		}
+		tfValorTotal.setText(valorTotal.toString());
+	}
+
 	public OrdemServicoUI(final OrdemServico os) throws ClassNotFoundException,
 			SQLException {
 		addComponentListener(new ComponentAdapter() {
@@ -188,6 +201,7 @@ public class OrdemServicoUI extends JInternalFrame {
 					jtListaServicosOS.setModel(new OrdemServicoTableModel(
 							OrdemServicoControl
 									.showItensServicoOrdemServicos(id_orc)));
+					atualizarValor();
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, "Numero inválidos");
 				} catch (ArrayIndexOutOfBoundsException e1) {
@@ -234,7 +248,7 @@ public class OrdemServicoUI extends JInternalFrame {
 					jtListaServicosOS.setModel(new OrdemServicoTableModel(
 							OrdemServicoControl
 									.showItensServicoOrdemServicos(id_orc)));
-
+					atualizarValor();
 				} catch (ArrayIndexOutOfBoundsException e1) {
 					JOptionPane.showMessageDialog(null,
 							"Selecione um serviço para deletar");
@@ -294,6 +308,7 @@ public class OrdemServicoUI extends JInternalFrame {
 				dispose();
 			}
 		});
+		atualizarValor();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)

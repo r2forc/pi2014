@@ -58,7 +58,7 @@ public class PrincipalUI extends JFrame {
 
 	public PrincipalUI() {
 		setResizable(false);
-		setTitle("R2FOrc");
+		setTitle("R2F ORC - Principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 600);
 
@@ -96,7 +96,7 @@ public class PrincipalUI extends JFrame {
 					getContentPane().add(ConsultaOS, 0);
 					ConsultaOS.requestFocus();
 					ConsultaOS.setVisible(true);
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

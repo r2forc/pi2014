@@ -8,11 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import br.senai.sc.model.Cliente;
 import br.senai.sc.model.ConnectionUtil;
 import br.senai.sc.model.Orcamento;
 import br.senai.sc.model.OrdemServico;
-import br.senai.sc.model.RelatorioStatus;
 
 import com.mysql.jdbc.Statement;
 
@@ -157,6 +155,7 @@ public class OrdemServicoDAO {
 			osRetorno.getCliente().setNome(rs.getString("nome"));
 
 			listaOS.add(osRetorno);
+			con.commit();
 		}
 		return listaOS;
 	}
@@ -165,11 +164,11 @@ public class OrdemServicoDAO {
 			throws ClassNotFoundException, SQLException {
 
 		String query = "SELECT * FROM orcamento orc JOIN cliente cli ON "
-				+ "orc.cliente_id = cli.id ORDER BY data;";
+				+ "orc.cliente_id = cli.id ORDER BY orc.id";
 
-		PreparedStatement stmt = con.prepareStatement(query);
+		java.sql.Statement stmt = con.createStatement();
 
-		ResultSet rs = stmt.executeQuery();
+		ResultSet rs = stmt.executeQuery(query);
 
 		Orcamento osRetorno = null;
 		ArrayList<OrdemServico> listaOS = new ArrayList<>();
@@ -192,6 +191,7 @@ public class OrdemServicoDAO {
 				break;
 			}
 			listaOS.add(osRetorno);
+			con.commit();
 		}
 		return listaOS;
 	}
@@ -240,6 +240,7 @@ public class OrdemServicoDAO {
 			oRetorno.setValorTotal(rs.getDouble("valorTotal"));
 			listaRelatorio.add(oRetorno);
 		}
+		con.commit();
 		return listaRelatorio;
 	}
 
