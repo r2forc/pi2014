@@ -11,7 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -28,10 +27,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import br.senai.sc.control.ClienteControl;
 import br.senai.sc.control.RelatorioControl;
 import br.senai.sc.dao.RelatorioDAO;
-import br.senai.sc.model.Cliente;
 import br.senai.sc.utils.MaskFields;
 import br.senai.sc.utils.RelatorioTableModel;
 
@@ -41,10 +38,10 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable jtTabelaStatus;
-	private ArrayList<Cliente> listaClientes;
 	private JFormattedTextField jftfDataInicial;
 	private JFormattedTextField jftfDataFinal;
 	private JTextField tfCliente;
+	private JLabel jlValorTotal = new JLabel("00.00");
 
 	/**
 	 * Launch the application.
@@ -62,6 +59,45 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		});
 	}
 
+	public void atualizarTableModel(){
+		jtTabelaStatus = new JTable();
+
+		try {
+			jtTabelaStatus.setModel(new RelatorioTableModel(
+					new RelatorioControl().showAllRelatorios()));
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void atualizarValor(){
+
+		Double valorTotal = 0.0;
+
+		RelatorioDAO rc = new RelatorioDAO();
+
+		try {
+			for (int i = 0; i < rc.getInstance().showAllOrcamentos().size(); i++) {
+				valorTotal += rc.getInstance().showAllOrcamentos().get(i)
+						.getValor();
+
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		jlValorTotal.setText(valorTotal.toString());
+		System.out.println(valorTotal);
+	}
+	
+	
+	
+	
 	/**
 	 * Create the frame.
 	 * 
@@ -69,13 +105,15 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 	 * @throws ClassNotFoundException
 	 */
 	public RelatorioPorStatusUI() throws ClassNotFoundException, SQLException {
-		setFrameIcon(new ImageIcon(RelatorioPorStatusUI.class.getResource("/br/senai/sc/icons/relatorio_insumo.png")));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentMoved(ComponentEvent arg0) {
 				setLocation(0, 0);
 			}
 		});
+		
+		atualizarTableModel();
+		atualizarValor();
 		setTitle("Relatorio por Status");
 		setBorder(null);
 		setBackground(SystemColor.inactiveCaption);
@@ -123,6 +161,8 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 									.getText(), jcbStatus.getSelectedItem()
 									.toString(), jftfDataInicial.getText(),
 									jftfDataFinal.getText())));
+					atualizarTableModel();
+					atualizarValor();
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -156,14 +196,6 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 			e1.printStackTrace();
 		}
 
-		// COMBO BOX CLIENTE
-		JComboBox jcbCliente = new JComboBox();
-		listaClientes = new ClienteControl().showAllClientes();
-		DefaultComboBoxModel<Cliente> modelCliente = new DefaultComboBoxModel<Cliente>();
-		for (Cliente cliente : listaClientes) {
-			modelCliente.addElement(cliente);
-		}
-
 		JLabel lblDataInicial = new JLabel("Data Inicial:");
 
 		JLabel lblDataFinal = new JLabel("Data Final:");
@@ -175,18 +207,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 
 		JLabel lblValorTotalR = new JLabel("Valor Total: R$");
 
-		JLabel jlValorTotal = new JLabel("00.00");
 
-		Double valorTotal = 0.0;
-
-		RelatorioDAO rc = new RelatorioDAO();
-
-		for (int i = 0; i < rc.getInstance().showAllOrcamentos().size(); i++) {
-			valorTotal += rc.getInstance().showAllOrcamentos().get(i)
-					.getValor();
-
-		}
-		jlValorTotal.setText(valorTotal.toString());
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
@@ -314,19 +335,6 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 																				.addComponent(
 																						jlValorTotal))
 																.addContainerGap()))));
-
-		jtTabelaStatus = new JTable();
-
-		try {
-			jtTabelaStatus.setModel(new RelatorioTableModel(
-					new RelatorioControl().showAllRelatorios()));
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		jtTabelaStatus.getColumnModel().getColumn(0).setResizable(false);
 		jtTabelaStatus.getColumnModel().getColumn(0).setPreferredWidth(100);

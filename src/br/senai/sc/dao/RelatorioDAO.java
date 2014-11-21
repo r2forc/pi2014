@@ -15,6 +15,7 @@ public class RelatorioDAO {
 	private static RelatorioDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
 	private static Integer status = 0;
+	private static String data;
 
 	public static RelatorioDAO getInstance() {
 		if (instance == null) {
@@ -23,8 +24,6 @@ public class RelatorioDAO {
 		return instance;
 	}
 
-	
-	
 	public ArrayList<RelatorioStatus> showAllOrcamentos()
 			throws ClassNotFoundException, SQLException {
 		String query = "SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.cliente_id  ORDER BY descricao ASC";
@@ -81,7 +80,6 @@ public class RelatorioDAO {
 
 			}
 		}
-		System.out.println(query);
 
 		PreparedStatement stmt = con.prepareStatement(query);
 
@@ -96,6 +94,7 @@ public class RelatorioDAO {
 
 			oRetorno.getCliente().setNome(rs.getString("nome"));
 			oRetorno.setData(rs.getDate("data"));
+
 			switch (this.status) {
 			case 0:
 				oRetorno.setStatus("Aguardando");
@@ -107,6 +106,8 @@ public class RelatorioDAO {
 			oRetorno.setValor(rs.getDouble("valorTotal"));
 
 			listaRelatorio.add(oRetorno);
+			con.commit();
+
 		}
 		return listaRelatorio;
 	}
