@@ -70,7 +70,7 @@ public class PrincipalTestaCliente {
 					String value = JOptionPane
 							.showInputDialog("VALOR a ser pesquisado no BANCO DE DADOS");
 
-					for (Cliente cliente : cc.showFilterClientes(column, value)) {
+					for (Cliente cliente : cc.showFilterClientes(column, value, false)) {
 						System.out.println("ID: " + cliente.getId() + " Nome: "
 								+ cliente.getNome() + " CPF: "
 								+ cliente.getCpf() + " E-mail: "

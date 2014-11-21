@@ -209,10 +209,15 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 
 				Cliente cli = new Cliente();
 				try {
-					jtConsultaCliente.setModel(new ClienteTableModel(
-							new ClienteControl().showFilterClientes(
-									jcbTipoFiltro.getSelectedItem().toString(),
-									jtfFiltro.getText())));
+					jtConsultaCliente.setModel(
+							new ClienteTableModel(
+									new ClienteControl().showFilterClientes( 
+											jcbTipoFiltro.getSelectedItem().toString(),jtfFiltro.getText(), false
+									)
+							)
+					);
+									
+									
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

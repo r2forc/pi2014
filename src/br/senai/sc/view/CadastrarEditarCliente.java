@@ -36,7 +36,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 	private JTextField jtfEmail;
 	private JFormattedTextField jtfCPFeCNPJ;
 	private JFormattedTextField jtfTelefone;
-	
+	private JComboBox jcbCPFeCNPJ;
 
 	/**
 	 * Launch the application.
@@ -75,6 +75,11 @@ public class CadastrarEditarCliente extends JInternalFrame {
 		
 		JLabel jlTelefone = new JLabel("Telefone:");
 		
+		
+		final JComboBox jcbCPFeCNPJ = new JComboBox();
+		jcbCPFeCNPJ.setModel(new DefaultComboBoxModel(new String[] {"CPF", "CNPJ"}));
+		jcbCPFeCNPJ.setBackground(SystemColor.inactiveCaptionBorder);
+		
 		MaskFields mascara = new MaskFields();
 		JFormattedTextField formattedTextField = null;
 		try { 
@@ -94,6 +99,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 			jtfEmail.setText(cli.getEmail());
 			jtfTelefone.setText(cli.getTelefone());
 			jtfCPFeCNPJ.enable(false);
+			jcbCPFeCNPJ.enable(false);
 			
 		}
 		
@@ -142,7 +148,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 			}
 		});
 		
-		final JComboBox jcbCPFeCNPJ = new JComboBox();
+
 		jcbCPFeCNPJ.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -161,8 +167,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 			}
 		});
 		
-		jcbCPFeCNPJ.setModel(new DefaultComboBoxModel(new String[] {"CPF", "CNPJ"}));
-		jcbCPFeCNPJ.setBackground(SystemColor.inactiveCaptionBorder);
+		
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(

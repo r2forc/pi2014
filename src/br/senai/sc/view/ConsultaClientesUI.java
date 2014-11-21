@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
 import br.senai.sc.control.ClienteControl;
+import br.senai.sc.dao.ClienteDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.utils.ClienteTableModel;
 
@@ -33,8 +34,11 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+
+import javax.swing.JCheckBox;
 
 public class ConsultaClientesUI extends JInternalFrame {
 	private JTextField jtfFiltro;
@@ -112,7 +116,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 			}	
 		});
 		
-		JButton btnAlterar = new JButton("Alterar");
+		final JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Cliente cli = null;
@@ -120,7 +124,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 					if (jtConsultaCliente.getSelectedRow() == -1)
 						throw new ArrayIndexOutOfBoundsException("Selecione um Cliente");
 					
-					cli = (Cliente) new ClienteTableModel( new ClienteControl().showAllClientes()).get(jtConsultaCliente.getSelectedRow());
+					cli =  ClienteDAO.getInstace().getListaClientes().get(jtConsultaCliente.getSelectedRow());
 					CadastrarEditarCliente cec = null;		
 					cec = new CadastrarEditarCliente(cli);
 					PrincipalUI.obterInstancia().getContentPane().add(cec);
@@ -131,12 +135,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 					cec.setVisible(true);
 					cec.addInternalFrameListener(new InternalFrameListener() {  
 					    public void internalFrameClosed(InternalFrameEvent e) { 
-					    	try { 
-					    		jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
-					    	}
-					    	catch (ClassNotFoundException | SQLException e1) {	
-					    		e1.printStackTrace(); 
-					    	}
+					    	jtConsultaCliente.setModel(new ClienteTableModel(ClienteDAO.getInstace().getListaClientes() ) );
 					    }
 					    public void internalFrameActivated(InternalFrameEvent arg0) {}
 						public void internalFrameClosing(InternalFrameEvent arg0) {}
@@ -145,14 +144,14 @@ public class ConsultaClientesUI extends JInternalFrame {
 						public void internalFrameIconified(InternalFrameEvent arg0) {}
 						public void internalFrameOpened(InternalFrameEvent arg0) {}  
 					});
-				} catch (ClassNotFoundException | SQLException | ParseException | ArrayIndexOutOfBoundsException e) {
+				} catch (ParseException | ArrayIndexOutOfBoundsException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
 			}
 		});
 		
-		JButton btnNewButton = new JButton("Exluir");
-		btnNewButton.addActionListener(new ActionListener() {
+		final JButton btnExcluir = new JButton("Exluir");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					if (jtConsultaCliente.getSelectedRow() == -1)
@@ -163,12 +162,12 @@ public class ConsultaClientesUI extends JInternalFrame {
 						JOptionPane.YES_NO_OPTION);
 					if ( opcao == 0){
 						Cliente cli = null;
-						cli = (Cliente) new ClienteTableModel( new ClienteControl().showAllClientes()).get(jtConsultaCliente.getSelectedRow());		
+						cli =  ClienteDAO.getInstace().getListaClientes().get(jtConsultaCliente.getSelectedRow());	
 						ClienteControl cc = new ClienteControl();
 						cc.deleteCliente(cli.getId());
-						jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );
+						jtConsultaCliente.setModel(new ClienteTableModel(ClienteDAO.getInstace().getListaClientes() ) );
 					}			
-				} catch (SQLException | ClassNotFoundException | ArrayIndexOutOfBoundsException e1) {
+				} catch (SQLException | ArrayIndexOutOfBoundsException | ClassNotFoundException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 			}
@@ -182,6 +181,30 @@ public class ConsultaClientesUI extends JInternalFrame {
 				dispose();
 			}
 		});
+		
+		final JButton btnRestaurar = new JButton("Restaurar");
+		btnRestaurar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if (jtConsultaCliente.getSelectedRow() == -1)
+						throw new ArrayIndexOutOfBoundsException("Selecione um Cliente");
+					int opcao = JOptionPane.showConfirmDialog(null, 
+						"Deseja Restaurar o cliente selecionado?", 
+						"Restaurar Cliente", 
+						JOptionPane.YES_NO_OPTION);
+					if ( opcao == 0){
+						Cliente cli = null;
+						cli =  ClienteDAO.getInstace().getListaClientes().get(jtConsultaCliente.getSelectedRow());	
+						ClienteControl cc = new ClienteControl();
+						cc.restauraCliente(cli.getId());
+						jtConsultaCliente.setModel(new ClienteTableModel(ClienteDAO.getInstace().getListaClientes() ) );
+					}			
+				} catch (SQLException | ArrayIndexOutOfBoundsException | ClassNotFoundException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+			}
+		});
+		btnRestaurar.setVisible(false);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -196,9 +219,11 @@ public class ConsultaClientesUI extends JInternalFrame {
 							.addGap(47)
 							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
 							.addGap(44)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
 							.addGap(48)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addGap(43)
+							.addComponent(btnRestaurar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1171, GroupLayout.PREFERRED_SIZE)))
@@ -215,8 +240,9 @@ public class ConsultaClientesUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNovo)
 						.addComponent(btnAlterar)
-						.addComponent(btnNewButton)
-						.addComponent(btnCancelar))
+						.addComponent(btnExcluir)
+						.addComponent(btnCancelar)
+						.addComponent(btnRestaurar))
 					.addGap(69))
 		);
 		
@@ -258,22 +284,36 @@ public class ConsultaClientesUI extends JInternalFrame {
 			}
 		});
 		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "CPF / CNPJ", "Email", "Telefone"}));
-		
+		final JCheckBox jckbExluidos = new JCheckBox("Exclu\u00EDdos");
+		jckbExluidos.setBackground(SystemColor.inactiveCaption);
 		
 		
 		JButton btnNewButton_1 = new JButton("Procurar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				if(jckbExluidos.isSelected()){ 
+					btnExcluir.setEnabled(false);
+					btnAlterar.setEnabled(false);
+					btnRestaurar.setVisible(true);
+				}
+				else{ 
+					btnExcluir.setEnabled(true); 
+					btnAlterar.setEnabled(true); 
+					btnRestaurar.setVisible(false);
+				}
+				
 				Cliente cli = new Cliente();
 				try {
 					jtConsultaCliente.setModel(new ClienteTableModel( 
-							new ClienteControl().showFilterClientes(jcbTipoFiltro.getSelectedItem().toString() ,jtfFiltro.getText() ) ) );
+							new ClienteControl().showFilterClientes(jcbTipoFiltro.getSelectedItem().toString() ,jtfFiltro.getText(), jckbExluidos.isSelected() ) ) );
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				} 
 			}
 		});
+		
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -282,11 +322,13 @@ public class ConsultaClientesUI extends JInternalFrame {
 					.addComponent(lblFiltro)
 					.addGap(10)
 					.addComponent(jtfFiltro, GroupLayout.PREFERRED_SIZE, 625, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+					.addGap(18)
 					.addComponent(lblTipoFiltro)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(jcbTipoFiltro, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-					.addGap(76)
+					.addComponent(jcbTipoFiltro, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+					.addGap(36)
+					.addComponent(jckbExluidos)
+					.addPreferredGap(ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
 					.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
 					.addGap(30))
 		);
@@ -299,7 +341,8 @@ public class ConsultaClientesUI extends JInternalFrame {
 						.addComponent(jtfFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNewButton_1)
 						.addComponent(lblTipoFiltro)
-						.addComponent(jcbTipoFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jcbTipoFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jckbExluidos))
 					.addGap(8))
 		);
 		panel.setLayout(gl_panel);

@@ -42,13 +42,13 @@ public class ClienteControl {
 				if (cliente.getTelefone().length() != 14)	
 					throw new Exception("Digite o campo Telefone");
 				
-				ArrayList<Cliente> resultadoClientes = new ArrayList<Cliente>();
-				resultadoClientes =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf());
-				System.out.println(resultadoClientes.size());
-				
-				if(resultadoClientes.size() != 0){
+				ArrayList<Cliente> resultadoClientesAtivos = new ArrayList<Cliente>();
+				ArrayList<Cliente> resultadoClientesInativos = new ArrayList<Cliente>();
+				resultadoClientesAtivos =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf(), 0);
+				resultadoClientesInativos =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf(), 1);
+				if(resultadoClientesAtivos.size() != 0 || resultadoClientesInativos.size() != 0)
 					throw new Exception("CPF já cadastrado, digite um CPF válido");
-				}
+				
 				ClienteDAO.getInstace().insertCliente(cliente);
 				return true;
 
@@ -88,8 +88,13 @@ public class ClienteControl {
 		}
 	}
 
-	public void deleteCliente(Integer id) throws SQLException {
+	public void deleteCliente(Integer id) throws SQLException, ClassNotFoundException {
 		ClienteDAO.getInstace().deleteCliente(id);
+		ClienteDAO.getInstace().showFilterClientes("nome", "", 0);
+	}
+	public void restauraCliente(Integer id) throws SQLException, ClassNotFoundException {
+		ClienteDAO.getInstace().restauraCliente(id);
+		ClienteDAO.getInstace().showFilterClientes("nome", "", 1);
 	}
 
 	public ArrayList<Cliente> showAllClientes() throws ClassNotFoundException,
@@ -97,8 +102,12 @@ public class ClienteControl {
 		return ClienteDAO.getInstace().showAllClientes();
 	}
 
-	public ArrayList<Cliente> showFilterClientes(String column, String value)
+	public ArrayList<Cliente> showFilterClientes(String column, String value, boolean excluidos)
 			throws ClassNotFoundException, SQLException {
-		return ClienteDAO.getInstace().showFilterClientes(column, value);
+
+		int exc =  excluidos ?  1 :  0;
+		column = column.equals("CPF / CNPJ") ? "CPF" : column;
+		return ClienteDAO.getInstace().showFilterClientes(column, value, exc);
+		
 	}
 }
