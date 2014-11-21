@@ -28,6 +28,8 @@ public class ServicoControl {
 				throw new Exception("Descrição inválida");
 			if (servico.getValorUnt().equals("") || servico.getValorUnt().equals("0.0"))
 				throw new NumberFormatException("Valor inválido");
+			if(ServicoDAO.getInstace().existeServico(servico.getDescricao(), servico.getValorUnt()))
+				throw new NumberFormatException("Serviço já existe no banco");
 			ServicoDAO.getInstace().insertServico(servico);
 			return true;
 		}catch(Exception e){

@@ -56,9 +56,7 @@ public class ServicoDAO {
 			String query = "DELETE FROM servico WHERE id =?;";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
-
 			stmt.executeUpdate();
-			System.out.println(query);
 			con.commit();
 		} catch (SQLException e) {
 			con.rollback();
@@ -94,13 +92,10 @@ public class ServicoDAO {
 	public ArrayList<Servico> showFilterServicos(String value)
 			throws ClassNotFoundException, SQLException {
 
-		String query = "SELECT * FROM Servico WHERE descricao LIKE '%"
-				+ value + "%' ORDER BY descricao ASC;";
-
+		String query = "SELECT * FROM Servico WHERE descricao LIKE  ?  ORDER BY descricao ASC;";
 		PreparedStatement stmt = con.prepareStatement(query);
-
+		stmt.setString(1, "%"+value+"%");
 		ResultSet rs = stmt.executeQuery();
-
 		Servico sRetorno = null;
 		ArrayList<Servico> listaServicos = new ArrayList<>();
 
@@ -115,5 +110,22 @@ public class ServicoDAO {
 			listaServicos.add(sRetorno);
 		}
 		return listaServicos;
+	}
+	
+	public boolean existeServico(String descricao, Double valor) throws ClassNotFoundException, SQLException {
+		String query = "SELECT * FROM Servico WHERE descricao =  ?  AND valorUnt = ?;";
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1,descricao);
+		stmt.setDouble(2,valor);
+		ResultSet rs = stmt.executeQuery();
+		int id = 0;
+		while (rs.next()) {
+			id  = rs.getInt("id");
+			break;
+		}
+		if(id == 0)
+			return false;
+		else
+			return true;
 	}
 }
