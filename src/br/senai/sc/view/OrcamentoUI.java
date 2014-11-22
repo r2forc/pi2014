@@ -37,6 +37,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.Color;
 
 public class OrcamentoUI extends JInternalFrame {
 
@@ -78,7 +79,7 @@ public class OrcamentoUI extends JInternalFrame {
 		});
 		setFrameIcon(new ImageIcon(OrcamentoUI.class.getResource("/br/senai/sc/icons/icon_table.png")));
 		setBorder(null);
-		getContentPane().setBackground(SystemColor.inactiveCaption);
+		getContentPane().setBackground(new Color(176, 196, 222));
 		setTitle("Gerar Or\u00E7amento");
 		setBounds(0, 0, 1194, 600);
 		final OrcamentoFlashControl ofc = new OrcamentoFlashControl();
