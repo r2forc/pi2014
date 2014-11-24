@@ -59,21 +59,6 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		});
 	}
 
-	public void atualizarTableModel() {
-		jtTabelaStatus = new JTable();
-
-		try {
-			jtTabelaStatus.setModel(new RelatorioTableModel(
-					new RelatorioControl().showAllRelatorios()));
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public void atualizarValor() throws ClassNotFoundException {
 
 		Double valorTotal = 0.0;
@@ -85,7 +70,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		}
 
 		jlValorTotal.setText(valorTotal.toString());
-		System.out.println(valorTotal);
+
 	}
 
 	/**
@@ -106,7 +91,6 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 			}
 		});
 
-		atualizarTableModel();
 		atualizarValor();
 		setTitle("Relatorio por Status");
 		setBorder(null);
@@ -156,8 +140,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 									.toString(), jftfDataInicial.getText(),
 									jftfDataFinal.getText())));
 					atualizarValor();
-					//atualizarTableModel();
-					
+
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -316,6 +299,10 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 														GroupLayout.PREFERRED_SIZE,
 														35,
 														GroupLayout.PREFERRED_SIZE))));
+		jtTabelaStatus = new JTable();
+
+		jtTabelaStatus.setModel(new RelatorioTableModel(new RelatorioControl()
+				.showAllRelatorios()));
 
 		jtTabelaStatus.getColumnModel().getColumn(0).setResizable(false);
 		jtTabelaStatus.getColumnModel().getColumn(0).setPreferredWidth(100);
