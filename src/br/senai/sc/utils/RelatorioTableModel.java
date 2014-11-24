@@ -49,12 +49,13 @@ public class RelatorioTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int column) {
 		// Precisamos retornar o valor da coluna column e da linha row.
 		RelatorioStatus rs = valores.get(row);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		if (column == COL_CLIENTE)
 			return rs.getCliente().getNome();
 		else if (column == COL_STATUS)
 			return rs.getStatus();
 		else if (column == COL_DATA)
-			return rs.getData();
+			return sdf.format(rs.getData());
 		else if (column == COL_VALOR)
 			return rs.getValor();
 		return ""; // Nunca deve ocorrer
