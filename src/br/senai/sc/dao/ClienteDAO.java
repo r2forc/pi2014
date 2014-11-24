@@ -13,7 +13,7 @@ public class ClienteDAO {
 
 	private static ClienteDAO instance;
 	private Connection con = ConnectionUtil.getConnection();
-	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();;
+	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	public static ClienteDAO getInstace() {
 		if (instance == null) {
 			instance = new ClienteDAO();

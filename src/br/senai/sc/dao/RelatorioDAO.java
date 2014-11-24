@@ -16,6 +16,7 @@ public class RelatorioDAO {
 	private Connection con = ConnectionUtil.getConnection();
 	private static Integer status = 0;
 	private static String data;
+	private ArrayList<RelatorioStatus> listaRelatorio = new ArrayList<>();
 
 	public static RelatorioDAO getInstance() {
 		if (instance == null) {
@@ -86,8 +87,9 @@ public class RelatorioDAO {
 		ResultSet rs = stmt.executeQuery();
 
 		RelatorioStatus oRetorno = null;
-		ArrayList<RelatorioStatus> listaRelatorio = new ArrayList<>();
-
+		
+		
+		listaRelatorio.clear();
 		while (rs.next()) {
 
 			oRetorno = new RelatorioStatus();
@@ -109,6 +111,10 @@ public class RelatorioDAO {
 			con.commit();
 
 		}
+		return listaRelatorio;
+	}
+	
+	public ArrayList<RelatorioStatus> getRelatorio() {
 		return listaRelatorio;
 	}
 
