@@ -91,7 +91,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 			}
 		});
 
-		atualizarValor();
+		
 		setTitle("Relatorio por Status");
 		setBorder(null);
 		setBackground(SystemColor.inactiveCaption);
@@ -312,6 +312,6 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		scrollPane.setViewportView(jtTabelaStatus);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
-
+		atualizarValor();
 	}
 }
