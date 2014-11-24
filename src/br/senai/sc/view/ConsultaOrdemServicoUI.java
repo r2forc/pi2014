@@ -154,6 +154,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 				.getResource("/br/senai/sc/icons/search.png")));
 
 		JButton btnSair = new JButton("Sair");
+		btnSair.setIcon(new ImageIcon(ConsultaOrdemServicoUI.class.getResource("/br/senai/sc/icons/exit_icon.png")));
 		btnSair.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -189,14 +190,15 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		tfCliente = new JTextField();
 		tfCliente.setColumns(10);
 
-		final JButton button = new JButton("Editar OS");
-		button.addActionListener(new ActionListener() {
+		final JButton btnEditarOs = new JButton("Editar O.S");
+		btnEditarOs.setIcon(new ImageIcon(ConsultaOrdemServicoUI.class.getResource("/br/senai/sc/icons/edit_icon.png")));
+		btnEditarOs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
 					if (jtListaOrdemServicos.getSelectedRow() == -1)
 						throw new ArrayIndexOutOfBoundsException(
-								"Selecione uma OS");
+								"Selecione uma O.S");
 					
 					OrdemServico os = OrdemServicoDAO.getInstace().getListaOS().get(jtListaOrdemServicos.getSelectedRow());
 
@@ -250,104 +252,63 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addComponent(lblNewLabel,
-										GroupLayout.DEFAULT_SIZE, 44,
-										Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(tfCliente,
-										GroupLayout.DEFAULT_SIZE, 424,
-										Short.MAX_VALUE)
-								.addGap(33)
-								.addComponent(lblStatus,
-										GroupLayout.DEFAULT_SIZE, 44,
-										Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(jcbStatus, 0, 103,
-										Short.MAX_VALUE)
-								.addGap(18)
-								.addComponent(lblDataInicial,
-										GroupLayout.DEFAULT_SIZE, 62,
-										Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(jftfDataInicial,
-										GroupLayout.DEFAULT_SIZE, 71,
-										Short.MAX_VALUE)
-								.addGap(33)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tfCliente, GroupLayout.PREFERRED_SIZE, 444, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblStatus, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblDataInicial, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(jftfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(27)
+							.addComponent(lblDataFinal)
+							.addGap(18)
+							.addComponent(jftfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(26)
+							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+							.addGap(69))
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1170, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(18)
+							.addComponent(btnEditarOs)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(11)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNewLabel)
+								.addComponent(tfCliente, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+							.addGap(11))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnPesquisar)
+								.addComponent(jftfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblDataFinal)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(jftfDataFinal,
-										GroupLayout.DEFAULT_SIZE, 79,
-										Short.MAX_VALUE)
-								.addGap(18)
-								.addComponent(btnPesquisar,
-										GroupLayout.PREFERRED_SIZE, 123,
-										GroupLayout.PREFERRED_SIZE).addGap(127))
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addComponent(scrollPane,
-										GroupLayout.PREFERRED_SIZE, 1170,
-										GroupLayout.PREFERRED_SIZE)
-								.addContainerGap())
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGap(18)
-								.addComponent(button)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnSair,
-										GroupLayout.PREFERRED_SIZE, 95,
-										GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(1057, Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGap(11)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblNewLabel)
-												.addComponent(
-														tfCliente,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														jcbStatus,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblStatus)
-												.addComponent(lblDataInicial)
-												.addComponent(
-														jftfDataInicial,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDataFinal)
-												.addComponent(
-														jftfDataFinal,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(btnPesquisar))
-								.addGap(11)
-								.addComponent(scrollPane,
-										GroupLayout.DEFAULT_SIZE, 420,
-										Short.MAX_VALUE)
-								.addGap(11)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														btnSair,
-														GroupLayout.PREFERRED_SIZE,
-														25,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(button))));
+								.addComponent(jftfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDataInicial)
+								.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblStatus))
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+					.addGap(11)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEditarOs, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)))
+		);
 
 		jtListaOrdemServicos.getColumnModel().getColumn(0).setResizable(false);
 		jtListaOrdemServicos.getColumnModel().getColumn(0)

@@ -54,6 +54,11 @@ public class OrdemServicoControl {
 		}
 	}
 
+	public static void changeValorTotal(OrdemServico os, Double valorTotal)
+			throws SQLException {
+		OrdemServicoDAO.getInstace().changeValorTotal(os, valorTotal);
+	}
+
 	public static ArrayList<OrdemServico> showItensServicoOrdemServicos(
 			Integer id_orc) throws ClassNotFoundException, SQLException {
 		return OrdemServicoDAO.getInstace().showItensServicoOrdemServicos(

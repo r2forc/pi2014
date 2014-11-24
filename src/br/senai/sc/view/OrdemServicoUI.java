@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -67,22 +68,31 @@ public class OrdemServicoUI extends JInternalFrame {
 		});
 	}
 
-	public void atualizarValor() throws ClassNotFoundException, SQLException {
+	public void atualizarValor(OrdemServico os) throws ClassNotFoundException,
+			SQLException {
 		OrdemServicoControl osc = null;
 		Double valorTotal = 0.0;
+		DecimalFormat fmt = new DecimalFormat("0.00");
+
 		for (int i = 0; i < new OrdemServicoControl()
 				.showItensServicoOrdemServicos(id_orc).size(); i++) {
 			valorTotal += new OrdemServicoControl()
 					.showItensServicoOrdemServicos(id_orc).get(i)
 					.getValorTotal();
-
 		}
-		tfValorTotal.setText(valorTotal.toString());
+
+		String string = fmt.format(valorTotal);
+		String[] part = string.split("[,]");
+		String string2 = part[0] + "." + part[1];
+		OrdemServicoControl.changeValorTotal(os, valorTotal);
+		tfValorTotal.setText(string2);
 	}
 
 	public OrdemServicoUI(final OrdemServico os) throws ClassNotFoundException,
 			SQLException {
-		setFrameIcon(new ImageIcon(OrdemServicoUI.class.getResource("/br/senai/sc/icons/efeturar_ordem.png")));
+		setFrameIcon(new ImageIcon(
+				OrdemServicoUI.class
+						.getResource("/br/senai/sc/icons/efeturar_ordem.png")));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentMoved(ComponentEvent arg0) {
@@ -113,22 +123,20 @@ public class OrdemServicoUI extends JInternalFrame {
 		panel.setBorder(new TitledBorder(null, "Ordem de Servi\u00E7o",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1171,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(19, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 503,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(59, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1171, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(19, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 518, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(45, Short.MAX_VALUE))
+		);
 
 		JScrollPane spItensOS = new JScrollPane();
 
@@ -202,7 +210,7 @@ public class OrdemServicoUI extends JInternalFrame {
 					jtListaServicosOS.setModel(new OrdemServicoTableModel(
 							OrdemServicoControl
 									.showItensServicoOrdemServicos(id_orc)));
-					atualizarValor();
+					atualizarValor(os);
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, "Numero inválidos");
 				} catch (ArrayIndexOutOfBoundsException e1) {
@@ -233,8 +241,7 @@ public class OrdemServicoUI extends JInternalFrame {
 			jbRemoverServico.setEnabled(true);
 		}
 		jbRemoverServico
-				.setIcon(new ImageIcon(
-						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\exit_icon.png"));
+				.setIcon(new ImageIcon(OrdemServicoUI.class.getResource("/br/senai/sc/icons/delete_icon.png")));
 		jbRemoverServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -249,7 +256,7 @@ public class OrdemServicoUI extends JInternalFrame {
 					jtListaServicosOS.setModel(new OrdemServicoTableModel(
 							OrdemServicoControl
 									.showItensServicoOrdemServicos(id_orc)));
-					atualizarValor();
+					atualizarValor(os);
 				} catch (ArrayIndexOutOfBoundsException e1) {
 					JOptionPane.showMessageDialog(null,
 							"Selecione um serviço para deletar");
@@ -277,8 +284,8 @@ public class OrdemServicoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					jtListaServicos.setModel(new ServicoTableModel(
-							new ServicoControl().showFilterServicos(jtfServico
-									.getText(), 0)));
+							new ServicoControl().showFilterServicos(
+									jtfServico.getText(), 0)));
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -297,19 +304,17 @@ public class OrdemServicoUI extends JInternalFrame {
 			}
 		});
 		jbImprimir
-				.setIcon(new ImageIcon(
-						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\save_icon.png"));
+				.setIcon(new ImageIcon(OrdemServicoUI.class.getResource("/br/senai/sc/icons/printer.png")));
 
 		JButton jbCancelar = new JButton("Cancelar");
 		jbCancelar
-				.setIcon(new ImageIcon(
-						"C:\\Users\\Felipe\\Google Drive\\ADS\\2-SEMESTRE\\POO\\ProjetoIntegrador2014\\src\\br\\senai\\sc\\icons\\1415673847_exit.png"));
+				.setIcon(new ImageIcon(OrdemServicoUI.class.getResource("/br/senai/sc/icons/exit_icon.png")));
 		jbCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		atualizarValor();
+		atualizarValor(os);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)

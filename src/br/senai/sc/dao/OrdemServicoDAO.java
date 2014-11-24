@@ -20,6 +20,7 @@ public class OrdemServicoDAO {
 	private Connection con = ConnectionUtil.getConnection();
 	private static Integer status = 0;
 	private ArrayList<OrdemServico> listaOS = new ArrayList<OrdemServico>();
+
 	public static OrdemServicoDAO getInstace() {
 		if (instance == null) {
 			instance = new OrdemServicoDAO();
@@ -84,6 +85,22 @@ public class OrdemServicoDAO {
 		}
 	}
 
+	public void changeValorTotal(OrdemServico os, Double valorTotal)
+			throws SQLException {
+		try {
+			String query = "UPDATE orcamento SET valorTotal = ? WHERE id = ?;";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setDouble(1, valorTotal);
+			stmt.setInt(2, os.getId());
+
+			stmt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
+	}
+
 	public void changeStatus(OrdemServico os, Integer status)
 			throws SQLException {
 		try {
@@ -128,7 +145,7 @@ public class OrdemServicoDAO {
 		// stmt.setInt(1, os.getId());
 		ResultSet rs = stmt.executeQuery();
 		OrdemServico osRetorno = null;
-		
+
 		listaOS.clear();
 		while (rs.next()) {
 			Integer status = 0;
@@ -172,7 +189,7 @@ public class OrdemServicoDAO {
 		ResultSet rs = stmt.executeQuery(query);
 
 		Orcamento osRetorno = null;
-		
+
 		listaOS.clear();
 		while (rs.next()) {
 			osRetorno = new Orcamento();
@@ -222,7 +239,7 @@ public class OrdemServicoDAO {
 		ResultSet rs = stmt.executeQuery();
 
 		OrdemServico oRetorno = null;
-		
+
 		listaOS.clear();
 		while (rs.next()) {
 			oRetorno = new OrdemServico();
