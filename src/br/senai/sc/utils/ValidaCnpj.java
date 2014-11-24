@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 
 public class ValidaCnpj {
 
-	  public static boolean isCNPJ(String CNPJ) {
+	  public boolean isCNPJ(String CNPJ) {
 		  CNPJ = CNPJ.replace(".", "");
 		  CNPJ = CNPJ.replace("-", "");
 		  CNPJ = CNPJ.replace("/", "");

@@ -94,4 +94,5 @@ public class ClienteTableModel extends AbstractTableModel {
 	public Cliente get(int row) {
 		return valores.get(row);
 	}
+	
 }

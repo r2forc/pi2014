@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 
 public class ValidaCpf {
  
-  public static boolean isCPF(String CPF) {
+  public boolean isCPF(String CPF) {
 // considera-se erro CPF's formados por uma sequencia de numeros iguais
 	  CPF = CPF.replace(".", "");
 	  CPF = CPF.replace("-", "");

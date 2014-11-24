@@ -1,48 +1,42 @@
 package br.senai.sc.view;
 
 import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
 
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.dao.ClienteDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.utils.ClienteTableModel;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
-import javax.swing.JCheckBox;
-
 public class ConsultaClientesUI extends JInternalFrame {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField jtfFiltro;
-	private JTable table;
 	private JTable jtConsultaCliente;
 	
 	/**
@@ -66,13 +60,11 @@ public class ConsultaClientesUI extends JInternalFrame {
 	 */
 	public ConsultaClientesUI() {
 		addComponentListener(new ComponentAdapter() {
-			@Override
 			public void componentMoved(ComponentEvent arg0) {
 				setLocation(0,0);
 			}
 		});
 		setFrameIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/fornecedores.png")));
-		
 		setTitle("Consultar Clientes");
 		setBorder(null);
 		getContentPane().setBackground(SystemColor.inactiveCaption);
@@ -249,13 +241,8 @@ public class ConsultaClientesUI extends JInternalFrame {
 		jtConsultaCliente = new JTable();
 		scrollPane.setViewportView(jtConsultaCliente);
 		try {
-			jtConsultaCliente.setModel(new ClienteTableModel( 
-					new ClienteControl().showAllClientes() ) );
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			jtConsultaCliente.setModel(new ClienteTableModel( new ClienteControl().showAllClientes() ) );	
+		}catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 		jtConsultaCliente.getColumnModel().getColumn(0).setResizable(false);
@@ -269,7 +256,6 @@ public class ConsultaClientesUI extends JInternalFrame {
 		jtConsultaCliente.getColumnModel().getColumn(3).setResizable(false);
 		getContentPane().setLayout(groupLayout);		
 		
-		
 		final JLabel lblFiltro = new JLabel("Filtro");
 		
 		jtfFiltro = new JTextField();
@@ -277,13 +263,13 @@ public class ConsultaClientesUI extends JInternalFrame {
 		
 		JLabel lblTipoFiltro = new JLabel("Tipo filtro");
 		
-		final JComboBox jcbTipoFiltro = new JComboBox();
+		final JComboBox<Object> jcbTipoFiltro = new JComboBox<Object>();
 		jcbTipoFiltro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				jtfFiltro.setText(null);
 			}
 		});
-		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "CPF / CNPJ", "Email", "Telefone"}));
+		jcbTipoFiltro.setModel(new DefaultComboBoxModel<Object>(new String[] {"Nome", "CPF / CNPJ", "Email", "Telefone"}));
 		final JCheckBox jckbExluidos = new JCheckBox("Exclu\u00EDdos");
 		jckbExluidos.setBackground(SystemColor.inactiveCaption);
 		
@@ -303,10 +289,10 @@ public class ConsultaClientesUI extends JInternalFrame {
 					btnRestaurar.setVisible(false);
 				}
 				
-				Cliente cli = new Cliente();
 				try {
 					jtConsultaCliente.setModel(new ClienteTableModel( 
 							new ClienteControl().showFilterClientes(jcbTipoFiltro.getSelectedItem().toString() ,jtfFiltro.getText(), jckbExluidos.isSelected() ) ) );
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				} 

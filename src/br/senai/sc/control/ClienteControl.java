@@ -21,13 +21,25 @@ public class ClienteControl {
 				
 				ValidaCpf validacaoCPF = new ValidaCpf();
 				ValidaCnpj validacaoCnpj = new ValidaCnpj();
-				
+				ArrayList<Cliente> resultadoClientes = new ArrayList<Cliente>();
 				if(cliente.getCpf().length() == 14){
 					if (validacaoCPF.isCPF(cliente.getCpf()) == false)
 						throw new Exception("Digite um CPF válido");
+					resultadoClientes =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf(), 0);
+					if(resultadoClientes.size() != 0)
+						throw new Exception("CPF já cadastrado, digite um CPF válido");
+					resultadoClientes =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf(), 1);
+					if(resultadoClientes.size() != 0)
+						throw new Exception("CPF já cadastrado, digite um CPF válido");
 				}else{
 					if (validacaoCnpj.isCNPJ(cliente.getCpf()) == false)
 						throw new Exception("Digite um CNPJ válido");
+					resultadoClientes =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf(), 0);
+					if(resultadoClientes.size() != 0)
+						throw new Exception("CNPJ já cadastrado, digite um CNPJ válido");
+					resultadoClientes =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf(), 1);
+					if(resultadoClientes.size() != 0)
+						throw new Exception("CNPJ já cadastrado, digite um CNPJ válido");
 				}
 				
 				 Pattern p = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$"); 
@@ -41,14 +53,7 @@ public class ClienteControl {
 				
 				if (cliente.getTelefone().length() != 14)	
 					throw new Exception("Digite o campo Telefone");
-				
-				ArrayList<Cliente> resultadoClientesAtivos = new ArrayList<Cliente>();
-				ArrayList<Cliente> resultadoClientesInativos = new ArrayList<Cliente>();
-				resultadoClientesAtivos =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf(), 0);
-				resultadoClientesInativos =  ClienteDAO.getInstace().showFilterClientes("cpf", cliente.getCpf(), 1);
-				if(resultadoClientesAtivos.size() != 0 || resultadoClientesInativos.size() != 0)
-					throw new Exception("CPF já cadastrado, digite um CPF válido");
-				
+
 				ClienteDAO.getInstace().insertCliente(cliente);
 				return true;
 
