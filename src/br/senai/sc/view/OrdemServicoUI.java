@@ -37,6 +37,7 @@ import br.senai.sc.utils.ServicoTableModel;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.Color;
 
 public class OrdemServicoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -90,6 +91,7 @@ public class OrdemServicoUI extends JInternalFrame {
 
 	public OrdemServicoUI(final OrdemServico os) throws ClassNotFoundException,
 			SQLException {
+		getContentPane().setBackground(new Color(176, 196, 222));
 		setFrameIcon(new ImageIcon(
 				OrdemServicoUI.class
 						.getResource("/br/senai/sc/icons/efeturar_ordem.png")));

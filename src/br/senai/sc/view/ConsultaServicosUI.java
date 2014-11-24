@@ -1,47 +1,41 @@
 package br.senai.sc.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
-import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.SQLException;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
 
-import br.senai.sc.control.ClienteControl;
 import br.senai.sc.control.ServicoControl;
 import br.senai.sc.dao.ServicoDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.model.Servico;
-import br.senai.sc.utils.ClienteTableModel;
 import br.senai.sc.utils.ServicoTableModel;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import javax.swing.JCheckBox;
-
 public class ConsultaServicosUI extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField jtfFiltro;
 	private JTable table;
 	private JTable jtConsultaServico;
@@ -78,15 +72,15 @@ public class ConsultaServicosUI extends JInternalFrame {
 		setFrameIcon(new ImageIcon(ConsultaServicosUI.class.getResource("/br/senai/sc/icons/imprimir.png")));
 		setTitle("Consultar Servi\u00E7os");
 		setBorder(null);
-		getContentPane().setBackground(SystemColor.inactiveCaption);
+		getContentPane().setBackground(new Color(176, 196, 222));
 		setBounds(0, 0, 1200, 600);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBackground(SystemColor.inactiveCaption);
+		panel.setBackground(new Color(176, 196, 222));
 		
 		final JCheckBox jckbExcluidos = new JCheckBox("Exclu\u00EDdos");
-		jckbExcluidos.setBackground(SystemColor.inactiveCaption);
+		jckbExcluidos.setBackground(new Color(176, 196, 222));
 		
 		final JButton btnRestaurar = new JButton("Restaurar");
 		btnRestaurar.addActionListener(new ActionListener() {
@@ -223,7 +217,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Sair");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

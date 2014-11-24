@@ -1,9 +1,11 @@
 package br.senai.sc.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -25,19 +27,9 @@ import javax.swing.event.InternalFrameListener;
 import br.senai.sc.control.OrcamentoFlashControl;
 import br.senai.sc.control.ServicoControl;
 import br.senai.sc.dao.OrcamentoFlashDAO;
-import br.senai.sc.model.OrcamentoFlash;
 import br.senai.sc.model.Servico;
 import br.senai.sc.utils.OrcamentoFlashTableModel;
 import br.senai.sc.utils.ServicoTableModel;
-
-import javax.swing.JTextPane;
-import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.Color;
 
 public class OrcamentoUI extends JInternalFrame {
 
@@ -222,7 +214,7 @@ public class OrcamentoUI extends JInternalFrame {
 			}
 		});
 		
-		JButton btCancelar = new JButton("Fechar");
+		JButton btCancelar = new JButton("Sair");
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(ofc.showAllServicos().size() != 0)
@@ -291,47 +283,43 @@ public class OrcamentoUI extends JInternalFrame {
 									.addComponent(tfValorTotal)
 									.addPreferredGap(ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
 									.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-									.addGap(63)
+									.addGap(73)
 									.addComponent(jbSalvar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-									.addGap(61)
-									.addComponent(btCancelar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-									.addGap(48))
-								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(73)
+									.addComponent(btCancelar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addComponent(jlQuantidadeDeOriginais)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jtfOriginais, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+									.addGap(70)
+									.addComponent(jlCopias)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jtfQuantidadeCopias, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+									.addComponent(jlValorUnitaro)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jtfValorUnitario, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+									.addGap(43)
+									.addComponent(btnAdicionar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addGap(14)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(jlQuantidadeDeOriginais)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(jtfOriginais, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-											.addGap(70)
-											.addComponent(jlCopias)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(jtfQuantidadeCopias, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-											.addComponent(jlValorUnitaro)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(jtfValorUnitario, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-											.addGap(43)
-											.addComponent(btnAdicionar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(14)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(jlServicos)
-												.addComponent(jlCliente))
-											.addGap(18)
-											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-												.addComponent(jtfServico)
-												.addComponent(jtfCliente, GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE))
-											.addGap(28)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-												.addComponent(jbProcurarServicos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(btnProcurarCliente, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-										.addComponent(spListaClientes, GroupLayout.DEFAULT_SIZE, 1161, Short.MAX_VALUE)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblDescrio)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(jtfDescricao, GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE)))
-									.addGap(26)))
-							.addGap(10))))
+										.addComponent(jlServicos)
+										.addComponent(jlCliente))
+									.addGap(18)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(jtfServico)
+										.addComponent(jtfCliente, GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE))
+									.addGap(28)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(jbProcurarServicos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(btnProcurarCliente, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+								.addComponent(spListaClientes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1161, Short.MAX_VALUE)
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addComponent(lblDescrio)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(jtfDescricao, GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE)))
+							.addGap(36))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -368,10 +356,10 @@ public class OrcamentoUI extends JInternalFrame {
 					.addGap(28)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlValorTotal)
-						.addComponent(jbSalvar)
-						.addComponent(btCancelar)
 						.addComponent(btnRemover)
-						.addComponent(tfValorTotal))
+						.addComponent(tfValorTotal)
+						.addComponent(btCancelar)
+						.addComponent(jbSalvar))
 					.addGap(71))
 		);
 		

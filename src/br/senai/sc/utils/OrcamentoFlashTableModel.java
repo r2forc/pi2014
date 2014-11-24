@@ -1,8 +1,5 @@
 package br.senai.sc.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
 
 import br.senai.sc.dao.OrcamentoFlashDAO;

@@ -1,41 +1,39 @@
 package br.senai.sc.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.SQLException;
 
-import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
+import javax.swing.border.EtchedBorder;
 
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.control.OrcamentoFlashControl;
-import br.senai.sc.dao.OrcamentoFlashDAO;
 import br.senai.sc.model.Cliente;
 import br.senai.sc.utils.ClienteTableModel;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
 public class ConsultaClientesOrcUI extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField jtfFiltro;
 	private JTable table;
 	private JTable jtConsultaCliente;
@@ -70,7 +68,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 						.getResource("/br/senai/sc/icons/fornecedores.png")));
 		setTitle("Consultar Clientes");
 		setBorder(null);
-		getContentPane().setBackground(SystemColor.inactiveCaption);
+		getContentPane().setBackground(new Color(176, 196, 222));
 		setBounds(2, 40, 1192, 500);
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -98,7 +96,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 			}
 		});
 
-		JButton jbCancelar = new JButton("Cancelar");
+		JButton jbCancelar = new JButton("Sair");
 		jbCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

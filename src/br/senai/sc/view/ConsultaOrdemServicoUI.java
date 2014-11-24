@@ -280,7 +280,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 							.addGap(18)
 							.addComponent(btnEditarOs)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -303,7 +303,7 @@ public class ConsultaOrdemServicoUI extends JInternalFrame {
 								.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblStatus))
 							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
 					.addGap(11)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)

@@ -40,7 +40,7 @@ public class OrcamentoFlash extends OrdemServico {
 	}
 
 	public void setServicos(ArrayList<Servico> servico) {
-		this.servicos = servicos;
+		this.servicos = servico;
 	}
 
 	public Date getData() {

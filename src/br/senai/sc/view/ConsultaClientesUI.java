@@ -1,5 +1,6 @@
 package br.senai.sc.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -67,12 +68,12 @@ public class ConsultaClientesUI extends JInternalFrame {
 		setFrameIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/fornecedores.png")));
 		setTitle("Consultar Clientes");
 		setBorder(null);
-		getContentPane().setBackground(SystemColor.inactiveCaption);
+		getContentPane().setBackground(new Color(176, 196, 222));
 		setBounds(0, 0, 1200, 600);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBackground(SystemColor.inactiveCaption);
+		panel.setBackground(new Color(176, 196, 222));
 		
 		JButton btnNovo = new JButton("Novo");
 		btnNovo.addActionListener(new ActionListener() {
@@ -167,7 +168,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Sair");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

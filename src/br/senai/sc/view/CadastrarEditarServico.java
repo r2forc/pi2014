@@ -1,35 +1,29 @@
 package br.senai.sc.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
-
 import javax.swing.border.EtchedBorder;
-
-
-
-
 
 import br.senai.sc.control.ServicoControl;
 import br.senai.sc.model.Servico;
-import br.senai.sc.utils.MaskFields;
-
-import javax.swing.JFormattedTextField;
-import javax.swing.ImageIcon;
 
 public class CadastrarEditarServico extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField jtfDescricao;
 	private JTextField jtfValor;
 
@@ -53,6 +47,7 @@ public class CadastrarEditarServico extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastrarEditarServico(final Servico serv) {
+		getContentPane().setBackground(new Color(176, 196, 222));
 		setTitle("Cadastrar Servi\u00E7o");
 		if(serv != null)
 			setTitle("Editar Servi\u00E7o");

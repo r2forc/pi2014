@@ -1,38 +1,37 @@
 package br.senai.sc.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
 
-import javax.swing.JInternalFrame;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.text.ParseException;
-
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-import br.senai.sc.utils.MaskFields;
 import br.senai.sc.control.ClienteControl;
 import br.senai.sc.model.Cliente;
-
-import javax.swing.JFormattedTextField;
-import javax.swing.JComboBox;
-import java.awt.Color;
-import javax.swing.DefaultComboBoxModel;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.SystemColor;
-import javax.swing.ImageIcon;
+import br.senai.sc.utils.MaskFields;
 
 public class CadastrarEditarCliente extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField jtfNome;
 	private JTextField jtfEmail;
 	private JFormattedTextField jtfCPFeCNPJ;
@@ -60,6 +59,7 @@ public class CadastrarEditarCliente extends JInternalFrame {
 	 * @throws ParseException 
 	 */
 	public CadastrarEditarCliente(final Cliente cli) throws ParseException {
+		getContentPane().setBackground(new Color(176, 196, 222));
 		setTitle("Cadastrar Cliente");
 		if(cli != null)
 			setTitle("Editar Cliente");

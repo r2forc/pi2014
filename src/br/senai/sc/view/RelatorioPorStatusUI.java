@@ -59,7 +59,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		});
 	}
 
-	public void atualizarTableModel(){
+	public void atualizarTableModel() {
 		jtTabelaStatus = new JTable();
 
 		try {
@@ -73,8 +73,8 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 			e.printStackTrace();
 		}
 	}
-	
-	public void atualizarValor(){
+
+	public void atualizarValor() {
 
 		Double valorTotal = 0.0;
 
@@ -90,14 +90,11 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		jlValorTotal.setText(valorTotal.toString());
 		System.out.println(valorTotal);
 	}
-	
-	
-	
-	
+
 	/**
 	 * Create the frame.
 	 * 
@@ -105,13 +102,17 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 	 * @throws ClassNotFoundException
 	 */
 	public RelatorioPorStatusUI() throws ClassNotFoundException, SQLException {
+		getContentPane().setBackground(new Color(176, 196, 222));
+		setFrameIcon(new ImageIcon(
+				"C:\\Users\\Fabr\u00EDcio\\git\\pi20144\\bin\\br\\senai\\sc\\icons\\search_user.png"));
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentMoved(ComponentEvent arg0) {
 				setLocation(0, 0);
 			}
 		});
-		
+
 		atualizarTableModel();
 		atualizarValor();
 		setTitle("Relatorio por Status");
@@ -120,7 +121,7 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		setBounds(0, 0, 1200, 550);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(SystemColor.inactiveCaption);
+		panel.setBackground(new Color(176, 196, 222));
 		panel.setBorder(null);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
@@ -176,6 +177,8 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 				.getResource("/br/senai/sc/icons/search.png")));
 
 		JButton btnSair = new JButton("Sair");
+		btnSair.setIcon(new ImageIcon(
+				"C:\\Users\\Fabr\u00EDcio\\git\\pi20144\\bin\\br\\senai\\sc\\icons\\exit_icon.png"));
 		btnSair.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -200,14 +203,10 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 
 		JLabel lblDataFinal = new JLabel("Data Final:");
 
-		JButton btnImprimir = new JButton("Imprimir");
-
 		tfCliente = new JTextField();
 		tfCliente.setColumns(10);
 
 		JLabel lblValorTotalR = new JLabel("Valor Total: R$");
-
-
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
@@ -215,32 +214,32 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 				.addGroup(
 						gl_panel.createSequentialGroup()
 								.addComponent(lblNewLabel,
-										GroupLayout.DEFAULT_SIZE, 43,
+										GroupLayout.DEFAULT_SIZE, 42,
 										Short.MAX_VALUE)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(tfCliente,
-										GroupLayout.DEFAULT_SIZE, 425,
+										GroupLayout.DEFAULT_SIZE, 419,
 										Short.MAX_VALUE)
 								.addGap(33)
 								.addComponent(lblStatus,
-										GroupLayout.DEFAULT_SIZE, 44,
+										GroupLayout.DEFAULT_SIZE, 43,
 										Short.MAX_VALUE)
 								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(jcbStatus, 0, 104,
+								.addComponent(jcbStatus, 0, 103,
 										Short.MAX_VALUE)
 								.addGap(18)
 								.addComponent(lblDataInicial,
-										GroupLayout.DEFAULT_SIZE, 63,
+										GroupLayout.DEFAULT_SIZE, 62,
 										Short.MAX_VALUE)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(jftfDataInicial,
-										GroupLayout.DEFAULT_SIZE, 72,
+										GroupLayout.DEFAULT_SIZE, 71,
 										Short.MAX_VALUE)
 								.addGap(33)
 								.addComponent(lblDataFinal)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(jftfDataFinal,
-										GroupLayout.DEFAULT_SIZE, 80,
+										GroupLayout.DEFAULT_SIZE, 79,
 										Short.MAX_VALUE)
 								.addGap(35)
 								.addComponent(btnPesquisar,
@@ -254,14 +253,10 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 								.addContainerGap())
 				.addGroup(
 						gl_panel.createSequentialGroup()
-								.addComponent(btnImprimir,
-										GroupLayout.PREFERRED_SIZE, 95,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(10)
 								.addComponent(btnSair,
-										GroupLayout.PREFERRED_SIZE, 95,
+										GroupLayout.PREFERRED_SIZE, 146,
 										GroupLayout.PREFERRED_SIZE)
-								.addGap(825)
+								.addGap(879)
 								.addComponent(lblValorTotalR,
 										GroupLayout.DEFAULT_SIZE,
 										GroupLayout.DEFAULT_SIZE,
@@ -306,25 +301,12 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 												.addComponent(btnPesquisar))
 								.addGap(11)
 								.addComponent(scrollPane,
-										GroupLayout.DEFAULT_SIZE, 409,
+										GroupLayout.DEFAULT_SIZE, 416,
 										Short.MAX_VALUE)
-								.addGap(11)
+								.addPreferredGap(ComponentPlacement.RELATED)
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.TRAILING)
-												.addGroup(
-														gl_panel.createParallelGroup(
-																Alignment.BASELINE)
-																.addComponent(
-																		btnImprimir,
-																		GroupLayout.PREFERRED_SIZE,
-																		25,
-																		GroupLayout.PREFERRED_SIZE)
-																.addComponent(
-																		btnSair,
-																		GroupLayout.PREFERRED_SIZE,
-																		25,
-																		GroupLayout.PREFERRED_SIZE))
 												.addGroup(
 														gl_panel.createSequentialGroup()
 																.addGroup(
@@ -334,7 +316,12 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 																						lblValorTotalR)
 																				.addComponent(
 																						jlValorTotal))
-																.addContainerGap()))));
+																.addContainerGap())
+												.addComponent(
+														btnSair,
+														GroupLayout.PREFERRED_SIZE,
+														35,
+														GroupLayout.PREFERRED_SIZE))));
 
 		jtTabelaStatus.getColumnModel().getColumn(0).setResizable(false);
 		jtTabelaStatus.getColumnModel().getColumn(0).setPreferredWidth(100);

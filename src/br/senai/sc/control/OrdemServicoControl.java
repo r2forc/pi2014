@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import br.senai.sc.dao.OrdemServicoDAO;
-import br.senai.sc.dao.RelatorioDAO;
 import br.senai.sc.model.OrdemServico;
-import br.senai.sc.model.RelatorioStatus;
 
 public class OrdemServicoControl {
 
