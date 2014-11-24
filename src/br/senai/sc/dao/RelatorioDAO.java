@@ -36,11 +36,10 @@ public class RelatorioDAO {
 		RelatorioStatus oRetorno = null;
 
 		
-
+		listaRelatorio.clear();
 		while (rs.next()) {
 
 			oRetorno = new RelatorioStatus();
-
 			oRetorno.getCliente().setNome(rs.getString("cli.nome"));
 			oRetorno.setData(rs.getDate("data"));
 			status = rs.getInt("status");
@@ -53,7 +52,7 @@ public class RelatorioDAO {
 				break;
 			}
 			oRetorno.setValor(rs.getDouble("valorTotal"));
-
+			
 			listaRelatorio.add(oRetorno);
 			con.commit();
 		}
@@ -111,6 +110,7 @@ public class RelatorioDAO {
 			con.commit();
 
 		}
+		
 		return listaRelatorio;
 	}
 	
