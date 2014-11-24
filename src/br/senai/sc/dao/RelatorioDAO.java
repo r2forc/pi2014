@@ -35,7 +35,7 @@ public class RelatorioDAO {
 
 		RelatorioStatus oRetorno = null;
 
-		ArrayList<RelatorioStatus> listaRelatorio = new ArrayList<>();
+		
 
 		while (rs.next()) {
 

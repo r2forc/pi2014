@@ -74,21 +74,15 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		}
 	}
 
-	public void atualizarValor() {
+	public void atualizarValor() throws ClassNotFoundException {
 
 		Double valorTotal = 0.0;
 
 		RelatorioDAO rc = new RelatorioDAO();
 
-		try {
-			for (int i = 0; i < rc.getInstance().showAllOrcamentos().size(); i++) {
-				valorTotal += rc.getInstance().showAllOrcamentos().get(i)
-						.getValor();
+		for (int i = 0; i < rc.getInstance().getRelatorio().size(); i++) {
+			valorTotal += rc.getInstance().getRelatorio().get(i).getValor();
 
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		jlValorTotal.setText(valorTotal.toString());
