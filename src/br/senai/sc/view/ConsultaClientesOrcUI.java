@@ -72,7 +72,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 		setBounds(2, 40, 1192, 500);
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBackground(SystemColor.inactiveCaption);
+		panel.setBackground(new Color(176, 196, 222));
 
 		JScrollPane scrollPane = new JScrollPane();
 

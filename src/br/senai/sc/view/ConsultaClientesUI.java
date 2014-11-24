@@ -272,7 +272,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 		});
 		jcbTipoFiltro.setModel(new DefaultComboBoxModel<Object>(new String[] {"Nome", "CPF / CNPJ", "Email", "Telefone"}));
 		final JCheckBox jckbExluidos = new JCheckBox("Exclu\u00EDdos");
-		jckbExluidos.setBackground(SystemColor.inactiveCaption);
+		jckbExluidos.setBackground(new Color(176, 196, 222));
 		
 		
 		JButton btnNewButton_1 = new JButton("Procurar");
