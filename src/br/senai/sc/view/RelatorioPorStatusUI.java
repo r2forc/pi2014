@@ -82,7 +82,6 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 
 		for (int i = 0; i < rc.getInstance().getRelatorio().size(); i++) {
 			valorTotal += rc.getInstance().getRelatorio().get(i).getValor();
-
 		}
 
 		jlValorTotal.setText(valorTotal.toString());
@@ -156,8 +155,9 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 									.getText(), jcbStatus.getSelectedItem()
 									.toString(), jftfDataInicial.getText(),
 									jftfDataFinal.getText())));
-					atualizarTableModel();
 					atualizarValor();
+					//atualizarTableModel();
+					
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
