@@ -1,5 +1,6 @@
 package br.senai.sc.utils;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,13 +54,17 @@ public class ConsultaOrdemServicoTableModel extends AbstractTableModel {
 		// Precisamos retornar o valor da coluna column e da linha row.
 		OrdemServico os = valores.get(row);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
+		DecimalFormat fmt = new DecimalFormat("0.00");
+		String string = fmt.format(os.getValorTotal());
+		String[] part = string.split("[,]");
+		String string2 = part[0] + "." + part[1];
+		
 		if (column == COL_DATA)
 			return sdf.format(os.getData());
 		else if (column == COL_NOMECLIENTE)
 			return os.getCliente().getNome();
 		else if (column == COL_VALORTOTAL)
-			return os.getValorTotal();
+			return string2;
 		else if (column == COL_STATUS)
 			return os.getStatus();
 		return ""; // Nunca deve ocorrer

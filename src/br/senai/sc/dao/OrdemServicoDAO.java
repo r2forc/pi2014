@@ -117,6 +117,21 @@ public class OrdemServicoDAO {
 		}
 	}
 
+	public void changeDescricao(OrdemServico os) throws SQLException {
+		try {
+			String query = "UPDATE orcamento SET descricao = ? WHERE id = ?;";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, os.getDescricao());
+			stmt.setInt(2, os.getId());
+
+			stmt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		}
+	}
+
 	public boolean verificarStatus(Integer status, Integer id_orc)
 			throws ClassNotFoundException, SQLException {
 		String query = "SELECT * FROM orcamento WHERE status = " + status
@@ -199,6 +214,7 @@ public class OrdemServicoDAO {
 			osRetorno.getCliente().setNome(rs.getString("cli.nome"));
 			osRetorno.getServico().setId(rs.getInt("usuario_id"));
 			osRetorno.setValorTotal(rs.getDouble("valorTotal"));
+			osRetorno.setDescricao(rs.getString("descricao"));
 			status = rs.getInt("status");
 			switch (status) {
 			case 0:
@@ -246,6 +262,7 @@ public class OrdemServicoDAO {
 			oRetorno.setId(rs.getInt("orc.id"));
 			oRetorno.getCliente().setNome(rs.getString("nome"));
 			oRetorno.setData(rs.getDate("data"));
+			oRetorno.setDescricao(rs.getString("descricao"));
 			this.status = rs.getInt("status");
 			switch (this.status) {
 			case 0:

@@ -1,5 +1,6 @@
 package br.senai.sc.utils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,11 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int column) {
 		// Precisamos retornar o valor da coluna column e da linha row.
 		OrdemServico os = valores.get(row);
+		DecimalFormat fmt = new DecimalFormat("0.00");
+		String string = fmt.format(os.getValorTotal());
+		String[] part = string.split("[,]");
+		String string2 = part[0] + "." + part[1];
+
 		if (column == COL_DESCRICAO)
 			return os.getServico().getDescricao();
 		else if (column == COL_VALORUNT)
@@ -62,7 +68,7 @@ public class OrdemServicoTableModel extends AbstractTableModel {
 		else if (column == COL_COPIAS)
 			return os.getCopias();
 		else if (column == COL_VALORTOTAL)
-			return os.getValorTotal();
+			return string2;
 		return ""; // Nunca deve ocorrer
 	}
 
