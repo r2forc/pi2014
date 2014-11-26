@@ -1,5 +1,7 @@
 package br.senai.sc.utils;
 
+import java.text.DecimalFormat;
+
 import javax.swing.table.AbstractTableModel;
 
 import br.senai.sc.dao.OrcamentoFlashDAO;
@@ -53,6 +55,10 @@ public class OrcamentoFlashTableModel extends AbstractTableModel {
 		// Precisamos retornar o valor da coluna column e da linha row.
 		//Servico orcamentoFlash = valores.getServicos().get(row);
 		OrcamentoFlashDAO of = new OrcamentoFlashDAO();
+		DecimalFormat fmt = new DecimalFormat("0.00");
+		String string = fmt.format((of.getInstace().mostrarServico(row).getCopias() * of.getInstace().mostrarServico(row).getOriginais()) * of.getInstace().mostrarServico(row).getValorUnt());
+		String[] part = string.split("[,]");
+		String string2 = part[0] + "." + part[1];
 		
 		if (column == COL_DESCRICAO)
 			return of.getInstace().mostrarServico(row).getDescricao();
@@ -63,7 +69,7 @@ public class OrcamentoFlashTableModel extends AbstractTableModel {
 		else if (column == COL_COPIAS)
 			return of.getInstace().mostrarServico(row).getCopias();
 		else if (column == COL_VALORTOAL)
-			return ((of.getInstace().mostrarServico(row).getCopias() * of.getInstace().mostrarServico(row).getOriginais()) * of.getInstace().mostrarServico(row).getValorUnt());
+			return string2;
 		
 		return ""; // Nunca deve ocorrer
 	}

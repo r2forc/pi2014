@@ -1,5 +1,6 @@
 package br.senai.sc.utils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,10 +46,14 @@ public class ServicoTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int column) {
 		// Precisamos retornar o valor da coluna column e da linha row.
 		Servico servico = valores.get(row);
+		DecimalFormat fmt = new DecimalFormat("0.00");
+		String string = fmt.format(servico.getValorUnt());
+		String[] part = string.split("[,]");
+		String string2 = part[0] + "." + part[1];
 		if (column == COL_DESCRICAO)
 			return servico.getDescricao();
 		else if (column == COL_VALORUNT)
-			return servico.getValorUnt();
+			return string2;
 		return ""; // Nunca deve ocorrer
 	}
 

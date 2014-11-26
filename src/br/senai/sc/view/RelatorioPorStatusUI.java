@@ -10,6 +10,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 
 import javax.swing.DefaultComboBoxModel;
@@ -31,6 +32,7 @@ import br.senai.sc.control.RelatorioControl;
 import br.senai.sc.dao.RelatorioDAO;
 import br.senai.sc.utils.MaskFields;
 import br.senai.sc.utils.RelatorioTableModel;
+
 import javax.swing.SwingConstants;
 
 public class RelatorioPorStatusUI extends JInternalFrame {
@@ -69,8 +71,11 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		for (int i = 0; i < rc.getInstance().getRelatorio().size(); i++) {
 			valorTotal += rc.getInstance().getRelatorio().get(i).getValor();
 		}
-
-		jlValorTotal.setText(valorTotal.toString());
+		DecimalFormat fmt = new DecimalFormat("0.00");
+		String string = fmt.format(valorTotal);
+		String[] part = string.split("[,]");
+		String string2 = part[0] + "." + part[1];
+		jlValorTotal.setText(string2);
 
 	}
 
@@ -92,7 +97,6 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 			}
 		});
 
-		
 		setTitle("Relatorio por Status");
 		setBorder(null);
 		setBackground(SystemColor.inactiveCaption);
@@ -189,62 +193,126 @@ public class RelatorioPorStatusUI extends JInternalFrame {
 		JLabel lblValorTotalR = new JLabel("Valor Total: R$");
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(tfCliente, GroupLayout.PREFERRED_SIZE, 470, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblStatus, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(jcbStatus, 0, 92, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(lblDataInicial, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(jftfDataInicial, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblDataFinal)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(jftfDataFinal, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-					.addGap(32)
-					.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
-					.addGap(45))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblValorTotalR, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jlValorTotal, GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
-							.addGap(885)
-							.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
-							.addGap(45))
-						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1170, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(11)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(tfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblStatus)
-						.addComponent(lblDataInicial)
-						.addComponent(jftfDataInicial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDataFinal)
-						.addComponent(jftfDataFinal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnPesquisar))
-					.addGap(11)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblValorTotalR)
-						.addComponent(jlValorTotal)
-						.addComponent(btnSair, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addComponent(lblNewLabel,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(tfCliente,
+										GroupLayout.PREFERRED_SIZE, 470,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(lblStatus,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(jcbStatus, 0, 92, Short.MAX_VALUE)
+								.addGap(18)
+								.addComponent(lblDataInicial,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(jftfDataInicial,
+										GroupLayout.PREFERRED_SIZE, 75,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(lblDataFinal)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(jftfDataFinal,
+										GroupLayout.PREFERRED_SIZE, 86,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(32)
+								.addComponent(btnPesquisar,
+										GroupLayout.PREFERRED_SIZE, 123,
+										GroupLayout.PREFERRED_SIZE).addGap(45))
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.TRAILING)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addContainerGap()
+																.addComponent(
+																		lblValorTotalR,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		jlValorTotal,
+																		GroupLayout.DEFAULT_SIZE,
+																		17,
+																		Short.MAX_VALUE)
+																.addGap(885)
+																.addComponent(
+																		btnSair,
+																		GroupLayout.PREFERRED_SIZE,
+																		146,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(45))
+												.addComponent(
+														scrollPane,
+														Alignment.LEADING,
+														GroupLayout.PREFERRED_SIZE,
+														1170,
+														GroupLayout.PREFERRED_SIZE))
+								.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGap(11)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblNewLabel)
+												.addComponent(
+														tfCliente,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														jcbStatus,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblStatus)
+												.addComponent(lblDataInicial)
+												.addComponent(
+														jftfDataInicial,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblDataFinal)
+												.addComponent(
+														jftfDataFinal,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(btnPesquisar))
+								.addGap(11)
+								.addComponent(scrollPane,
+										GroupLayout.DEFAULT_SIZE, 415,
+										Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblValorTotalR)
+												.addComponent(jlValorTotal)
+												.addComponent(
+														btnSair,
+														GroupLayout.PREFERRED_SIZE,
+														35,
+														GroupLayout.PREFERRED_SIZE))));
 		jtTabelaStatus = new JTable();
 
 		jtTabelaStatus.setModel(new RelatorioTableModel(new RelatorioControl()

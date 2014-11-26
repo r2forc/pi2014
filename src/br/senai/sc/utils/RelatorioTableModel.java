@@ -1,5 +1,6 @@
 package br.senai.sc.utils;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,6 +51,11 @@ public class RelatorioTableModel extends AbstractTableModel {
 		// Precisamos retornar o valor da coluna column e da linha row.
 		RelatorioStatus rs = valores.get(row);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DecimalFormat fmt = new DecimalFormat("0.00");
+		String string = fmt.format(rs.getValor());
+		String[] part = string.split("[,]");
+		String string2 = part[0] + "." + part[1];
+		
 		if (column == COL_CLIENTE)
 			return rs.getCliente().getNome();
 		else if (column == COL_STATUS)
@@ -57,7 +63,7 @@ public class RelatorioTableModel extends AbstractTableModel {
 		else if (column == COL_DATA)
 			return sdf.format(rs.getData());
 		else if (column == COL_VALOR)
-			return rs.getValor();
+			return string2;
 		return ""; // Nunca deve ocorrer
 	}
 
