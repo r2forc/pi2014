@@ -203,7 +203,7 @@ public class OrcamentoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				OrcamentoFlashControl ofc = new OrcamentoFlashControl();
 				if(ofc.salvarNoBanco(Double.parseDouble(tfValorTotal.getText()),jtfDescricao.getText())){
-					JOptionPane.showMessageDialog(null, "Orçameto Cadastrado com Sucesso");
+					JOptionPane.showMessageDialog(null, "Orçamento Cadastrado com Sucesso");
 					ofc.destruirFlash();
 					jtfDescricao.setText("");
 					jtfCliente.setText("");

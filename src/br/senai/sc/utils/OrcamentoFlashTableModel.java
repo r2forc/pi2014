@@ -60,10 +60,14 @@ public class OrcamentoFlashTableModel extends AbstractTableModel {
 		String[] part = string.split("[,]");
 		String string2 = part[0] + "." + part[1];
 		
+		String string3 = fmt.format(of.getInstace().mostrarServico(row).getValorUnt());
+		String[] part2 = string3.split("[,]");
+		String string4 = part[0] + "." + part[1];
+		
 		if (column == COL_DESCRICAO)
 			return of.getInstace().mostrarServico(row).getDescricao();
 		else if (column == COL_VALORUNT)
-			return of.getInstace().mostrarServico(row).getValorUnt();
+			return string4;
 		else if (column == COL_ORIGINAIS)
 			return of.getInstace().mostrarServico(row).getOriginais();
 		else if (column == COL_COPIAS)
