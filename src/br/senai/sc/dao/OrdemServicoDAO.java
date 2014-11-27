@@ -30,9 +30,10 @@ public class OrdemServicoDAO {
 
 	public boolean verificarServicosOrdemServicos(Integer id_orc,
 			Integer id_serv) throws ClassNotFoundException, SQLException {
-		String query = "SELECT * FROM orcamento_has_servico WHERE orcamento_id = "
-				+ id_orc + " AND " + "servico_id = " + id_serv;
+		String query = "SELECT * FROM orcamento_has_servico WHERE orcamento_id = ? AND servico_id = ? ";
 		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setInt(1, id_orc);
+		stmt.setInt(2, id_serv);
 		ResultSet rs = stmt.executeQuery();
 		int verifica = 0;
 		while (rs.next()) {
@@ -134,9 +135,11 @@ public class OrdemServicoDAO {
 
 	public boolean verificarStatus(Integer status, Integer id_orc)
 			throws ClassNotFoundException, SQLException {
-		String query = "SELECT * FROM orcamento WHERE status = " + status
-				+ " AND " + "id = " + id_orc;
+		String query = "SELECT * FROM orcamento WHERE status = ? AND id = ? ";
 		PreparedStatement stmt = con.prepareStatement(query);
+
+		stmt.setInt(1, status);
+		stmt.setInt(2, id_orc);
 		ResultSet rs = stmt.executeQuery();
 		int verifica = 0;
 		while (rs.next()) {
@@ -156,7 +159,7 @@ public class OrdemServicoDAO {
 				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = ?";
 
 		PreparedStatement stmt = con.prepareStatement(query);
-		stmt.setInt(1, id_orc);  //Arrumar as query para ficarem assim 
+		stmt.setInt(1, id_orc); // Arrumar as query para ficarem assim
 		ResultSet rs = stmt.executeQuery();
 		OrdemServico osRetorno = null;
 
@@ -233,8 +236,7 @@ public class OrdemServicoDAO {
 			String status, String dataInicial, String dataFinal)
 			throws ClassNotFoundException, SQLException {
 
-		String query = " SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.cliente_id  WHERE (status = "
-				+ status + ")";
+		String query = " SELECT * FROM orcamento orc JOIN cliente cli ON cli.id = orc.cliente_id  WHERE (status = ?)";
 		if (!(cliente.equals("")))
 			query += " AND nome LIKE '%" + cliente + "%' ";
 
@@ -252,6 +254,7 @@ public class OrdemServicoDAO {
 		PreparedStatement stmt = con.prepareStatement(query);
 
 		ResultSet rs = stmt.executeQuery();
+		stmt.setString(1, status);
 
 		OrdemServico oRetorno = null;
 
