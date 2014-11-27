@@ -153,11 +153,10 @@ public class OrdemServicoDAO {
 			throws ClassNotFoundException, SQLException {
 		String query = "SELECT * FROM orcamento orc JOIN orcamento_has_servico ohs"
 				+ " ON orc.id = ohs.orcamento_id JOIN servico s ON s.id = ohs.servico_id"
-				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = +"
-				+ id_orc + ";";
+				+ " JOIN cliente cli ON orc.cliente_id = cli.id where orc.id = ?";
 
 		PreparedStatement stmt = con.prepareStatement(query);
-		// stmt.setInt(1, os.getId());
+		stmt.setInt(1, id_orc);  //Arrumar as query para ficarem assim 
 		ResultSet rs = stmt.executeQuery();
 		OrdemServico osRetorno = null;
 
