@@ -76,6 +76,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 		panel.setBackground(new Color(176, 196, 222));
 		
 		JButton btnNovo = new JButton("Novo");
+		btnNovo.setIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/add_icon.png")));
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CadastrarEditarCliente cec = null;
@@ -110,6 +111,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 		});
 		
 		final JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/refresh-icon.png")));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Cliente cli = null;
@@ -144,6 +146,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 		});
 		
 		final JButton btnExcluir = new JButton("Exluir");
+		btnExcluir.setIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/delete_icon.png")));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -169,6 +172,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		JButton btnCancelar = new JButton("Sair");
+		btnCancelar.setIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/exit_icon.png")));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -176,6 +180,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 		});
 		
 		final JButton btnRestaurar = new JButton("Restaurar");
+		btnRestaurar.setIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/entrada_produto.png")));
 		btnRestaurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -276,6 +281,7 @@ public class ConsultaClientesUI extends JInternalFrame {
 		
 		
 		JButton btnNewButton_1 = new JButton("Procurar");
+		btnNewButton_1.setIcon(new ImageIcon(ConsultaClientesUI.class.getResource("/br/senai/sc/icons/search.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				

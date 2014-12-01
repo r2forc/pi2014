@@ -77,6 +77,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 		JScrollPane scrollPane = new JScrollPane();
 
 		JButton jbSelecionar = new JButton("Selecionar");
+		jbSelecionar.setIcon(new ImageIcon(ConsultaClientesOrcUI.class.getResource("/br/senai/sc/icons/add_icon.png")));
 		jbSelecionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -97,6 +98,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 		});
 
 		JButton jbCancelar = new JButton("Sair");
+		jbCancelar.setIcon(new ImageIcon(ConsultaClientesOrcUI.class.getResource("/br/senai/sc/icons/exit_icon.png")));
 		jbCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -202,6 +204,7 @@ public class ConsultaClientesOrcUI extends JInternalFrame {
 		jcbTipoFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nome", "CPF / CNPJ", "Email", "Telefone"}));
 
 		JButton btnNewButton_1 = new JButton("Procurar");
+		btnNewButton_1.setIcon(new ImageIcon(ConsultaClientesOrcUI.class.getResource("/br/senai/sc/icons/search.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 

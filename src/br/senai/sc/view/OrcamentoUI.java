@@ -147,6 +147,7 @@ public class OrcamentoUI extends JInternalFrame {
 		JLabel jlCopias = new JLabel("Quantidade de C\u00F3pias:");
 		
 		JButton btnAdicionar = new JButton("Adicionar");
+		btnAdicionar.setIcon(new ImageIcon(OrcamentoUI.class.getResource("/br/senai/sc/icons/add_icon.png")));
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Servico serv = new Servico();
@@ -199,6 +200,7 @@ public class OrcamentoUI extends JInternalFrame {
 		JLabel jlValorTotal = new JLabel("Valor Total: R$");
 		
 		JButton jbSalvar = new JButton("Salvar");
+		jbSalvar.setIcon(new ImageIcon(OrcamentoUI.class.getResource("/br/senai/sc/icons/save_icon.png")));
 		jbSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				OrcamentoFlashControl ofc = new OrcamentoFlashControl();
@@ -215,6 +217,7 @@ public class OrcamentoUI extends JInternalFrame {
 		});
 		
 		JButton btCancelar = new JButton("Sair");
+		btCancelar.setIcon(new ImageIcon(OrcamentoUI.class.getResource("/br/senai/sc/icons/exit_icon.png")));
 		btCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(ofc.showAllServicos().size() != 0)
@@ -229,6 +232,7 @@ public class OrcamentoUI extends JInternalFrame {
 		JLabel jlServicos = new JLabel("Servi\u00E7os:");
 		
 		JButton btnRemover = new JButton("Remover Servi\u00E7o");
+		btnRemover.setIcon(new ImageIcon(OrcamentoUI.class.getResource("/br/senai/sc/icons/saida_produto.png")));
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
@@ -275,19 +279,19 @@ public class OrcamentoUI extends JInternalFrame {
 							.addComponent(spOrcamentoFlahs, GroupLayout.PREFERRED_SIZE, 1172, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(31)
 									.addComponent(jlValorTotal)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(tfValorTotal)
-									.addPreferredGap(ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
-									.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 429, Short.MAX_VALUE)
+									.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
 									.addGap(73)
 									.addComponent(jbSalvar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 									.addGap(73)
 									.addComponent(btCancelar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(jlQuantidadeDeOriginais)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(jtfOriginais, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
@@ -301,7 +305,7 @@ public class OrcamentoUI extends JInternalFrame {
 									.addComponent(jtfValorUnitario, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
 									.addGap(43)
 									.addComponent(btnAdicionar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(14)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addComponent(jlServicos)
@@ -314,8 +318,8 @@ public class OrcamentoUI extends JInternalFrame {
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 										.addComponent(jbProcurarServicos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(btnProcurarCliente, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-								.addComponent(spListaClientes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1161, Short.MAX_VALUE)
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+								.addComponent(spListaClientes, GroupLayout.DEFAULT_SIZE, 1161, Short.MAX_VALUE)
+								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(lblDescrio)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(jtfDescricao, GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE)))

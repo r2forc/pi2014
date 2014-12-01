@@ -83,6 +83,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 		jckbExcluidos.setBackground(new Color(176, 196, 222));
 		
 		final JButton btnRestaurar = new JButton("Restaurar");
+		btnRestaurar.setIcon(new ImageIcon(ConsultaServicosUI.class.getResource("/br/senai/sc/icons/entrada_produto.png")));
 		btnRestaurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -112,6 +113,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 		btnRestaurar.setVisible(false);
 		
 		JButton btnNovo = new JButton("Novo");
+		btnNovo.setIcon(new ImageIcon(ConsultaServicosUI.class.getResource("/br/senai/sc/icons/add_icon.png")));
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CadastrarEditarServico ces = new CadastrarEditarServico(null);
@@ -146,6 +148,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 		});
 		
 		final JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setIcon(new ImageIcon(ConsultaServicosUI.class.getResource("/br/senai/sc/icons/refresh-icon.png")));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Servico serv = null;
@@ -187,6 +190,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 		});
 		
 		final JButton btnExcluir = new JButton("Exluir");
+		btnExcluir.setIcon(new ImageIcon(ConsultaServicosUI.class.getResource("/br/senai/sc/icons/delete_icon.png")));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -218,6 +222,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		JButton btnCancelar = new JButton("Sair");
+		btnCancelar.setIcon(new ImageIcon(ConsultaServicosUI.class.getResource("/br/senai/sc/icons/exit_icon.png")));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -284,6 +289,7 @@ public class ConsultaServicosUI extends JInternalFrame {
 		jtfFiltro.setColumns(10);
 
 		JButton btnNewButton_1 = new JButton("Procurar");
+		btnNewButton_1.setIcon(new ImageIcon(ConsultaServicosUI.class.getResource("/br/senai/sc/icons/search.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Cliente cli = new Cliente();

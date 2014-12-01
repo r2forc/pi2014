@@ -72,6 +72,7 @@ public class CadastrarEditarServico extends JInternalFrame {
 		
 		
 		JButton jbSalvar = new JButton("Salvar");
+		jbSalvar.setIcon(new ImageIcon(CadastrarEditarServico.class.getResource("/br/senai/sc/icons/save_icon.png")));
 		jbSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -121,6 +122,7 @@ public class CadastrarEditarServico extends JInternalFrame {
 		});
 		
 		JButton jbCancelar = new JButton("Cancelar");
+		jbCancelar.setIcon(new ImageIcon(CadastrarEditarServico.class.getResource("/br/senai/sc/icons/exit_icon.png")));
 		jbCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
